@@ -17,7 +17,7 @@ if [ "$HASBOOTED" = "no" ]; then
   echo "Starting eudev daemon"
   cd /
   tar xfz /exts/eudev/eudev.tgz
-  ll /usr/sbin
+  ls -l /usr/sbin
     [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
   /usr/sbin/udevd -d || { echo "FAIL"; exit 1; }
   echo "Triggering add events to udev"
