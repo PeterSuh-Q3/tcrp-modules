@@ -5,4 +5,4 @@ like ARPL bromolow | apollolake | broadwell | broadwellnk | v1000 | denverton | 
 
 When building the TCRP loader, it must be included as a bundle by default.
 
-Junior automatically detects the device and selectively injects only the necessary driver ko files.
+In Junior, EUDEV automatically detects the device and optionally activates the required module files.
