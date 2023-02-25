@@ -4,7 +4,7 @@
       "name": "eudev",
       "url": "https://raw.githubusercontent.com/pocopico/rp-ext/main/eudev/releases/eudev.tgz",
       "sha256": "bbd4a53783c67884a711e4fbc67b5565cf019b0c93c95efcb6887cf8d69f2822",
-      "packed": true
+      "packed": false
     },
     {
       "name": "install.sh",
