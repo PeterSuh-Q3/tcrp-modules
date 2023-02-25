@@ -1,18 +1,15 @@
 #!/usr/bin/env ash
 
-
-
 ### USUALLY SCEMD is the last process run in init, so when scemd is running we are most
 # probably certain that system has finish init process
 #
 
-
 if [ `mount | grep tmpRoot | wc -l` -gt 0 ] ; then
-HASBOOTED="yes"
-echo "System passed junior"
+  HASBOOTED="yes"
+  echo "System passed junior"
 else
-echo "System is booting"
-HASBOOTED="no"
+  echo "System is booting"
+  HASBOOTED="no"
 fi
 
 if [ "$HASBOOTED" = "no" ]; then
