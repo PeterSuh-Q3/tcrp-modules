@@ -9,9 +9,9 @@
       "packed": false
     },
     {
-      "name": "check-all-modules.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/check-all-modules.sh",
-      "sha256": "695921078ae3730e7e1a633cb08c5ea776a0efcee2df9c029de31b8434f5e306",
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "51634aa9eb40a69f706f89d960b6ccd30102d99cd68dbb249d1f44f3fa0dde8f",
       "packed": false
     },
     {
@@ -77,7 +77,7 @@
   ],
   
   "scripts": {
-    "on_boot": "check-all-modules.sh"
+    "on_boot": "install.sh"
   }
 
 }
