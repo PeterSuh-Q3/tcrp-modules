@@ -11,7 +11,7 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/auxfiles/libkmod.so.2.2.6",
       "sha256": "341945f87a7764c24fc3c2e59721f817f9e2a1443adff5f2cc600f52117f0aa2",
       "packed": false
-    }
+    },
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/install.sh",
