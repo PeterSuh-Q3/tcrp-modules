@@ -18,12 +18,14 @@ if [ "$HASBOOTED" = "no" ]; then
   cd /
   tar xfz /exts/eudev/eudev.tgz
 
-  echo "link depmod, modprobe to kmod"
-ln -s /usr/bin/kmod /usr/sbin/depmod
-ln -s /usr/bin/kmod /usr/sbin/modprobe
-ln -s /usr/bin/kmod /usr/sbin/libkmod.so.2
+  echo "Copying libkmod libraries to /lib/"
+  /bin/cp -v libkmod.so.2.2.6      /lib  ; chmod 644 /lib/libkmod.so.2.2.6
 
-  ls -l /usr/sbin
+  echo "Link libkmod.so.2 to libkmod.so.2.2.6"
+  #ln -s /usr/bin/kmod /usr/sbin/depmod
+  #ln -s /usr/bin/kmod /usr/sbin/modprobe
+  ln -s /lib/libkmod.so.2.2.6 /lib/libkmod.so.2
+  
     [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
   /usr/sbin/udevd -d || { echo "FAIL"; exit 1; }
   echo "Triggering add events to udev"
