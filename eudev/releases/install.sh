@@ -17,6 +17,12 @@ if [ "$HASBOOTED" = "no" ]; then
   echo "Starting eudev daemon"
   cd /
   tar xfz /exts/eudev/eudev.tgz
+
+  echo "link depmod, modprobe to kmod"
+ln -s /usr/bin/kmod /usr/sbin/depmod
+ln -s /usr/bin/kmod /usr/sbin/modprobe
+ln -s /usr/bin/kmod /usr/sbin/libkmod.so.2
+
   ls -l /usr/sbin
     [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
   /usr/sbin/udevd -d || { echo "FAIL"; exit 1; }
