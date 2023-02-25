@@ -9,19 +9,20 @@
 
 if [ `mount | grep tmpRoot | wc -l` -gt 0 ] ; then
 HASBOOTED="yes"
-echo -n "System passed junior"
+echo "System passed junior"
 else
-echo -n "System is booting"
+echo "System is booting"
 HASBOOTED="no"
 fi
 
 if [ "$HASBOOTED" = "no" ]; then
-
+  echo "eudev - early"
   echo "Starting eudev daemon"
   cd /
-  tar xfz /exts/eudev/eudev.tgz 
+  tar xfz /exts/eudev/eudev.tgz
+  ln -s /usr/lib/udav/libkmod.so.2.4.0 /usr/lib/udav/libkmod.so.2
   [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
-  /sbin/udevd -d || { echo "FAIL"; exit 1; }
+  /usr/sbin/udevd -d || { echo "FAIL"; exit 1; }
   echo "Triggering add events to udev"
   udevadm trigger --type=subsystems --action=add
   udevadm trigger --type=devices --action=add
