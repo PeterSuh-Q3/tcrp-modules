@@ -1,33 +1,28 @@
 #!/usr/bin/env ash
 
+
+
 ### USUALLY SCEMD is the last process run in init, so when scemd is running we are most
 # probably certain that system has finish init process
 #
 
+
 if [ `mount | grep tmpRoot | wc -l` -gt 0 ] ; then
-  HASBOOTED="yes"
-  echo "System passed junior"
+HASBOOTED="yes"
+echo -n "System passed junior"
 else
-  echo "System is booting"
-  HASBOOTED="no"
+echo -n "System is booting"
+HASBOOTED="no"
 fi
 
 if [ "$HASBOOTED" = "no" ]; then
-  echo "eudev - early"
+
   echo "Starting eudev daemon"
   cd /
   tar xfz /exts/eudev/eudev.tgz
-
-  echo "Copying libkmod libraries to /lib/"
-  /bin/cp -v libkmod.so.2.2.6      /lib  ; chmod 644 /lib/libkmod.so.2.2.6
-
-  echo "Link libkmod.so.2 to libkmod.so.2.2.6"
-  #ln -s /usr/bin/kmod /usr/sbin/depmod
-  #ln -s /usr/bin/kmod /usr/sbin/modprobe
-  ln -s /lib/libkmod.so.2.2.6 /lib/libkmod.so.2
-  
-    [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
-  /usr/sbin/udevd -d || { echo "FAIL"; exit 1; }
+  ln -s /lib/libkmod.so.2.4.0 /lib/libkmod.so.2
+  [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
+  /sbin/udevd -d || { echo "FAIL"; exit 1; }
   echo "Triggering add events to udev"
   udevadm trigger --type=subsystems --action=add
   udevadm trigger --type=devices --action=add
@@ -59,5 +54,4 @@ elif [ "$HASBOOTED" = "yes" ]; then
   mkdir -p /tmpRoot/etc/systemd/system/multi-user.target.wants
   ln -sf /lib/systemd/system/udevrules.service /tmpRoot/lib/systemd/system/multi-user.target.wants/udevrules.service
 fi
-
 
