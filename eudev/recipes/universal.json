@@ -2,13 +2,13 @@
 "files": [
     {
       "name": "eudev.tgz",
-      "url": "https://raw.githubusercontent.com/pocopico/rp-ext/main/eudev/releases/eudev.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev.tgz",
       "sha256": "bbd4a53783c67884a711e4fbc67b5565cf019b0c93c95efcb6887cf8d69f2822",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/pocopico/rp-ext/main/eudev/releases/install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/install.sh",
       "sha256": "ead883f463f301406d7d4eeb7df5bba5ff4e8cf2ebedd009b005b6d25628000c",
       "packed": false
     }
