@@ -131,22 +131,22 @@ function getvars() {
 
 function preparedetect() {
 
-echo "Copying kmod,sed,jq,lspci files to /sbin/"
-/bin/cp -v kmod  /bin/       ; chmod 700 /bin/kmod
-/bin/cp -v sed   /usr/sbin/  ; chmod 700 /usr/sbin/sed
-/bin/cp -v jq    /usr/sbin/  ; chmod 700 /usr/sbin/jq
-/bin/cp -v lspci /usr/sbin/  ; chmod 700 /usr/sbin/lspci
+#echo "Copying kmod,sed,jq,lspci files to /sbin/"
+#/bin/cp -v kmod  /bin/       ; chmod 700 /bin/kmod
+#/bin/cp -v sed   /usr/sbin/  ; chmod 700 /usr/sbin/sed
+#/bin/cp -v jq    /usr/sbin/  ; chmod 700 /usr/sbin/jq
+#/bin/cp -v lspci /usr/sbin/  ; chmod 700 /usr/sbin/lspci
 
-echo "Copying lspci libraries to /lib/"
-/bin/cp -v libz.so.1      /lib  ; chmod 644 /lib/libz.so.1
-/bin/cp -v libudev.so.1   /lib  ; chmod 644 /lib/libudev.so.1
-/bin/cp -v libattr.so.1   /lib  ; chmod 644 /lib/libattr.so.1
-/bin/cp -v libcap.so.2    /lib  ; chmod 644 /lib/libcap.so.2
+#echo "Copying lspci libraries to /lib/"
+#/bin/cp -v libz.so.1      /lib  ; chmod 644 /lib/libz.so.1
+#/bin/cp -v libudev.so.1   /lib  ; chmod 644 /lib/libudev.so.1
+#/bin/cp -v libattr.so.1   /lib  ; chmod 644 /lib/libattr.so.1
+#/bin/cp -v libcap.so.2    /lib  ; chmod 644 /lib/libcap.so.2
 
-echo "link depmod, modprobe to kmod"
-ln -s /bin/kmod /usr/sbin/depmod
-ln -s /bin/kmod /usr/sbin/modprobe
-ln -s /bin/kmod /usr/sbin/libkmod.so.2
+#echo "link depmod, modprobe to kmod"
+#ln -s /bin/kmod /usr/sbin/depmod
+#ln -s /bin/kmod /usr/sbin/modprobe
+#ln -s /bin/kmod /usr/sbin/libkmod.so.2
 
 tar xvfz /exts/all-modules/${TARGET_PLATFORM}-${LINUX_VER}.tgz -C /lib/modules/
 #/usr/sbin/depmod -a
