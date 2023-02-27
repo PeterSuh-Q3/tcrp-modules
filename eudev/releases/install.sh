@@ -21,14 +21,14 @@ if [ "$HASBOOTED" = "no" ]; then
   cd /
   tar xfz /exts/eudev/eudev.tgz
   ln -s /lib/libkmod.so.2.4.0 /lib/libkmod.so.2
+  ln -s /usr/bin/udevadm /usr/sbin/udevadm
   [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
   /sbin/udevd -d || { echo "FAIL"; exit 1; }
   echo "Triggering add events to udev"
   udevadm trigger --type=subsystems --action=add
   udevadm trigger --type=devices --action=add
-  udevadm settle --timeout=10 || echo "udevadm settle failed"
-
-
+  udevadm trigger --type=devices --action=change
+  udevadm settle --timeout=30 || echo "udevadm settle failed"
   # Give more time
   sleep 10
   # Remove from memory to not conflict with RAID mount scripts
