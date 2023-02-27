@@ -11,13 +11,19 @@
      {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "091e6c0cf01981cb4edeb35a3d79ae3c8da243ff4780a61eb5688b22cfa58713",
+      "sha256": "ce622fb429de1309d6fd5e62785f769fc3cae58d530e100c887686ef29a51291",
       "packed": false
     },
     {
       "name": "kmod",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/auxfiles/kmod",
       "sha256": "c28321e57b8af57b04905a346b093182f74d2836ca188c5536b47e6459153938",
+      "packed": false
+    },
+    {
+      "name": "tar",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/auxfiles/tar",
+      "sha256": "fc6ee2194057f9c3a58719d130d79db7d8131dd3949d148be93eb09cffc43eb7",
       "packed": false
     }
   ],
