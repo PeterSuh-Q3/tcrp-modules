@@ -11,7 +11,7 @@
     {
       "name": "check-all-modules.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/check-all-modules.sh",
-      "sha256": "695921078ae3730e7e1a633cb08c5ea776a0efcee2df9c029de31b8434f5e306",
+      "sha256": "4917c304ab037dbda20cf49f2962b81ba9c97e82e6f18087bfd1686b7a695c5d",
       "packed": false
     },
     {
