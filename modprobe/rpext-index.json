@@ -7,7 +7,7 @@
     "name": "modprobe",
     "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/tree/main/modprobe"
   },
-  "recipes": {
+  "releases": {
     "ds918p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
     "ds1019p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
     "ds920p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
