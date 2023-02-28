@@ -1,0 +1,37 @@
+{
+  "id": "modprobe",
+  "info": {
+    "author_url": "https://github.com/PeterSuh-Q3",
+    "description": "excute modprobe",
+    "help_url": "<todo>",
+    "name": "modprobe",
+    "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/tree/main/modprobe"
+  },
+  "recipes": {
+    "ds918p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1019p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds920p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1520p_42218": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds918p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1019p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds920p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1520p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "dva1622_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1621p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds2422p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "fs2500_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds3622xsp_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds1621xsp_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "rs4021xsp_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds3615xs_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "rs3413xsp_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds3617xs_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "rs3618xs_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "dva3219_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "dva3221_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds923p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "ds723p_42962": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/recipes/universal.json",
+    "zendofmodel": "endofurls"
+  },
+  "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+}
