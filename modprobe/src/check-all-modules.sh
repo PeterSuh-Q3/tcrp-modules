@@ -130,9 +130,8 @@ function getvars() {
 
 function preparedetect() {
 
-echo "Copying kmod,tar to /bin/"
+echo "Copying kmod to /bin/"
 /bin/cp -v kmod  /bin/       ; chmod 700 /bin/kmod
-/bin/cp -v tar  /bin/        ; chmod 700 /bin/tar
 
 echo "Copying sed,jq,lspci files to /sbin/"
 /bin/cp -v sed   /usr/sbin/  ; chmod 700 /usr/sbin/sed
