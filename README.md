@@ -6,9 +6,9 @@
 
 ### In Junior, EUDEV/DDSML automatically detects the device and optionally activates the required module files.
 
-EUDEV
+EUDEV :
 embedded userspace device ( 임베디드 사용자 공간 장치 ) with eudev deamon
 
-DDSML 
+DDSML :
 Detected Device Static Module Loading ( 감지된 장치 정적 모듈 적재 ) with modprobe / insmod command
 
