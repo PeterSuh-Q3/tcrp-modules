@@ -67,7 +67,7 @@ function listpci() {
         ;;
         broadwellnk )
             case $MODEL in
-            SA3600 )
+            sa3600 )
                 bus="$(echo $line | cut -c 1-7)"
                 class="$(echo $line | cut -c 9-12)"
                 vendor="$(echo $line | cut -c 15-18)"
