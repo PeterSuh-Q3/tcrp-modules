@@ -3,7 +3,7 @@
     {
       "name": "check-all-modules.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/src/check-all-modules.sh",
-      "sha256": "af64a5daacfc306364bc33f8897b362f87c38b5a40e387a55eb78133b3812751",
+      "sha256": "4dd83344cfb2e9c717e93fbf819d3bb0b2360dc64dcd3a3bc6832a5865dffc3f",
       "packed": false
     },
     {
