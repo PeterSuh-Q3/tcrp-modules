@@ -48,7 +48,7 @@ function listpci() {
             class="$(echo $line | cut -c 9-12)"
             vendor="$(echo $line | cut -c 15-18)"
             device="$(echo $line | cut -c 20-23)"        
-            ;;
+        ;;
         r1000 )
             case $MODEL in
             923+ )
@@ -64,6 +64,7 @@ function listpci() {
                 device="$(echo $line | cut -c 25-28)"
                 ;;
             esac
+        ;;
         broadwellnk )
             case $MODEL in
             SA3600 )
@@ -79,12 +80,13 @@ function listpci() {
                 device="$(echo $line | cut -c 25-28)"
                 ;;
             esac
+        ;;
         geminilake | bromolow | apollolake | broadwell | *)
             bus="$(echo $line | cut -c 6-12)"
             class="$(echo $line | cut -c 14-17)"
             vendor="$(echo $line | cut -c 20-23)"
             device="$(echo $line | cut -c 25-28)"
-            ;;
+        ;;
         esac
 
         #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
