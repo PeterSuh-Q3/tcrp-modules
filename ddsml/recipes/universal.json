@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "name": "check-all-modules.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/check-all-modules.sh",
+      "sha256": "441e3304f2fb56ad9f3ef19d4801318d9c3d01d663abcb1c54d62ff961a6b114",
+      "packed": false
+    },
+    {
+      "name": "modules.alias.3.json.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/modules.alias.3.json.tgz",
+      "sha256": "ed263ba26e53869597b682a9fa9703a26b872e40e32658a8aae0d33e9772f389",
+      "packed": true
+    },
+    {
+      "name": "modules.alias.4.json.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/modules.alias.4.json.tgz",
+      "sha256": "89d3cef885e3e9ab5b6625dec43cf4a785a33261edf752bccde703cc2d71a3a9",
+      "packed": true
+    }
+  ],
+  "scripts": {
+    "on_boot": "check-all-modules.sh"
+  }
+}
