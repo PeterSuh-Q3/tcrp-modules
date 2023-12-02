@@ -1,0 +1,36 @@
+{
+  "id": "all-modules",
+  "info": {
+    "author_url": "https://github.com/PeterSuh-Q3",
+    "description": "Adds All modules Support",
+    "help_url": "<todo>",
+    "name": "all-modules",
+    "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/tree/main/all-modules"
+  },
+  "releases": {
+    "apollolake_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake.json",
+    "apollolake_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake72.json",
+    "bromolow_310108": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/bromolow.json",
+    "broadwell_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell.json",
+    "broadwell_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell72.json",
+    "broadwellnk_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnk.json",
+    "broadwellnk_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnk72.json",
+    "broadwellnkv2_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2.json",
+    "broadwellnkv2_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv272.json",
+    "broadwellntbap_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap.json",
+    "broadwellntbap_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap72.json",
+    "epyc7002_71_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002.json",
+    "epyc7002_72_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc700272.json",
+    "denverton_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton.json",
+    "denverton_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton72.json",
+    "geminilake_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake.json",
+    "geminilake_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake72.json",
+    "purley_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley.json",
+    "purley_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley72.json",
+    "r1000_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000.json",
+    "r1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r100072.json",
+    "v1000_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000.json",
+    "v1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v100072.json"
+  },
+  "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json"
+}
