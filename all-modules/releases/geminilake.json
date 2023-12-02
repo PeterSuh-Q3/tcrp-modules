@@ -1,0 +1,42 @@
+{
+  "mod_version": "v1",
+
+  "files": [
+    {
+      "name": "geminilake-4.4.180.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.180.tgz",
+      "sha256": "57d06a3d921cdd3773653150a0572955ea23eaede66cab62a01ea4cdf4cfa07a",
+      "packed": false
+    },
+    {
+      "name": "geminilake-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.302.tgz",
+      "sha256": "3acf317cd4bca0cf2fd31d331668f7eb1e7b1b4d5df21c387e9d96890faf4d6c",
+      "packed": false
+    },    
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
+      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "packed": false
+    },
+    {
+      "name": "sbin.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/sbin.tgz",
+      "sha256": "a086b388ab80c1e9d0464692b79cfa702f1bacc7109d5ae2d2791e11bb583e1c",
+      "packed": false
+    }
+  ],
+  
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+
+}
