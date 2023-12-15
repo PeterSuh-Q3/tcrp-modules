@@ -1,0 +1,33 @@
+# This is a basic workflow that is manually triggered
+
+name: Update sha256
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow]
+
+jobs:
+  update_sha256_and_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Set up Git
+        run: |
+          git config --global user.name "PeterSuh-Q3"
+          git config --global user.email dante9000@gmail.com
+          
+      - name: update sha256 for platform.json
+        run: |
+          #echo "Param1: ${{ github.event.client_payload.param1 }}"
+          ROOT_PATH=${{ github.workspace }}
+          cd ${ROOT_PATH}/all-modules/
+          sh syncsha.sh
+          date > date.log
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -a -m "update sha256 for platform.json"
+          git push
