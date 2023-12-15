@@ -5,19 +5,19 @@
     {
       "name": "denverton-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.180.tgz",
-      "sha256": "88b6e265faffa425296d1eefb91f07f0f5f341c38121eb2d83d56cc2d283b0af",
+      "sha256": "619525f045801d4334726732f57c803c58dbe911b33985284f48d99d21cd768a",
       "packed": false
     },
     {
       "name": "denverton-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.302.tgz",
-      "sha256": "ec283b057a8256ea66f7fd6e27af1eac98eae191879c828ec65cf74e92b3434b",
+      "sha256": "2b80ecd6c407c89a04f4e981922b4317d4d440a5ff6ba9784d5d1083bbec78d8",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
+      "sha256": "",
       "packed": false
     },
     {
