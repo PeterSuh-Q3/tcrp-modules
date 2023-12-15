@@ -19,7 +19,7 @@ URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmwa
 echo "$URL"
 curl -kLO $URL
 
-for platform in bromolow braswell epyc7002; do
+for platform in bromolow epyc7002; do
     echo "modify $platform.json"
     
     if [ "$platform" = "bromolow" ]||[ "$platform" = "braswell" ]; then
@@ -92,7 +92,7 @@ for platform in bromolow braswell epyc7002; do
 done
 
 
-for platform in apollolake broadwell broadwellnk broadwellnkv2 broadwellntbap denverton geminilake purley v1000 r1000; do
+for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000; do
     echo "modify $platform.json"
     
     kver="4.4.180"
@@ -124,7 +124,7 @@ for platform in apollolake broadwell broadwellnk broadwellnkv2 broadwellntbap de
     
 done
 
-for platform in apollolake broadwell broadwellnk broadwellnkv2 broadwellntbap denverton geminilake purley v1000 r1000; do
+for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000; do
     echo "modify ${platform}72.json"
 
     kver="4.4.302"
