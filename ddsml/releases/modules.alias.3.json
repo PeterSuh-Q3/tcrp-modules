@@ -2905,6 +2905,126 @@
 "alias" :  "pci:v00001000d00000096sv*sd*bc*sc*i*"
 },
 {
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002710sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002720sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002721sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002722sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002740sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002744sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001103d00002760sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00006320sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00006340sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00006440sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00006440sv*sd00006480bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00006485sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00009180sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000011ABd00009480sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000017D3d00001300sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v000017D3d00001320sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B4Bd00009445sv*sd00009480bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B4Bd00009480sv*sd00009480bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B4Bd00009485sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001021sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001022sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001040sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001041sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001042sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001043sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001044sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001080sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001083sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00001B85d00001084sv*sd*bc*sc*i*"
+},
+{
+    "name": "mvsas",
+    "alias": "pci:v00009005d00000450sv*sd*bc*sc*i*"
+},
+{
 "name" :  "mptfc",
 "alias" :  "pci:v00001657d00000646sv*sd*bc*sc*i*"
 },
