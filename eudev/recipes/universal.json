@@ -9,13 +9,13 @@
     {
       "name": "eudev-7.1.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-7.1.tgz",
-      "sha256": "af33aae5705b576726db2f378cb3d59db3ad4126d977207d1cfc2935e7a98bf7",
+      "sha256": "190efbf39e5420ddba68febfaca8cba8e10f3b2c20a271f68f6074ea2c0b6ba2",
       "packed": false
     },
     {
       "name": "eudev-7.2.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-7.2.tgz",
-      "sha256": "2906343146aa8084d9542e1b29d498813dee5cb4cc7328424b03ca5ad6b3bc55",
+      "sha256": "ed0a273894c5eb0cd7c8cef7f93607f4bbc0d48ff07433e94eabce44042da6dd",
       "packed": false
     },
     {
