@@ -23,7 +23,7 @@
     {
       "name": "sbin.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/sbin.tgz",
-      "sha256": "a086b388ab80c1e9d0464692b79cfa702f1bacc7109d5ae2d2791e11bb583e1c",
+      "sha256": "efede1f3d292d1794e7078169b12be128f45f6cb4890878829a46695dff29d54",
       "packed": false
     }
   ],
