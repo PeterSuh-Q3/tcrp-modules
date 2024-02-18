@@ -121,6 +121,7 @@ function virtio_modprobe() {
 }
 
 if [ "${1}" = "modules" ]; then
+    /usr/sbin/depmod -a
     getvars
     listpci
     virtio_modprobe
