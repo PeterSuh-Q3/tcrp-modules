@@ -8,10 +8,6 @@
       "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
       "packed": false
     }
-  ],
-  
-  "scripts": {
-    "on_boot": "sbin.tgz"
-  }
+  ]
 
 }
