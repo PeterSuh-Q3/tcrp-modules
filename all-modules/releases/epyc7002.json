@@ -11,7 +11,7 @@
   ],
   
   "scripts": {
-    "on_boot": ""
+    "on_boot": "sbin.tgz"
   }
 
 }
