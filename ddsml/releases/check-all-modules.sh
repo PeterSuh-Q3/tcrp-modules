@@ -110,11 +110,11 @@ function virtio_modprobe() {
     /usr/sbin/insmod /lib/modules/virtio_ring.ko
     /usr/sbin/insmod /lib/modules/virtio_mmio.ko
     /usr/sbin/insmod /lib/modules/virtio_pci.ko
-    if [ "${LINUX_VER}" != "5.10.55" ]; then
+    #if [ "${LINUX_VER}" != "5.10.55" ]; then
     /usr/sbin/insmod /lib/modules/virtio_blk.ko
     /usr/sbin/insmod /lib/modules/virtio_net.ko
     /usr/sbin/insmod /lib/modules/virtio_scsi.ko
-    fi
+    #fi
   else
     echo "*No* VirtIO hypervisor detected"
   fi
