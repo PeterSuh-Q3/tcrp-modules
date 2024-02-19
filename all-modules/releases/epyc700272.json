@@ -15,9 +15,15 @@
       "packed": false
     },
     {
-      "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "name": "mpt3sas.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/mpt3sas.ko",
+      "sha256": "5051f02fa2740168bd431d382f3a36307be945f5ce399dfeb993ebd3ada3f5e0",
+      "packed": false
+    },    
+    {
+      "name": "installtest.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/installtest.sh",
+      "sha256": "163b51017ec83fa391b8c246db683b0886ade8cb34b99e2a0eae841be9dc9db1",
       "packed": false
     },
     {
@@ -29,8 +35,8 @@
   ],
   
   "scripts": {
-    "on_boot": "install.sh",
-    "on_os_load": "install.sh"
+    "on_boot": "installtest.sh",
+    "on_os_load": "installtest.sh"
   }
 
 }
