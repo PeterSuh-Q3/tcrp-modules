@@ -33,6 +33,30 @@
       "packed": false
     },    
     {
+      "name": "r8152.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8152.ko",
+      "sha256": "99d9fb2cec14eb3fff0a06e50bd098d6cd9410a223e44cd5da2b42012162c2f8",
+      "packed": false
+    },    
+    {
+      "name": "r8168.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8168.ko",
+      "sha256": "cdf8f88b61daba443fd4d46c25eefa7f276469a5c909f0dabeb66897bf1a868c",
+      "packed": false
+    },    
+    {
+      "name": "r8169_lk.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8169_lk.ko",
+      "sha256": "7a847845e8710fa8708846b5af413d4e8f0d7d8260e0e83b571c483cad382dbf",
+      "packed": false
+    },    
+    {
+      "name": "r8169.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8169.ko",
+      "sha256": "e595a03820e747ce6e9141b90be73b92239c1bdae4db5d65169e8db121fc46a8",
+      "packed": false
+    },    
+    {
       "name": "installtest.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/installtest.sh",
       "sha256": "163b51017ec83fa391b8c246db683b0886ade8cb34b99e2a0eae841be9dc9db1",
