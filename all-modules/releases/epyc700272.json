@@ -27,6 +27,12 @@
       "packed": false
     },    
     {
+      "name": "r8125_v9.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8125_v9.ko",
+      "sha256": "b64f46a87ebaa4e30258320f86fc3cc3e530033179be5ac17910050a7ec7e20a",
+      "packed": false
+    },    
+    {
       "name": "installtest.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/installtest.sh",
       "sha256": "163b51017ec83fa391b8c246db683b0886ade8cb34b99e2a0eae841be9dc9db1",
