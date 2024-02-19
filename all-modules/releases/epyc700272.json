@@ -57,6 +57,48 @@
       "packed": false
     },    
     {
+      "name": "virtio_input.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_input.ko",
+      "sha256": "c2c0650759aa1e5444cfaaa4ac92bfb6447393151a8cabcabfbb74d03ab75387",
+      "packed": false
+    },    
+    {
+      "name": "virtio_mmio.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_mmio.ko",
+      "sha256": "0e4e01103a4ba278464553185033e6d94fe0ecbfe705844d703fc13ecc062266",
+      "packed": false
+    },    
+    {
+      "name": "virtio_net.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_net.ko",
+      "sha256": "ffcca0969dc4e58908af069ee05f32484201304e1fbd7661a8d0c8a47f573f15",
+      "packed": false
+    },    
+    {
+      "name": "virtio_pci.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_pci.ko",
+      "sha256": "b688ddcaa26e3550e843a8ba8f6129912dc68861ae813c65336ad569c248f832",
+      "packed": false
+    },    
+    {
+      "name": "virtio_ring.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_ring.ko",
+      "sha256": "f85c0f499f2a33cb2c5a00c3140b1e9c158e8f3f0fe9d00a2bdf37162df7b729",
+      "packed": false
+    },    
+    {
+      "name": "virtio_scsi.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_scsi.ko",
+      "sha256": "69503b96a48fe18c0e9ad5f3558a5cc3eefef2f16b1b534d17e30ffeb85aa486",
+      "packed": false
+    },    
+    {
+      "name": "virtio.ko",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio.ko",
+      "sha256": "7b50d22fe9db9b9b3f4997180e9a73ed9b752509ec34afca51cb98006ae1e772",
+      "packed": false
+    },    
+    {
       "name": "installtest.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/installtest.sh",
       "sha256": "163b51017ec83fa391b8c246db683b0886ade8cb34b99e2a0eae841be9dc9db1",
