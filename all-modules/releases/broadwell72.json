@@ -5,13 +5,13 @@
     {
       "name": "broadwell-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.302.tgz",
-      "sha256": "f2ef73631d10d37d270810ebe1dda0f2a11dc10eb90a0aa59a9e7c523bac41ab",
+      "sha256": "18dd9e1b854f25788d6421866e36c4a162e3e23b045024a425425f9a6482f2da",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
+      "sha256": "6ac528d791194ec0c7f8baf0ac365d4fe5532a8dfea359b831999b2d2e26ac4d",
       "packed": false
     },
     {
