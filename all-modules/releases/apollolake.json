@@ -5,19 +5,19 @@
     {
       "name": "apollolake-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake-4.4.180.tgz",
-      "sha256": "859308246f3ae520c23a379a3dedcd6f97a080659c00561f4ca72b95be5c1b69",
+      "sha256": "21cf5a7c37fa31d3f3f92468be950c0eead3a96caf4e7e43eb47e48c724a2ea1",
       "packed": false
     },
     {
       "name": "apollolake-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake-4.4.302.tgz",
-      "sha256": "e8cdb44da08c75589cbf93f60b0a1481861a7dabd838c84a0cc80288bb19a28f",
+      "sha256": "6fde10dd9b948501914691b4a7249e7ba205fc1c886b579d4a143836e3c851f8",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "6ac528d791194ec0c7f8baf0ac365d4fe5532a8dfea359b831999b2d2e26ac4d",
+      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
       "packed": false
     },
     {
