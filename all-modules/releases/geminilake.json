@@ -5,19 +5,19 @@
     {
       "name": "geminilake-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.180.tgz",
-      "sha256": "74cda1162bd721e293c9b9960ea0b19a200ab2ff8c03faeca9547058b260c1b3",
+      "sha256": "c64133744140950e8092148edbd0709c09271f147fac4194be42b2c7d9d53604",
       "packed": false
     },
     {
       "name": "geminilake-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.302.tgz",
-      "sha256": "2ab403f8bd7d516abcf7e72df463a8a95054da58edc262897df19897a067cbc1",
+      "sha256": "4ec3d95fb0f5176e882df1ee176946d2b7f61909ceddbee4db9277b74a8adf1c",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
+      "sha256": "6d0c18bcfe7a9f55b0d3cd7589586f81c27acea25ad9113edbe889afca1c9b5e",
       "packed": false
     },
     {
