@@ -17,7 +17,7 @@
     {
       "name": "mpt3sas.ko",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/mpt3sas.ko",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "sha256": "5051f02fa2740168bd431d382f3a36307be945f5ce399dfeb993ebd3ada3f5e0",
       "packed": false
     },    
     {
