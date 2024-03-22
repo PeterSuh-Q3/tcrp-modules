@@ -23,7 +23,7 @@
     {
       "name": "r8125.ko",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8125.ko",
-      "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
+      "sha256": "38db09b798e66feddc7b30479f4ab33f589500a355f2179eca66a1b4caa731fa",
       "packed": false
     },    
     {
