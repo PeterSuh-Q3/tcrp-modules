@@ -27,88 +27,10 @@
       "packed": false
     },
     {
-      "name": "mpt3sas.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/mpt3sas.ko",
-      "sha256": "5051f02fa2740168bd431d382f3a36307be945f5ce399dfeb993ebd3ada3f5e0",
-      "packed": false
-    },    
-    {
-      "name": "r8125.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8125.ko",
-      "sha256": "38db09b798e66feddc7b30479f4ab33f589500a355f2179eca66a1b4caa731fa",
-      "packed": false
-    },    
-    {
-      "name": "r8125_v9.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8125_v9.ko",
-      "sha256": "b64f46a87ebaa4e30258320f86fc3cc3e530033179be5ac17910050a7ec7e20a",
-      "packed": false
-    },    
-    {
-      "name": "r8152.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8152.ko",
-      "sha256": "99d9fb2cec14eb3fff0a06e50bd098d6cd9410a223e44cd5da2b42012162c2f8",
-      "packed": false
-    },    
-    {
-      "name": "r8168.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8168.ko",
-      "sha256": "cdf8f88b61daba443fd4d46c25eefa7f276469a5c909f0dabeb66897bf1a868c",
-      "packed": false
-    },    
-    {
-      "name": "r8169_lk.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8169_lk.ko",
-      "sha256": "7a847845e8710fa8708846b5af413d4e8f0d7d8260e0e83b571c483cad382dbf",
-      "packed": false
-    },    
-    {
-      "name": "r8169.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/r8169.ko",
-      "sha256": "e595a03820e747ce6e9141b90be73b92239c1bdae4db5d65169e8db121fc46a8",
-      "packed": false
-    },    
-    {
-      "name": "virtio_input.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_input.ko",
-      "sha256": "c2c0650759aa1e5444cfaaa4ac92bfb6447393151a8cabcabfbb74d03ab75387",
-      "packed": false
-    },    
-    {
-      "name": "virtio_mmio.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_mmio.ko",
-      "sha256": "0e4e01103a4ba278464553185033e6d94fe0ecbfe705844d703fc13ecc062266",
-      "packed": false
-    },    
-    {
-      "name": "virtio_net.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_net.ko",
-      "sha256": "ffcca0969dc4e58908af069ee05f32484201304e1fbd7661a8d0c8a47f573f15",
-      "packed": false
-    },    
-    {
-      "name": "virtio_pci.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_pci.ko",
-      "sha256": "b688ddcaa26e3550e843a8ba8f6129912dc68861ae813c65336ad569c248f832",
-      "packed": false
-    },    
-    {
-      "name": "virtio_ring.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_ring.ko",
-      "sha256": "f85c0f499f2a33cb2c5a00c3140b1e9c158e8f3f0fe9d00a2bdf37162df7b729",
-      "packed": false
-    },    
-    {
-      "name": "virtio_scsi.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio_scsi.ko",
-      "sha256": "69503b96a48fe18c0e9ad5f3558a5cc3eefef2f16b1b534d17e30ffeb85aa486",
-      "packed": false
-    },    
-    {
-      "name": "virtio.ko",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55/virtio.ko",
-      "sha256": "7b50d22fe9db9b9b3f4997180e9a73ed9b752509ec34afca51cb98006ae1e772",
-      "packed": false
+      "name": "epyc7002-7.2-5.10.55-rr.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55-rr.tgz",
+      "sha256": "926d8d75ed826fce30ccd0aedb2502190f129fdd1dc66f8857284b46900272ee",
+      "packed": true
     }
   ],
   
