@@ -40,7 +40,7 @@ if [ "${1}" = "modules" ]; then
   tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /lib/modules/
 
   #copy test modules
-  cp -vf /exts/all-modules/*.ko /lib/modules/
+  #cp -vf /exts/all-modules/*.ko /lib/modules/
 
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
   tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/
