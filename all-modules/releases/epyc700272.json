@@ -15,9 +15,9 @@
       "packed": false
     },    
     {
-      "name": "installtest.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/installtest.sh",
-      "sha256": "1efc71d8aefaae4a9e47e4f46946079d5607d27ea36d61887e5736ffd284a91c",
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
       "packed": false
     },
     {
@@ -29,8 +29,8 @@
   ],
   
   "scripts": {
-    "on_boot": "installtest.sh",
-    "on_os_load": "installtest.sh"
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
   }
 
 }
