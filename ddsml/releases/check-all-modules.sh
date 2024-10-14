@@ -120,9 +120,25 @@ function virtio_modprobe() {
   fi
 }
 
+function mmc_modprobe() {
+  echo "excute modprobe for mmc(include sd)..."
+  /usr/sbin/modprobe mmc_block
+  /usr/sbin/modprobe mmc_core
+  /usr/sbin/modprobe rtsx_pci
+  /usr/sbin/modprobe rtsx_pci_sdmmc
+  sleep 1
+  if [ `/sbin/lsmod |grep -i mmc|wc -l` -gt 0 ] ; then
+      echo "Module mmc loaded succesfully!!!"
+  else
+      echo "Module mmc failed to load successfully!!!"
+  fi
+}
+
 if [ "${1}" = "modules" ]; then
+    echo "ddsml - ${1}"
     /usr/sbin/depmod -a
     getvars
     listpci
     virtio_modprobe
+    mmc_modprobe
 fi
