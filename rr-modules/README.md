@@ -1,7 +1,7 @@
-Integrated extension driver pack of ARPL_MODULES used for ARPL
-(https://github.com/fbelavenuto/arpl-modules) Applied to be usable in TCRP.
+Integrated extension driver pack of RR_MODULES used for RR
+([https://github.com/fbelavenuto/rr-modules](https://github.com/RROrg/rr-modules)) Applied to be usable in TCRP.
 
-like ARPL bromolow | apollolake | broadwell | broadwellnk | v1000 | denverton | Geminilake | r1000 uses 8 platform-specific integrated extension driver packs,
+like RR apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | r1000 | epyc7002 uses 8 platform-specific integrated extension driver packs,
 
 When building the TCRP loader, it must be included as a bundle by default.
 
