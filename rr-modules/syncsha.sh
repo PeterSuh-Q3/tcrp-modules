@@ -6,8 +6,6 @@ echo "$installsha"
 sbintgzsha=$(sha256sum ./releases/sbin.tgz | awk '{print $1}')
 echo "$sbintgzsha"
 
-cd ./releases/
-
 firmware=$(sha256sum ./releases/firmware.tgz | awk '{print $1}')
 echo "firmware sha256=$firmware"
 
