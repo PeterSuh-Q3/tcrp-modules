@@ -1,0 +1,36 @@
+{
+  "mod_version": "v1",
+
+  "files": [
+    {
+      "name": "denverton-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/releases/denverton-4.4.302.tgz",
+      "sha256": "3058b7e59da1caea5c061ef1efdc1df5854e937aa036a58a652543474e6a12c4",
+      "packed": false
+    },    
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/releases/firmware.tgz",
+      "sha256": "33ea507daed5964cbd6e6b4c5ee31902cca8a251b5cbb330f52da183707c83c9",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/src/install.sh",
+      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "packed": false
+    },
+    {
+      "name": "sbin.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/releases/sbin.tgz",
+      "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
+      "packed": false
+    }
+  ],
+  
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+
+}
