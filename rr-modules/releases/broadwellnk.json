@@ -11,19 +11,19 @@
     {
       "name": "broadwellnk-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/releases/broadwellnk-4.4.302.tgz",
-      "sha256": "bcdea9f37fe12f3217ecc2c5aa5075fe4f962852948695731c5841ccb15affa4",
+      "sha256": "a734e1ce501d2c5a56e801deb7349b19a5aae08aa24b056746c9776d2beaa95e",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/releases/firmware.tgz",
-      "sha256": "33ea507daed5964cbd6e6b4c5ee31902cca8a251b5cbb330f52da183707c83c9",
+      "sha256": "ccde9ed530f9413bb6af72e062e533b08efe920f61688c6ad85a11f26f973610",
       "packed": false
     },
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/rr-modules/src/install.sh",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "sha256": "c0d4b04b2ca14ad251511be9ff1607189bf3aff345936f70c90977afac4b03cc",
       "packed": false
     },
     {

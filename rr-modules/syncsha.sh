@@ -17,23 +17,23 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     value=$(sha256sum ./releases/${platform}-${kver}.tgz | awk '{print $1}')
     echo "$value"    
 
-    org=$(jq -r '.files[0].sha256' "${platform}.json")
+    org=$(jq -r '.files[0].sha256' "./releases/${platform}.json")
     sed -i "s/$org/$value/" "${platform}.json"
 
     value=$(sha256sum ./releases/${platform}-4.4.302.tgz | awk '{print $1}')
     echo "$value"
     
-    org=$(jq -r '.files[1].sha256' "${platform}.json")
-    sed -i "s/$org/$value/" "${platform}.json"
+    org=$(jq -r '.files[1].sha256' "./releases/${platform}.json")
+    sed -i "s/$org/$value/" "./releases/${platform}.json"
 
-    orgfirmware=$(jq -r '.files[2].sha256' "${platform}.json")
-    sed -i "s/$orgfirmware/$firmware/" "${platform}.json"
+    orgfirmware=$(jq -r '.files[2].sha256' "./releases/${platform}.json")
+    sed -i "s/$orgfirmware/$firmware/" "./releases/${platform}.json"
 
-    orginstall=$(jq -r '.files[3].sha256' "${platform}.json")
-    sed -i "s/$orginstall/$installsha/" "${platform}.json"
+    orginstall=$(jq -r '.files[3].sha256' "./releases/${platform}.json")
+    sed -i "s/$orginstall/$installsha/" "./releases/${platform}.json"
 
-    orgsbintgz=$(jq -r '.files[4].sha256' "${platform}.json")
-    sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}.json"
+    orgsbintgz=$(jq -r '.files[4].sha256' "./releases/${platform}.json")
+    sed -i "s/$orgsbintgz/$sbintgzsha/" "./releases/${platform}.json"
     
 done
 
@@ -45,17 +45,17 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     value=$(sha256sum ./releases/${platform}-${kver}.tgz | awk '{print $1}')    
     echo "$value"
     
-    org=$(jq -r '.files[0].sha256' "${platform}72.json")
-    sed -i "s/$org/$value/" "${platform}72.json"
+    org=$(jq -r '.files[0].sha256' "./releases/${platform}72.json")
+    sed -i "s/$org/$value/" "./releases/${platform}72.json"
 
-    orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
-    sed -i "s/$orgfirmware/$firmware/" "${platform}72.json"
+    orgfirmware=$(jq -r '.files[1].sha256' "./releases/${platform}72.json")
+    sed -i "s/$orgfirmware/$firmware/" "./releases/${platform}72.json"
 
-    orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
-    sed -i "s/$orginstall/$installsha/" "${platform}72.json"
+    orginstall=$(jq -r '.files[2].sha256' "./releases/${platform}72.json")
+    sed -i "s/$orginstall/$installsha/" "./releases/${platform}72.json"
 
-    orgsbintgz=$(jq -r '.files[3].sha256' "${platform}72.json")
-    sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}72.json"
+    orgsbintgz=$(jq -r '.files[3].sha256' "./releases/${platform}72.json")
+    sed -i "s/$orgsbintgz/$sbintgzsha/" "./releases/${platform}72.json"
     
 done
 
