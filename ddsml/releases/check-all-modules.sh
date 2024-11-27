@@ -126,6 +126,8 @@ function mmc_modprobe() {
   /usr/sbin/modprobe mmc_core
   /usr/sbin/modprobe rtsx_pci
   /usr/sbin/modprobe rtsx_pci_sdmmc
+  /usr/sbin/modprobe sdhci
+  /usr/sbin/modprobe sdhci_pci
   sleep 1
   if [ `/sbin/lsmod |grep -i mmc|wc -l` -gt 0 ] ; then
       echo "Module mmc loaded succesfully!!!"
