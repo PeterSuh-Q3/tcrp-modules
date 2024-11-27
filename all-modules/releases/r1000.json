@@ -5,19 +5,19 @@
     {
       "name": "r1000-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000-4.4.180.tgz",
-      "sha256": "272f0be2dba591ae136658a1461ef6721f85c112e0cb992be621b7c1f826d045",
+      "sha256": "49e186370d9e5a9125f747e15c18bd2474c05bcaa0b9ad907249accd51dcb711",
       "packed": false
     },
     {
       "name": "r1000-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000-4.4.302.tgz",
-      "sha256": "249ae0a7d8d2c1f7b2963cc4b7f3bde9477bdd1041496c9a5981317f2e06c3f8",
+      "sha256": "f61e66b86370aa63ffbed1a443443f85f5009609ea43b95706a78c5940c3e193",
       "packed": false
     },    
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "c427200cbf972c421ba670df5fdc11fa5159c13519cf8569458ee062580c5669",
+      "sha256": "fa0028d0e75ff007a618beb503a90cbc4c0daec6ce8e7fa314cca93d97d99ece",
       "packed": false
     },
     {
