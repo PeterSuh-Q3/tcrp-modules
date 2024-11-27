@@ -12058,6 +12058,14 @@
             "alias": "pci:v000010ECd00008125sv*sd*bc*sc*i*"
         },
         {
+            "name": "r8126",
+            "alias": "pci:v000010ECd00005000sv*sd*bc*sc*i*"
+        },
+        {
+            "name": "r8126",
+            "alias": "pci:v000010ECd00008126sv*sd*bc*sc*i*"
+        },
+        {
             "name": "r8152",
             "alias": "usb:v045Ep07ABd*dc*dsc*dp*ic02isc06ip00in*"
         },
