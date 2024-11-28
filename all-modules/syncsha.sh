@@ -47,12 +47,12 @@ for platform in bromolow epyc7002; do
     elif [ "$platform" = "epyc7002" ]; then
         kver="5.10.55"
 
-        # 7.1
-        value=`grep ${platform}-7.1-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
-        echo "$value"    
+        # 7.1 remark to use rr's module
+        #value=`grep ${platform}-7.1-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
+        #echo "$value"    
     
-        org=$(jq -r '.files[0].sha256' "${platform}.json")
-        sed -i "s/$org/$value/" "${platform}.json"
+        #org=$(jq -r '.files[0].sha256' "${platform}.json")
+        #sed -i "s/$org/$value/" "${platform}.json"
     
         orgfirmware=$(jq -r '.files[1].sha256' "${platform}.json")
         sed -i "s/$orgfirmware/$firmware/" "${platform}.json"
@@ -63,16 +63,16 @@ for platform in bromolow epyc7002; do
         orgsbintgz=$(jq -r '.files[3].sha256' "${platform}.json")
         sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}.json"
 
-        URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.1-${kver}.tgz"
-        echo "$URL"
-        curl -kLO $URL
+        #URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.1-${kver}.tgz"
+        #echo "$URL"
+        #curl -kLO $URL
 
-        # 7.2
-        value=`grep ${platform}-7.2-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
-        echo "$value"    
+        # 7.2 remark to use rr's module
+        #value=`grep ${platform}-7.2-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
+        #echo "$value"    
     
-        org=$(jq -r '.files[0].sha256' "${platform}72.json")
-        sed -i "s/$org/$value/" "${platform}72.json"
+        #org=$(jq -r '.files[0].sha256' "${platform}72.json")
+        #sed -i "s/$org/$value/" "${platform}72.json"
     
         orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
         sed -i "s/$orgfirmware/$firmware/" "${platform}72.json"
@@ -83,9 +83,9 @@ for platform in bromolow epyc7002; do
         orgsbintgz=$(jq -r '.files[3].sha256' "${platform}72.json")
         sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}72.json"
 
-        URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.2-${kver}.tgz"
-        echo "$URL"
-        curl -kLO $URL
+        #URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.2-${kver}.tgz"
+        #echo "$URL"
+        #curl -kLO $URL
         
     fi
     
