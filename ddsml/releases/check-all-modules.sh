@@ -7,12 +7,17 @@ function listextension() {
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
-        /usr/sbin/modprobe ${1}
-        sleep 1
-        if [ `/sbin/lsmod |grep -i ${1}|wc -l` -gt 0 ] ; then
-            echo "Module ${1} loaded succesfully"
+        /usr/sbin/modprobe "${1}"
+        
+        # Wait for 2 seconds
+        sleep 2
+        
+        # Check for "Kernel driver in use: ${1}" in lspci -v output
+        if lspci -v | grep -q "Kernel driver in use: ${1}"; then
+            echo "Module ${1} loaded successfully and is in use"
         else
-            /usr/sbin/insmod /lib/modules/${1}.ko
+            echo "Module ${1} not detected in use, trying insmod"
+            /usr/sbin/insmod "/lib/modules/${1}.ko"
         fi
     else
         echo "No matching extension"
