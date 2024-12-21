@@ -19,7 +19,8 @@ URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmwa
 echo "$URL"
 curl -kLO $URL
 
-for platform in bromolow epyc7002; do
+#don't touch bromolow,braswell 2024.12.22
+for platform in epyc7002; do
     echo "modify $platform.json"
     
     if [ "$platform" = "bromolow" ]||[ "$platform" = "braswell" ]; then
