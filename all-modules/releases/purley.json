@@ -17,13 +17,13 @@
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "ccde9ed530f9413bb6af72e062e533b08efe920f61688c6ad85a11f26f973610",
+      "sha256": "fa0028d0e75ff007a618beb503a90cbc4c0daec6ce8e7fa314cca93d97d99ece",
       "packed": false
     },
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "c0d4b04b2ca14ad251511be9ff1607189bf3aff345936f70c90977afac4b03cc",
+      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
       "packed": false
     },
     {
