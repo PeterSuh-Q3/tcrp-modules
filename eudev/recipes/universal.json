@@ -9,11 +9,12 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/install.sh",
-      "sha256": "0264ce79d55220876390fb4bc31767132b50059d37d25917c976d6b748235df0",
+      "sha256": "0c33292e7ed4f152663c2b49c37c70e29f810d6850a8d9732d83677e7ede4a5d",
       "packed": false
     }
   ],
   "scripts": {
+    "on_early": "install.sh",
     "on_boot": "install.sh",
     "on_os_load": "install.sh"
   }

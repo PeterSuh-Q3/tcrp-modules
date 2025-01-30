@@ -1,22 +1,26 @@
 #!/usr/bin/env ash
+#
+# Copyright (C) 2022 Ing <https://github.com/wjz304>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
 
-# DSM version
-MajorVersion=`/bin/get_key_value /etc.defaults/VERSION majorversion`
-MinorVersion=`/bin/get_key_value /etc.defaults/VERSION minorversion`
-ModuleUnique=`/bin/get_key_value /etc.defaults/VERSION unique` # Avoid confusion with global variables
+if [ "${1}" = "early" ]; then
+  echo "Installing addon eudev - ${1}"
+  tar -zxf /exts/eudev/eudev-7.1.tgz -C /
+  [ ! -L "/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /usr/sbin/modprobe
+  [ ! -L "/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /usr/sbin/modinfo
+  [ ! -L "/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /usr/sbin/depmod
 
-echo "MajorVersion:${MajorVersion} MinorVersion:${MinorVersion}"
+elif [ "${1}" = "modules" ]; then
+  echo "Installing addon eudev - ${1}"
 
-if [ "${1}" = "modules" ]; then
-  echo "Starting eudev daemon - modules"
-  cd /
-  tar xfz /exts/eudev/eudev-7.1.tgz -C /
-
-  ln -s /lib/libkmod.so.2.4.0 /lib/libkmod.so.2
-  ln -s /usr/bin/udevadm /usr/sbin/udevadm
-  [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' > /proc/sys/kernel/hotplug
-  chmod 755 /usr/sbin/udevd /usr/bin/kmod /usr/bin/udevadm /usr/lib/udev/*
-  /usr/sbin/depmod -a  
+  # mv -f /usr/lib/udev/rules.d/60-persistent-storage.rules /usr/lib/udev/rules.d/60-persistent-storage.rules.bak
+  # mv -f /usr/lib/udev/rules.d/60-persistent-storage-tape.rules /usr/lib/udev/rules.d/60-persistent-storage-tape.rules.bak
+  # mv -f /usr/lib/udev/rules.d/80-net-name-slot.rules /usr/lib/udev/rules.d/80-net-name-slot.rules.bak
+  [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' >/proc/sys/kernel/hotplug
+  /usr/sbin/depmod -a
   /usr/sbin/udevd -d || {
     echo "FAIL"
     exit 1
@@ -30,47 +34,77 @@ if [ "${1}" = "modules" ]; then
   sleep 10
   # Remove from memory to not conflict with RAID mount scripts
   /usr/bin/killall udevd
+  # modprobe pcspeaker, pcspkr
+  /usr/sbin/modprobe pcspeaker
+  /usr/sbin/modprobe pcspkr
+  # Remove kvm module
+  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel && /usr/sbin/modprobe -r kvm_intel || true # kvm-intel.ko
+  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd && /usr/sbin/modprobe -r kvm_amd || true     # kvm-amd.ko
+
 elif [ "${1}" = "late" ]; then
-  echo "Starting eudev daemon - late"
-  # The modules of SA6400 still have compatibility issues, temporarily canceling the copy. TODO: to be resolved
-  #if [ ! "${ModuleUnique}" = "synology_epyc7002_sa6400" ]; then
-    echo "copy modules"
-    export LD_LIBRARY_PATH=/tmpRoot/bin:/tmpRoot/lib
-    /tmpRoot/bin/cp -rnf /usr/lib/firmware/* /tmpRoot/usr/lib/firmware/
-    #/tmpRoot/bin/cp -rnf /usr/lib/modules/* /tmpRoot/usr/lib/modules/
-    #/usr/sbin/depmod -a -b /tmpRoot/
-  #fi
-  echo "Copy rules"
-  cp -vf /usr/lib/udev/rules.d/* /tmpRoot/usr/lib/udev/rules.d/
-  if [ "${MajorVersion}" -lt "7" ]; then # < 7
-    mkdir -p /tmpRoot/etc/init
-    DEST=/tmpRoot/etc/init/eudev.conf
-    echo 'description "EUDEV daemon"'                                              >${DEST}
-    echo 'System Intergration Team'                                               >>${DEST}
-    echo 'start on runlevel 1'                                                    >>${DEST}
-    echo 'stop on runlevel [06]'                                                  >>${DEST}
-    echo 'expect fork'                                                            >>${DEST}
-    echo 'respawn'                                                                >>${DEST}
-    echo 'respawn limit 5 10'                                                     >>${DEST}
-    echo 'console log'                                                            >>${DEST}
-    echo 'exec /usr/bin/udevadm hwdb --update'                                    >>${DEST}
-    echo 'exec /usr/bin/udevadm control --reload-rules'                           >>${DEST}
+  echo "Installing addon eudev - ${1}"
+  # [ ! -L "/tmpRoot/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modprobe
+  [ ! -L "/tmpRoot/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modinfo
+  [ ! -L "/tmpRoot/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/depmod
+
+  echo "copy modules"
+  export LD_LIBRARY_PATH=/tmpRoot/bin:/tmpRoot/lib
+  isChange=false
+  /tmpRoot/bin/cp -rnf /usr/lib/firmware/* /tmpRoot/usr/lib/firmware/
+  if grep -q 'RR@RR' /proc/version 2>/dev/null; then
+    if [ -d /tmpRoot/usr/lib/modules.bak ]; then
+      /tmpRoot/bin/rm -rf /tmpRoot/usr/lib/modules
+      /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules.bak /tmpRoot/usr/lib/modules
+    else
+      echo "RR@RR, backup modules."
+      /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules /tmpRoot/usr/lib/modules.bak
+    fi
+    /tmpRoot/bin/cp -rpf /usr/lib/modules/* /tmpRoot/usr/lib/modules
+    isChange=true
   else
-    DEST="/tmpRoot/lib/systemd/system/udevrules.service"
-    echo "[Unit]"                                                                  >${DEST}
-    echo "Description=Reload udev rules"                                          >>${DEST}
-    echo                                                                          >>${DEST}
-    echo "[Service]"                                                              >>${DEST}
-    echo "Type=oneshot"                                                           >>${DEST}
-    echo "RemainAfterExit=true"                                                   >>${DEST}
-    echo "ExecStart=/usr/bin/udevadm hwdb --update"                               >>${DEST}
-    echo "ExecStart=/usr/bin/udevadm control --reload-rules"                      >>${DEST}
-    echo                                                                          >>${DEST}
-    echo "[Install]"                                                              >>${DEST}
-    echo "WantedBy=multi-user.target"                                             >>${DEST}
-
-    mkdir -vp /tmpRoot/lib/systemd/system/multi-user.target.wants
-    ln -vsf /lib/systemd/system/udevrules.service /tmpRoot/lib/systemd/system/multi-user.target.wants/udevrules.service
+    if [ -d /tmpRoot/usr/lib/modules.bak ]; then
+      echo "RR@RR, restore modules from backup."
+      /tmpRoot/bin/rm -rf /tmpRoot/usr/lib/modules
+      /tmpRoot/bin/mv -rf /tmpRoot/usr/lib/modules.bak /tmpRoot/usr/lib/modules
+    fi
+    for L in $(grep -v '^\s*$\|^\s*#' /addons/modulelist 2>/dev/null | awk '{if (NF == 2) print $1"###"$2}'); do
+      O=$(echo "${L}" | awk -F'###' '{print $1}')
+      M=$(echo "${L}" | awk -F'###' '{print $2}')
+      [ -z "${M}" ] || [ ! -f "/usr/lib/modules/${M}" ] && continue
+      if [ "$(echo "${O:0:1}" | sed 's/.*/\U&/')" = "F" ]; then
+        /tmpRoot/bin/cp -vrf /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
+      else
+        /tmpRoot/bin/cp -vrn /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
+      fi
+      isChange=true
+    done
   fi
-fi
+  echo "isChange: ${isChange}"
+  [ "${isChange}" = "true" ] && /usr/sbin/depmod -a -b /tmpRoot
 
+  # Restore kvm module
+  /usr/sbin/modprobe kvm_intel || true # kvm-intel.ko
+  /usr/sbin/modprobe kvm_amd || true   # kvm-amd.ko
+
+  echo "Copy rules"
+  /tmpRoot/bin/cp -vrf /usr/lib/udev/* /tmpRoot/usr/lib/udev/
+
+  mkdir -p "/tmpRoot/usr/lib/systemd/system"
+  DEST="/tmpRoot/usr/lib/systemd/system/udevrules.service"
+  {
+    echo "[Unit]"
+    echo "Description=mshell addon udev daemon"
+    echo
+    echo "[Service]"
+    echo "Type=oneshot"
+    echo "RemainAfterExit=yes"
+    echo "ExecStart=/usr/bin/udevadm hwdb --update"
+    echo "ExecStart=/usr/bin/udevadm control --reload-rules"
+    echo
+    echo "[Install]"
+    echo "WantedBy=multi-user.target"
+  } >"${DEST}"
+
+  mkdir -vp /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
+  ln -vsf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
+fi
