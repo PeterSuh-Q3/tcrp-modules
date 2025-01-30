@@ -1,27 +1,15 @@
 {
 "files": [
     {
-      "name": "eudev-6.2.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-6.2.tgz",
-      "sha256": "afdaebf3e33bb005c3d52432385bd4a147b395cf72a482a4927b47d7811a71d9",
-      "packed": false
-    },
-    {
       "name": "eudev-7.1.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-7.1.tgz",
-      "sha256": "190efbf39e5420ddba68febfaca8cba8e10f3b2c20a271f68f6074ea2c0b6ba2",
-      "packed": false
-    },
-    {
-      "name": "eudev-7.2.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-7.2.tgz",
-      "sha256": "ed0a273894c5eb0cd7c8cef7f93607f4bbc0d48ff07433e94eabce44042da6dd",
+      "sha256": "d32996bd68823775b4a3754a200d1827d0a2f0b04ee69019524240f836573cb3",
       "packed": false
     },
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/install.sh",
-      "sha256": "a4c71d08e040b5989e858e06fe889dc7233050524f41447e1dc3e9d096323b6d",
+      "sha256": "0264ce79d55220876390fb4bc31767132b50059d37d25917c976d6b748235df0",
       "packed": false
     }
   ],
