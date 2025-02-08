@@ -11,7 +11,7 @@
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "fa0028d0e75ff007a618beb503a90cbc4c0daec6ce8e7fa314cca93d97d99ece",
+      "sha256": "6fe4a7366f5816bb5f10fba4a20afe4cf63c9d3b6da9500d81f66288132447f5",
       "packed": false
     },    
     {
