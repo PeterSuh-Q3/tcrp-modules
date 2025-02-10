@@ -93,7 +93,7 @@ for platform in epyc7002; do
 done
 
 
-for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000; do
+for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000 broadwellnkv2 broadwellntbap purley; do
     echo "modify $platform.json"
     
     kver="4.4.180"
@@ -125,7 +125,7 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     
 done
 
-for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000; do
+for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000 broadwellnkv2 broadwellntbap purley; do
     echo "modify ${platform}72.json"
 
     kver="4.4.302"
