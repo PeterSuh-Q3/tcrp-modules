@@ -12,7 +12,7 @@ function getvars() {
 getvars
 
 if [ "${1}" = "modules" ]; then
-  echo "all-modules - modules"
+  echo "all-modules - ${1}"
   
   echo "extract sbin.tgz to /usr/sbin/ and /usr/lib/ "
   tar xfz /exts/all-modules/sbin.tgz -C /
@@ -37,11 +37,10 @@ if [ "${1}" = "modules" ]; then
   ln -s /usr/sbin/kmod /usr/sbin/modprobe
   ln -s /lib/libudev.so.1.6.2 /lib/libudev.so.1
   
-  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /lib/modules/ 2>/dev/null
+  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /lib/modules/ >/dev/null 2>&1
 
-  echo "all-modules - modules"
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
-  tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/ 2>/dev/null
+  tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/ >/dev/null 2>&1
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Modify VERSION file for 7.2.0-64570-1"
@@ -50,9 +49,9 @@ if [ "${1}" = "modules" ]; then
   #  echo 'packing_id="1"' >> /etc.defaults/VERSION
   #fi
 elif [ "${1}" = "late" ]; then
-  echo "all-modules - late"
+  echo "all-modules - ${1}"
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
-  tar xvfz /exts/all-modules/firmware.tgz -C /tmpRoot/lib/firmware/ 2>/dev/null
+  tar xvfz /exts/all-modules/firmware.tgz -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
