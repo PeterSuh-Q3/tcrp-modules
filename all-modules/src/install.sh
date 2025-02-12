@@ -37,11 +37,11 @@ if [ "${1}" = "modules" ]; then
   ln -s /usr/sbin/kmod /usr/sbin/modprobe
   ln -s /lib/libudev.so.1.6.2 /lib/libudev.so.1
   
-  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /lib/modules/
+  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /lib/modules/ 2>/dev/null
 
   echo "all-modules - modules"
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
-  tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/
+  tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/ 2>/dev/null
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Modify VERSION file for 7.2.0-64570-1"
@@ -52,7 +52,7 @@ if [ "${1}" = "modules" ]; then
 elif [ "${1}" = "late" ]; then
   echo "all-modules - late"
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
-  tar xvfz /exts/all-modules/firmware.tgz -C /tmpRoot/lib/firmware/
+  tar xvfz /exts/all-modules/firmware.tgz -C /tmpRoot/lib/firmware/ 2>/dev/null
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
