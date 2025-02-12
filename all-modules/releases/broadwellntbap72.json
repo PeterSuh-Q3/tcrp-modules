@@ -5,7 +5,7 @@
     {
       "name": "broadwellntbap-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.302.tgz",
-      "sha256": "a493956552b36c1badf9f5f6967274fe9e7b44bb910b1f76dc8c7ee2c9ffbb59",
+      "sha256": "",
       "packed": false
     },    
     {
@@ -17,7 +17,7 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "sha256": "42f1414064d795cd94fd9faeac9a027d4f8f906a34e3576cc8291e9951ac2c8c",
       "packed": false
     },
     {

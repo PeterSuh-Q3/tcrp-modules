@@ -5,13 +5,13 @@
     {
       "name": "purley-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley-4.4.180.tgz",
-      "sha256": "be99a03ef9f02b7b138f6e04b105078adfb6f1723982eab195afa597532b2f37",
+      "sha256": "",
       "packed": false
     },
     {
       "name": "purley-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley-4.4.302.tgz",
-      "sha256": "3117b99ef70702b71849dc9c0465de38972cb3b3d8e65ddb696fc8c99a97970b",
+      "sha256": "",
       "packed": false
     },    
     {
@@ -23,7 +23,7 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "sha256": "42f1414064d795cd94fd9faeac9a027d4f8f906a34e3576cc8291e9951ac2c8c",
       "packed": false
     },
     {
