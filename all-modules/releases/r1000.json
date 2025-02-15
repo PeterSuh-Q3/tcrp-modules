@@ -5,13 +5,13 @@
     {
       "name": "r1000-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000-4.4.180.tgz",
-      "sha256": "af14160fbb43376bf8c33badb13950d759c1825b85627f9391cbb471dc067d00",
+      "sha256": "1b8d85e3acfc792ae7641f9ec5d9267ef1e704cc1c6299d08e8dfa0bfbba449a",
       "packed": false
     },
     {
       "name": "r1000-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000-4.4.302.tgz",
-      "sha256": "236dc26137a43c24c9d41fdf0a090a6e9c9c1c526fe8f055cbab00f01cbb483b",
+      "sha256": "01eab8885edd4a11837c59154a2ee3ba2838d70b055e361d244c7afa842936c5",
       "packed": false
     },    
     {
