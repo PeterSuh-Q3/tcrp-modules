@@ -20,10 +20,11 @@ echo "$URL"
 curl -kLO $URL
 
 #don't touch bromolow,braswell 2024.12.22
-for platform in epyc7002; do
+#Add bromolow again 2025.02.17
+for platform in bromolow epyc7002; do
     echo "modify $platform.json"
     
-    if [ "$platform" = "bromolow" ]||[ "$platform" = "braswell" ]; then
+    if [ "$platform" = "bromolow" ]; then
         kver="3.10.108"
 
         value=`grep ${platform}-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
