@@ -5,13 +5,13 @@
     {
       "name": "denverton-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.180.tgz",
-      "sha256": "d31c81818197e14836daadf45b2fcdeaa5d0dd65ecea56a4c5e5cecdf7f98093",
+      "sha256": "ddf09d77af7c5e4ff62b3afedc4d023af96d4a15667a6fb5209bf1cb33d0b4d3",
       "packed": false
     },
     {
       "name": "denverton-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.302.tgz",
-      "sha256": "66447a751875a20015ae981c256d4071ea47eebe15f06807d1604a3c4bed31f6",
+      "sha256": "535a59daceb3660e26f8e999257aa78eb7a5cd477cf4c1f51d96c34d86449a9a",
       "packed": false
     },    
     {
