@@ -5,13 +5,13 @@
     {
       "name": "broadwellntbap-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.180.tgz",
-      "sha256": "4ed0a92434121153c34b4da3d41925920e0188f7c8287433359830150d2bcedf",
+      "sha256": "a8d56059765cf5b8da6d7fbcd17945a54722deff7abc34b57ca8ebfb80e53cd2",
       "packed": false
     },
     {
       "name": "broadwellntbap-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.302.tgz",
-      "sha256": "2be3ce501b70b1796461c3e1ef35a5230939285839545d9bada0839fa022bd1b",
+      "sha256": "98ef7eb62e3210ca1b90d421a884a837f1a5485c8e92248bdc8c5f681493bc26",
       "packed": false
     },    
     {
