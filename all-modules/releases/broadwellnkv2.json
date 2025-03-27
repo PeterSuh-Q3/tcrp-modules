@@ -5,13 +5,13 @@
     {
       "name": "broadwellnkv2-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2-4.4.180.tgz",
-      "sha256": "abd3de6b28e9a40c5aa59b8284e46b020f1e0b214fdaf9c44f1ad6511de036c6",
+      "sha256": "d8a8289932def4e29749264a5607873d99cf117dd17e16a570a28d9b2e8ffd48",
       "packed": false
     },
     {
       "name": "broadwellnkv2-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2-4.4.302.tgz",
-      "sha256": "f0908f3d43f12fd9b96827c7502d3c9643760743a925c31842ce4e90a299e0fe",
+      "sha256": "3f198c544e0f8d19732723f9b8d0c97c5c1d5923c8c646a09b3a607e3d36fefa",
       "packed": false
     },    
     {
