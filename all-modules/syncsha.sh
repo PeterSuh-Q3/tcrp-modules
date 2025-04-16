@@ -19,6 +19,13 @@ URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmwa
 echo "$URL"
 curl -kLO $URL
 
+firmwarei915=`grep firmwarei915.tgz files-chksum | grep firmwarei915.sha256|awk '{print $1}'`
+echo "firmwarei915 sha256=$firmwarei915"
+
+URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmwarei915.tgz"
+echo "$URL"
+curl -kLO $URL
+
 #don't touch bromolow,braswell 2024.12.22
 #Add bromolow again 2025.02.17
 for platform in bromolow epyc7002; do
