@@ -94,7 +94,7 @@ function getvars() {
     echo $LINUX_VER
     case $TARGET_PLATFORM in
 
-    bromolow)
+    avoton | bromolow)
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
