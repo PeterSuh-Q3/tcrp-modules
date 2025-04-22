@@ -5,25 +5,25 @@
     {
       "name": "braswell-3.10.108.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/braswell-3.10.108.tgz",
-      "sha256": "26e66411f2a9003eb57b13454b192e03b2262e7dde04120ffa67a479014b84b5",
+      "sha256": "7220b28d9f104abbd2f03947909ef89016b421f00b5c7e11b45a08886f402647",
       "packed": false
     },
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "309a3b6c9cbf59107b793dd84a63e02208987944bd100a34a15e9c17eef6709e",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "e47363affe92b1634f8a92d2377943847d031179c1934cf3b4f45a780ac36eeb",
+      "sha256": "4019ed926eda383e2213e27a914f963a70cfda42b01638c87da467b114db125f",
       "packed": false
     },
     {
       "name": "sbin.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/sbin.tgz",
-      "sha256": "a086b388ab80c1e9d0464692b79cfa702f1bacc7109d5ae2d2791e11bb583e1c",
+      "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
       "packed": false
     }
   ],
