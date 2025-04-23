@@ -1,0 +1,36 @@
+{
+  "mod_version": "v1",
+
+  "files": [
+    {
+      "name": "grantley-3.10.108.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/grantley-3.10.108.tgz",
+      "sha256": "b5c0000a3b101545488bbe9e859af5943568f4cb6a4aff60170d37e728ac873b",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "4019ed926eda383e2213e27a914f963a70cfda42b01638c87da467b114db125f",
+      "packed": false
+    },
+    {
+      "name": "sbin.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/sbin.tgz",
+      "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
+      "packed": false
+    }
+  ],
+  
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+
+}
