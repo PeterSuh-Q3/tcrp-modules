@@ -94,7 +94,7 @@ function getvars() {
     echo $LINUX_VER
     case $TARGET_PLATFORM in
 
-    avoton | bromolow | braswell | cedarview)
+    avoton | bromolow | braswell | cedarview | grantley)
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
@@ -147,5 +147,11 @@ if [ "${1}" = "modules" ]; then
     getvars
     listpci
     virtio_modprobe
-    mmc_modprobe
+    case $TARGET_PLATFORM in
+    avoton | bromolow | braswell | cedarview | grantley)
+        ;;
+    apollolake | broadwell | broadwellnk | v1000 | r1000 | denverton | geminilake | *)
+        mmc_modprobe
+        ;;
+    esac
 fi
