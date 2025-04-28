@@ -1,6 +1,5 @@
 {
   "mod_version": "v1",
-
   "files": [
     {
       "name": "broadwellntbap-4.4.180.tgz",
@@ -13,7 +12,7 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.302.tgz",
       "sha256": "24b158d6a3000b3f4bae9ae5ee98ba45b4aadae80a22df19598b7886b2bee788",
       "packed": false
-    },    
+    },
     {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
@@ -23,20 +22,12 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "32b8f8eb26c3f8032c05070260866c8ef33107609601080c843a98d54db2d2fb",
-      "packed": false
-    },
-    {
-      "name": "sbin.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/sbin.tgz",
-      "sha256": "9c62ed230ea64acf0537fbe64816f65d49d17a81458345a8a82123dba9b15e4d",
+      "sha256": "055cd8bdcbbed9bfd1ab938dd292a149514e5e74b301cda5fab0fdce2c0a06ce",
       "packed": false
     }
   ],
-  
   "scripts": {
     "on_boot": "install.sh",
     "on_os_load": "install.sh"
   }
-
 }
