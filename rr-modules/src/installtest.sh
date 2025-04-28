@@ -4,7 +4,7 @@
 #
 
 function getvars() {
-  TARGET_PLATFORM="$(uname -u | cut -d '_' -f2)"
+  TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
   LINUX_VER="$(uname -r | cut -d '+' -f1)"
   REVISION="$(uname -a | cut -d ' ' -f4)"
 }

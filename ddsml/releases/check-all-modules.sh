@@ -86,8 +86,8 @@ function listpci() {
 
 function getvars() {
 
-    TARGET_PLATFORM="$(uname -u | cut -d '_' -f2)"
-    MODEL="$(uname -u | cut -d '_' -f3)"
+    TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
+    MODEL="$(uname -a | awk '{print $NF}' | cut -d '_' -f3)"
     LINUX_VER="$(uname -r | cut -d '+' -f1)"
     
     echo $TARGET_PLATFORM
