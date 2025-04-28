@@ -10,12 +10,18 @@ cd ./releases/
 for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk; do
     echo "modify $platform.json"
     
-    if [ "$platform" = "epyc7002" ]||[ "$platform" = "v1000nk" ]; then
+    if [ "$platform" = "epyc7002" ]; then
         kver="5.10.55"
 
         # 7.1 remark to use rr's module
         orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
         sed -i "s/$orginstall/$installsha/" "${platform}.json"
+
+        # 7.2 remark to use rr's module
+        orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
+        sed -i "s/$orginstall/$installsha/" "${platform}72.json"
+    elif [ "$platform" = "v1000nk" ]; then
+        kver="5.10.55"
 
         # 7.2 remark to use rr's module
         orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
