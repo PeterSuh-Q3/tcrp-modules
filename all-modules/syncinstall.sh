@@ -7,7 +7,7 @@ cd ./releases/
 
 #don't touch bromolow,braswell 2024.12.22
 #Add bromolow again 2025.02.17
-for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk; do
+for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk r1000nk geminilakenk; do
     echo "modify $platform.json"
     
     if [ "$platform" = "epyc7002" ]; then
@@ -24,7 +24,7 @@ for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk; do
         sed -i "s/$orginstall/$installsha/" "${platform}72.json"
 
         jq '.files |= map(select(.name != "sbin.tgz"))' "${platform}72.json" | sponge "${platform}72.json"
-    elif [ "$platform" = "v1000nk" ]; then
+    elif [ "$platform" = "v1000nk" ]||[ "$platform" = "r1000nk" ]||[ "$platform" = "geminilakenk" ]; then
         kver="5.10.55"
 
         # 7.2 remark to use rr's module
