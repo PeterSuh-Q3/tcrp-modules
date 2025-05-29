@@ -22,7 +22,7 @@
     {
       "name": "firmwarei915.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
-      "sha256": "036d91d593158d5eb1f7acb18c05aa3f38955b2afb99f10a1ed81d8ba49f64bd",
+      "sha256": "76e3f0b5eb6e2cfa4494b4e23f0b16ee7af42fc3208dd115280a897d263848dc",
       "packed": false
     }
   ],
