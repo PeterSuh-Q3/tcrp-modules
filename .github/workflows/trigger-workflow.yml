@@ -23,7 +23,8 @@ jobs:
           #echo "Param1: ${{ github.event.client_payload.param1 }}"
           ROOT_PATH=${{ github.workspace }}
           cd ${ROOT_PATH}/all-modules/
-          sh syncsha.sh
+          #sh syncsha.sh
+          sh syncinstall.sh
           date > date.log
 
       - name: Commit and push changes
