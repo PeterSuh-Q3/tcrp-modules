@@ -18,7 +18,7 @@ if [ "${1}" = "modules" ]; then
 
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
   tar xvfz /exts/all-modules/firmware.tgz -C /lib/firmware/ >/dev/null 2>&1
-  [ "$TARGET_PLATFORM" = "epyc7002" ] && tar xvfz /exts/all-modules/firmwarei915.tgz -C /lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmwarei915.tgz ] && tar xvfz /exts/all-modules/firmwarei915.tgz -C /lib/firmware/ >/dev/null 2>&1
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Modify VERSION file for 7.2.0-64570-1"
@@ -30,7 +30,7 @@ elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
   tar xvfz /exts/all-modules/firmware.tgz -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
-  [ "$TARGET_PLATFORM" = "epyc7002" ] && tar xvfz /exts/all-modules/firmwarei915.tgz -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmwarei915.tgz ] && tar xvfz /exts/all-modules/firmwarei915.tgz -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
