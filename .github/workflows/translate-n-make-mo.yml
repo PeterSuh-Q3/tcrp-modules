@@ -6,7 +6,20 @@ on:
 jobs:
   translate_and_convert:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read    
     steps:
+      - name: Debug API Key
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+        run: |
+          if [ -z "$PERPLEXITY_API_KEY" ]; then
+            echo "❌ API key is empty"
+          else
+            echo "✅ API key is configured (length: ${#PERPLEXITY_API_KEY})"
+          fi
+    
       - name: Checkout
         uses: actions/checkout@v4
         
