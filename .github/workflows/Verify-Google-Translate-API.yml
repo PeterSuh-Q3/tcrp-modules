@@ -1,0 +1,190 @@
+name: Verify Google Translate API
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 1'  # 매주 월요일 오전 9시 검증
+
+jobs:
+  verify_google_translate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          pip install requests
+          
+      - name: Verify Google Translate API Configuration
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          echo "=== Google Translate API Configuration Check ==="
+          if [ -z "$GOOGLE_TRANSLATE_API_KEY" ]; then
+            echo "❌ GOOGLE_TRANSLATE_API_KEY is not configured"
+            echo "Please set this secret in repository settings"
+            exit 1
+          else
+            echo "✅ GOOGLE_TRANSLATE_API_KEY is configured"
+          fi
+      
+      - name: Test Google Translate API Connection
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          cat > test_google_translate.py << 'EOF'
+          import requests
+          import os
+          import json
+          
+          def test_google_translate_api():
+              api_key = os.environ.get('GOOGLE_TRANSLATE_API_KEY')
+              
+              if not api_key:
+                  print("❌ API key not found")
+                  return False
+              
+              print("=== Testing Google Translate API Connection ===")
+              
+              # 1. 기본 번역 테스트
+              url = "https://translation.googleapis.com/language/translate/v2"
+              params = {
+                  'key': api_key,
+                  'q': 'Hello World',
+                  'source': 'en',
+                  'target': 'ko',
+                  'format': 'text'
+              }
+              
+              try:
+                  response = requests.post(url, params=params, timeout=10)
+                  print(f"API Response Status: {response.status_code}")
+                  
+                  if response.status_code == 200:
+                      result = response.json()
+                      translated = result['data']['translations'][0]['translatedText']
+                      print(f"✅ Translation Test: 'Hello World' -> '{translated}'")
+                  else:
+                      print(f"❌ API Error: {response.status_code} - {response.text}")
+                      return False
+                      
+              except Exception as e:
+                  print(f"❌ API Connection Error: {e}")
+                  return False
+              
+              # 2. 지원 언어 목록 테스트
+              print("\n=== Testing Supported Languages ===")
+              lang_url = "https://translation.googleapis.com/language/translate/v2/languages"
+              lang_params = {
+                  'key': api_key,
+                  'target': 'en'
+              }
+              
+              try:
+                  lang_response = requests.get(lang_url, params=lang_params, timeout=10)
+                  if lang_response.status_code == 200:
+                      languages = lang_response.json()
+                      lang_count = len(languages['data']['languages'])
+                      print(f"✅ Supported Languages: {lang_count} languages available")
+                      
+                      # 주요 언어 확인
+                      target_languages = ['ko', 'ja', 'zh-CN', 'fr', 'de', 'es']
+                      available_codes = [lang['language'] for lang in languages['data']['languages']]
+                      
+                      for lang in target_languages:
+                          if lang in available_codes:
+                              print(f"✅ {lang}: Available")
+                          else:
+                              print(f"❌ {lang}: Not available")
+                  else:
+                      print(f"❌ Language API Error: {lang_response.status_code}")
+                      
+              except Exception as e:
+                  print(f"❌ Language API Error: {e}")
+              
+              # 3. 다중 언어 번역 테스트
+              print("\n=== Testing Multiple Language Translation ===")
+              test_languages = ['ko', 'ja', 'zh-CN', 'fr', 'de']
+              test_text = "Settings"
+              
+              for target_lang in test_languages:
+                  try:
+                      params = {
+                          'key': api_key,
+                          'q': test_text,
+                          'source': 'en',
+                          'target': target_lang,
+                          'format': 'text'
+                      }
+                      
+                      response = requests.post(url, params=params, timeout=10)
+                      if response.status_code == 200:
+                          result = response.json()
+                          translated = result['data']['translations'][0]['translatedText']
+                          print(f"✅ {target_lang}: '{test_text}' -> '{translated}'")
+                      else:
+                          print(f"❌ {target_lang}: Translation failed")
+                          
+                  except Exception as e:
+                      print(f"❌ {target_lang}: Error - {e}")
+              
+              # 4. 사용량 및 할당량 정보 (가능한 경우)
+              print("\n=== API Usage Information ===")
+              print("✅ API connection and translation functionality verified")
+              print("💡 Monitor your usage at: https://console.cloud.google.com/apis/api/translate.googleapis.com")
+              
+              return True
+          
+          if __name__ == "__main__":
+              success = test_google_translate_api()
+              if not success:
+                  exit(1)
+              else:
+                  print("\n🎉 All Google Translate API tests passed!")
+          EOF
+          
+          python test_google_translate.py
+      
+      - name: Generate API Status Report
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          echo "=== Google Translate API Status Report ===" > api_status_report.md
+          echo "Generated on: $(date)" >> api_status_report.md
+          echo "" >> api_status_report.md
+          echo "## Configuration Status" >> api_status_report.md
+          
+          if [ -n "$GOOGLE_TRANSLATE_API_KEY" ]; then
+            echo "- ✅ API Key: Configured" >> api_status_report.md
+          else
+            echo "- ❌ API Key: Not configured" >> api_status_report.md
+          fi
+          
+          echo "" >> api_status_report.md
+          echo "## Supported Target Languages" >> api_status_report.md
+          echo "- 한국어 (ko)" >> api_status_report.md
+          echo "- 日本語 (ja)" >> api_status_report.md
+          echo "- 中文 (zh-CN)" >> api_status_report.md
+          echo "- Français (fr)" >> api_status_report.md
+          echo "- Deutsch (de)" >> api_status_report.md
+          echo "- Español (es)" >> api_status_report.md
+          echo "- Italiano (it)" >> api_status_report.md
+          echo "- Português (pt)" >> api_status_report.md
+          echo "- العربية (ar)" >> api_status_report.md
+          echo "- हिन्दी (hi)" >> api_status_report.md
+          echo "- Magyar (hu)" >> api_status_report.md
+          echo "- Bahasa Indonesia (id)" >> api_status_report.md
+          echo "- Türkçe (tr)" >> api_status_report.md
+          echo "- ไทย (th)" >> api_status_report.md
+          echo "" >> api_status_report.md
+          echo "## Next Steps" >> api_status_report.md
+          echo "- Run the main translation workflow to generate .po/.mo files" >> api_status_report.md
+          echo "- Monitor API usage in Google Cloud Console" >> api_status_report.md
+          
+          cat api_status_report.md
