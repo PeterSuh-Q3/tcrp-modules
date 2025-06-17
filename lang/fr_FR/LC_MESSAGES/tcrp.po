@@ -1,217 +1,182 @@
-# Translation for fr_FR
+#
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
 "Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: MSGUS01 
-msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgid ""
+"Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT"
+" models do not support HBAs"
+msgstr ""
+"Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT"
+" models do not support HBAs"
 
-#: MSGUS02 
 msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a Dev Mod handling method, DDSML/EUDEV"
 
-#: MSGUS03 
 msgid "Choose a Synology Model"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a Synology Model"
 
-#: MSGUS04 
 msgid "Choose a Synology Serial Number"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a Synology Serial Number"
 
-#: MSGUS05 
 msgid "Choose a mac address"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a mac address"
 
-#: MSGUS06 
 msgid "Choose a DSM VERSION, Current"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a DSM VERSION, Current"
 
-#: MSGUS10 
 msgid "Choose a loader Mode, Current"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a loader Mode, Current"
 
-#: MSGUS11 
 msgid "Edit user config file manually"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Edit user config file manually"
 
-#: MSGUS12 
 msgid "Choose a keymap"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a keymap"
 
-#: MSGUS13 
 msgid "Format Disk(s) # Excluding Loader Disk"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Format Disk(s) # Excluding Loader Disk"
 
-#: MSGUS14 
 msgid "Backup TCRP"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Backup TCRP"
 
-#: MSGUS15 
 msgid "Reboot"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Reboot"
 
-#: MSGUS16 
 msgid "Power Off"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Power Off"
 
-#: MSGUS17 
 msgid "Max 24 Threads, any x86-64"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Max 24 Threads, any x86-64"
 
-#: MSGUS18 
 msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Max 8 Threads, Haswell or later,iGPU Transcoding"
 
-#: MSGUS20 
 msgid "Build the loader"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Build the loader"
 
-#: MSGUS21 
 msgid "Max ? Threads, any x86-64"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Max ? Threads, any x86-64"
 
-#: MSGUS22 
 msgid "Have a camera license"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Have a camera license"
 
-#: MSGUS23 
 msgid "Max 16 Threads, any x86-64"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Max 16 Threads, any x86-64"
 
-#: MSGUS24 
 msgid "Max 16 Threads, Haswell or later"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Max 16 Threads, Haswell or later"
 
-#: MSGUS25 
 msgid "Nvidia GTX1650"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Nvidia GTX1650"
 
-#: MSGUS26 
 msgid "Nvidia GTX1050Ti"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Nvidia GTX1050Ti"
 
-#: MSGUS27 
 msgid "EUDEV (enhanced user-space device)"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "EUDEV (enhanced user-space device)"
 
-#: MSGUS28 
 msgid "DDSML (Detected Device Static Module Loading)"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "DDSML (Detected Device Static Module Loading)"
 
-#: MSGUS29 
 msgid "FRIEND (most recently stabilized)"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "FRIEND (most recently stabilized)"
 
-#: MSGUS30 
 msgid "JOT (The old way before friend)"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "JOT (The old way before friend)"
 
-#: MSGUS31 
 msgid "Generate a random serial number"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Generate a random serial number"
 
-#: MSGUS32 
 msgid "Enter a serial number"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Enter a serial number"
 
-#: MSGUS33 
 msgid "Get a real mac address"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Get a real mac address"
 
-#: MSGUS34 
 msgid "Generate a random mac address"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Generate a random mac address"
 
-#: MSGUS35 
 msgid "Enter a mac address"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Enter a mac address"
 
-#: MSGUS36 
 msgid "press any key to continue..."
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "press any key to continue..."
 
-#: MSGUS37 
-msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgid ""
+"Synology serial number not set. Check user_config.json again. Abort the "
+"loader build !!!"
+msgstr ""
+"Synology serial number not set. Check user_config.json again. Abort the "
+"loader build !!!"
 
-#: MSGUS38 
-msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgid ""
+"The first MAC address is not set. Check user_config.json again. Abort the "
+"loader build !!!"
+msgstr ""
+"The first MAC address is not set. Check user_config.json again. Abort the "
+"loader build !!!"
 
-#: MSGUS39 
-msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgid ""
+"The netif_num and the number of mac addresses do not match. Check "
+"user_config.json again. Abort the loader build !!!"
+msgstr ""
+"The netif_num and the number of mac addresses do not match. Check "
+"user_config.json again. Abort the loader build !!!"
 
-#: MSGUS40 
 msgid "Choose a language"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a language"
 
-#: MSGUS41 
 msgid "DDSML+EUDEV"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "DDSML+EUDEV"
 
-#: MSGUS50 
 msgid "Choose a Storage Panel Size"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Choose a Storage Panel Size"
 
-#: MSGUS51 
 msgid "Mac-spoof Addon"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Mac-spoof Addon"
 
-#: MSGUS52 
 msgid "Prevent SataPortMap,DiskIdxMap initialization"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Prevent SataPortMap,DiskIdxMap initialization"
 
-#: MSGUS53 
 msgid "Show SATA(s) ports and drives for SataPortMap"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Show SATA(s) ports and drives for SataPortMap"
 
-#: MSGUS54 
 msgid "Show error log of running loader"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Show error log of running loader"
 
-#: MSGUS55 
 msgid "Burn TCRP Bootloader Img to USB or SSD"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Burn TCRP Bootloader Img to USB or SSD"
 
-#: MSGUS56 
 msgid "Clone Current TCRP Bootloader to USB or SSD"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Clone Current TCRP Bootloader to USB or SSD"
 
-#: MSGUS57
 msgid "sata_remap processing for SataPort reordering"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "sata_remap processing for SataPort reordering"
 
-#: MSGUS58
 msgid "nvmesystem Addon(NVMe single volume use)"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "nvmesystem Addon(NVMe single volume use)"
 
-#: MSGUS59
 msgid "Boot the loader"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Boot the loader"
 
-#: MSGUS60
 msgid "Additional Functions"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Additional Functions"
 
-#: MSGUS61
 msgid "Change GRUB boot entry default value"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Change GRUB boot entry default value"
 
-#: MSGUS62
 msgid "Inject Bootloader to Syno DISK"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Inject Bootloader to Syno DISK"
 
-#: MSGUS63
 msgid "Remove the injected bootloader partition"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Remove the injected bootloader partition"
 
-#: MSGUS07
 msgid "Packing loader file for remote update"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
+msgstr "Packing loader file for remote update"
 
 msgid "Syno disk and partition handling"
-msgstr "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT"
-
+msgstr "Syno disk and partition handling"
