@@ -91,3 +91,36 @@ jobs:
           EOF
           
           python azure_translate.py
+
+
+      - name: Convert PO to MO files
+        run: |
+          ROOT_PATH=${{ github.workspace }}
+          DEST_PATH="${ROOT_PATH}/lang"
+          
+          echo "Converting PO to MO files..."
+          for P in $(find ${DEST_PATH} -name "tcrp.po" 2>/dev/null); do
+            echo "Converting ${P} to ${P/.po/.mo}"
+            msgfmt ${P} -o ${P/.po/.mo}
+            
+            if [ -f "${P/.po/.mo}" ]; then
+              echo "✓ Successfully created: ${P/.po/.mo}"
+            else
+              echo "✗ Failed to create: ${P/.po/.mo}"
+            fi
+          done
+          
+          echo "Generated files:"
+          find ${DEST_PATH} -name "*.po" -o -name "*.mo" | sort
+          
+          tar -zcvf lang.tgz -C ${DEST_PATH} .
+          
+      - name: Commit and push changes
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-translate and generate .po/.mo files [$(date)]"
+            git push
+          fi
