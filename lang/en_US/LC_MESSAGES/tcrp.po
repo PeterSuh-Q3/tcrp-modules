@@ -1,0 +1,14 @@
+# Sample PO file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgid "Settings"
+msgstr "Settings"
