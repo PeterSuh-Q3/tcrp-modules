@@ -1,0 +1,47 @@
+name: Diagnose and Fix Translation Issues
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose_and_translate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Verify Secrets Configuration
+        env:
+          AZURE_TRANSLATOR_KEY: ${{ secrets.AZURE_TRANSLATOR_KEY }}
+          AZURE_TRANSLATOR_REGION: ${{ secrets.AZURE_TRANSLATOR_REGION }}
+        run: |
+          echo "=== Secret Configuration Check ==="
+          if [ -z "$AZURE_TRANSLATOR_KEY" ]; then
+            echo "❌ AZURE_TRANSLATOR_KEY is not configured"
+            echo "Please set this secret in repository settings"
+            exit 1
+          else
+            echo "✅ AZURE_TRANSLATOR_KEY is configured"
+          fi
+          
+          if [ -z "$AZURE_TRANSLATOR_REGION" ]; then
+            echo "⚠️  AZURE_TRANSLATOR_REGION not set, using default: eastus"
+            echo "AZURE_TRANSLATOR_REGION=eastus" >> $GITHUB_ENV
+          else
+            echo "✅ AZURE_TRANSLATOR_REGION is configured: $AZURE_TRANSLATOR_REGION"
+          fi
+      
+      - name: Test Azure Translator API
+        env:
+          AZURE_TRANSLATOR_KEY: ${{ secrets.AZURE_TRANSLATOR_KEY }}
+          AZURE_TRANSLATOR_REGION: ${{ secrets.AZURE_TRANSLATOR_REGION }}
+        run: |
+          echo "=== API Connection Test ==="
+          curl -X POST "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=ko" \
+            -H "Ocp-Apim-Subscription-Key: $AZURE_TRANSLATOR_KEY" \
+            -H "Ocp-Apim-Subscription-Region: ${AZURE_TRANSLATOR_REGION:-eastus}" \
+            -H "Content-Type: application/json" \
+            -d '[{"Text": "Hello"}]' \
+            --fail --silent || echo "❌ API connection failed - check your keys"
+      
+      # 나머지 번역 로직...
