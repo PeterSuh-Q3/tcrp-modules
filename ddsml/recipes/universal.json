@@ -9,13 +9,13 @@
     {
       "name": "modules.alias.3.json.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/modules.alias.3.json.tgz",
-      "sha256": "d85d85f8a78e5828910805e58a07d01164699e814683ae5f77586a89b452ab84",
+      "sha256": "7d16ce048ba9014e8781ce3b4777126cd98ec2db07e5ee6d95c924e7a12cf3a2",
       "packed": false
     },
     {
       "name": "modules.alias.4.json.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/modules.alias.4.json.tgz",
-      "sha256": "c9d1bac3915bb540825255dbef3d2ac20cb3eb8e9ec0bc6b9b5dc77e5c46cd50",
+      "sha256": "089a00d2436efa3984998d6991d2d8db6a88936f24b8e293047d656bc50e11a4",
       "packed": false
     }
   ],
