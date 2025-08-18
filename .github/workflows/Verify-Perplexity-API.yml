@@ -69,7 +69,7 @@ jobs:
               print("\n=== Basic API Connection Test ===")
               try:
                   response = client.chat.completions.create(
-                      model="llama-3.1-sonar-small-128k-online",
+                      model="sonar-pro",
                       messages=[
                           {
                               "role": "system",
@@ -109,7 +109,7 @@ jobs:
               for test in translation_tests:
                   try:
                       response = client.chat.completions.create(
-                          model="llama-3.1-sonar-small-128k-online",
+                          model="sonar-pro",
                           messages=[
                               {
                                   "role": "system",
@@ -144,7 +144,7 @@ jobs:
               print("\n=== Model Information Test ===")
               
               models_to_test = [
-                  "llama-3.1-sonar-small-128k-online",
+                  "sonar-pro",
                   "llama-3.1-sonar-large-128k-online",
                   "llama-3.1-8b-instruct"
               ]
@@ -184,7 +184,7 @@ jobs:
               print("\n=== Online Search Capability Test ===")
               try:
                   response = client.chat.completions.create(
-                      model="llama-3.1-sonar-small-128k-online",
+                      model="sonar-pro",
                       messages=[
                           {
                               "role": "user",
@@ -236,7 +236,7 @@ jobs:
           
           echo "" >> api_status_report.md
           echo "## Available Models" >> api_status_report.md
-          echo "- 🚀 llama-3.1-sonar-small-128k-online (Fast, Online)" >> api_status_report.md
+          echo "- 🚀 sonar-pro (Fast, Online)" >> api_status_report.md
           echo "- 🎯 llama-3.1-sonar-large-128k-online (Accurate, Online)" >> api_status_report.md
           echo "- ⚡ llama-3.1-8b-instruct (Fast, Offline)" >> api_status_report.md
           echo "" >> api_status_report.md
@@ -289,7 +289,7 @@ jobs:
           )
           
           response = client.chat.completions.create(
-              model="llama-3.1-sonar-small-128k-online",
+              model="sonar-pro",
               messages=[{"role": "user", "content": "Hello"}]
           )
           ```
