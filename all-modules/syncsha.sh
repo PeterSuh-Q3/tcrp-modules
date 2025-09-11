@@ -25,29 +25,10 @@ curl -kLO $URL
 
 #don't touch bromolow,braswell 2024.12.22
 #Add bromolow again 2025.02.17
-for platform in bromolow epyc7002; do
+for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk r1000nk geminilakenk; do
     echo "modify $platform.json"
-    
-    if [ "$platform" = "bromolow" ]; then
-        kver="3.10.108"
-
-        value=`grep ${platform}-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
-        echo "$value"    
-    
-        org=$(jq -r '.files[0].sha256' "${platform}.json")
-        sed -i "s/$org/$value/" "${platform}.json"
-    
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}.json")
-        sed -i "s/$orgfirmware/$firmware/" "${platform}.json"
-    
-        orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
-        sed -i "s/$orginstall/$installsha/" "${platform}.json"
-
-        URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-${kver}.tgz"
-        echo "$URL"
-        curl -kLO $URL
         
-    elif [ "$platform" = "epyc7002" ]; then
+    if [ "$platform" = "epyc7002" ]; then
         kver="5.10.55"
 
         # 7.1 remark to use rr's module
@@ -87,6 +68,48 @@ for platform in bromolow epyc7002; do
         sed -i "s/$orgfirmwarei915/$firmwarei915/" "${platform}72.json"
 
         URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.2-${kver}.tgz"
+        echo "$URL"
+        curl -kLO $URL
+
+    elif [ "$platform" = "v1000nk" ]||[ "$platform" = "r1000nk" ]||[ "$platform" = "geminilakenk" ]; then
+        kver="5.10.55"
+
+        # 7.2 remark to use rr's module
+        value=`grep ${platform}-7.2-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
+        echo "$value"    
+    
+        org=$(jq -r '.files[0].sha256' "${platform}72.json")
+        sed -i "s/$org/$value/" "${platform}72.json"
+    
+        orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
+        sed -i "s/$orgfirmware/$firmware/" "${platform}72.json"
+    
+        orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
+        sed -i "s/$orginstall/$installsha/" "${platform}72.json"
+
+        orgfirmwarei915=$(jq -r '.files[3].sha256' "${platform}72.json")
+        sed -i "s/$orgfirmwarei915/$firmwarei915/" "${platform}72.json"
+
+        URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.2-${kver}.tgz"
+        echo "$URL"
+        curl -kLO $URL
+        
+    else
+        kver="3.10.108"
+
+        value=`grep ${platform}-${kver}.tgz files-chksum | grep modpack.sha256|awk '{print $1}'`
+        echo "$value"    
+    
+        org=$(jq -r '.files[0].sha256' "${platform}.json")
+        sed -i "s/$org/$value/" "${platform}.json"
+    
+        orgfirmware=$(jq -r '.files[1].sha256' "${platform}.json")
+        sed -i "s/$orgfirmware/$firmware/" "${platform}.json"
+    
+        orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
+        sed -i "s/$orginstall/$installsha/" "${platform}.json"
+
+        URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-${kver}.tgz"
         echo "$URL"
         curl -kLO $URL
         
