@@ -3,9 +3,6 @@
 installsha=$(sha256sum ./src/install.sh | awk '{print $1}')
 echo "$installsha"
 
-sbintgzsha=$(sha256sum ./releases/sbin.tgz | awk '{print $1}')
-echo "$sbintgzsha"
-
 cd ./releases/
 
 URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/files-chksum"
@@ -45,9 +42,6 @@ for platform in bromolow epyc7002; do
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
         sed -i "s/$orginstall/$installsha/" "${platform}.json"
-    
-        orgsbintgz=$(jq -r '.files[3].sha256' "${platform}.json")
-        sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}.json"
 
         URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-${kver}.tgz"
         echo "$URL"
@@ -68,11 +62,8 @@ for platform in bromolow epyc7002; do
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
         sed -i "s/$orginstall/$installsha/" "${platform}.json"
-    
-        orgsbintgz=$(jq -r '.files[3].sha256' "${platform}.json")
-        sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}.json"
 
-        orgfirmwarei915=$(jq -r '.files[4].sha256' "${platform}.json")
+        orgfirmwarei915=$(jq -r '.files[3].sha256' "${platform}.json")
         sed -i "s/$orgfirmwarei915/$firmwarei915/" "${platform}.json"
 
         URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.1-${kver}.tgz"
@@ -91,11 +82,8 @@ for platform in bromolow epyc7002; do
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
         sed -i "s/$orginstall/$installsha/" "${platform}72.json"
-    
-        orgsbintgz=$(jq -r '.files[3].sha256' "${platform}72.json")
-        sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}72.json"
 
-        orgfirmwarei915=$(jq -r '.files[4].sha256' "${platform}72.json")
+        orgfirmwarei915=$(jq -r '.files[3].sha256' "${platform}72.json")
         sed -i "s/$orgfirmwarei915/$firmwarei915/" "${platform}72.json"
 
         URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-7.2-${kver}.tgz"
@@ -130,9 +118,6 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     orginstall=$(jq -r '.files[3].sha256' "${platform}.json")
     sed -i "s/$orginstall/$installsha/" "${platform}.json"
 
-    orgsbintgz=$(jq -r '.files[4].sha256' "${platform}.json")
-    sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}.json"
-
     URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-${kver}.tgz"
     echo "$URL"
     curl -kLO $URL
@@ -155,9 +140,6 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
 
     orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
     sed -i "s/$orginstall/$installsha/" "${platform}72.json"
-
-    orgsbintgz=$(jq -r '.files[3].sha256' "${platform}72.json")
-    sed -i "s/$orgsbintgz/$sbintgzsha/" "${platform}72.json"
 
     URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${platform}-${kver}.tgz"
     echo "$URL"
