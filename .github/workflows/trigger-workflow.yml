@@ -17,7 +17,10 @@ jobs:
         run: |
           git config --global user.name "PeterSuh-Q3"
           git config --global user.email dante9000@gmail.com
-          
+
+      - name: Install moreutils (for sponge)
+        run: sudo apt-get update && sudo apt-get install -y moreutils
+  
       - name: update sha256 for platform.json
         run: |
           #echo "Param1: ${{ github.event.client_payload.param1 }}"
