@@ -4,7 +4,7 @@
     {
       "name": "r1000nk-7.2-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000nk-7.2-5.10.55.tgz",
-      "sha256": "3e0e14a3681c86942ecce7df6917cc06e8105730e1b41dc618252aa2ec811429",
+      "sha256": "8b19acfde02ec12b81e2b24366e4c12c94138afbe5e343105c81f2123fde8d53",
       "packed": false
     },
     {
@@ -22,7 +22,7 @@
     {
       "name": "firmwarei915.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
-      "sha256": "76e3f0b5eb6e2cfa4494b4e23f0b16ee7af42fc3208dd115280a897d263848dc",
+      "sha256": "036d91d593158d5eb1f7acb18c05aa3f38955b2afb99f10a1ed81d8ba49f64bd",
       "packed": false
     }
   ],

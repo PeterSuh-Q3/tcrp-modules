@@ -4,7 +4,7 @@
     {
       "name": "geminilakenk-7.2-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilakenk-7.2-5.10.55.tgz",
-      "sha256": "43e55426b3ff9a28b7749fbad30d8df5f7f38ddd38a3b975f7a00de9b9abd3e9",
+      "sha256": "6a934f87f6e04718024d6803e6823316590df18f701a5a1a277f786839242ffc",
       "packed": false
     },
     {
@@ -22,7 +22,7 @@
     {
       "name": "firmwarei915.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
-      "sha256": "76e3f0b5eb6e2cfa4494b4e23f0b16ee7af42fc3208dd115280a897d263848dc",
+      "sha256": "036d91d593158d5eb1f7acb18c05aa3f38955b2afb99f10a1ed81d8ba49f64bd",
       "packed": false
     }
   ],
