@@ -11,7 +11,7 @@ for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk r10
     echo "modify $platform.json"
     
     if [ "$platform" = "epyc7002" ]; then
-        kver="5.10.55"
+        #kver="5.10.55"
 
         # 7.1 remark to use rr's module
         orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
@@ -25,14 +25,14 @@ for platform in bromolow avoton braswell cedarview grantley epyc7002 v1000nk r10
 
         jq '.files |= map(select(.name != "sbin.tgz"))' "${platform}72.json" | sponge "${platform}72.json"
     elif [ "$platform" = "v1000nk" ]||[ "$platform" = "r1000nk" ]||[ "$platform" = "geminilakenk" ]; then
-        kver="5.10.55"
+        #kver="5.10.55"
 
         # 7.2 remark to use rr's module
         orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
         sed -i "s/$orginstall/$installsha/" "${platform}72.json"
         jq '.files |= map(select(.name != "sbin.tgz"))' "${platform}72.json" | sponge "${platform}72.json"        
     else
-        kver="3.10.108"
+        #kver="3.10.108"
    
         orginstall=$(jq -r '.files[2].sha256' "${platform}.json")
         sed -i "s/$orginstall/$installsha/" "${platform}.json"
@@ -45,7 +45,7 @@ done
 for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r1000 broadwellnkv2 broadwellntbap purley; do
     echo "modify $platform.json"
     
-    kver="4.4.180"
+    #kver="4.4.180"
 
     orginstall=$(jq -r '.files[3].sha256' "${platform}.json")
     sed -i "s/$orginstall/$installsha/" "${platform}.json"
