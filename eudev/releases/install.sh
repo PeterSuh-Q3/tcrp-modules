@@ -35,8 +35,13 @@ elif [ "${1}" = "modules" ]; then
   # Remove from memory to not conflict with RAID mount scripts
   /usr/bin/killall udevd
   # modprobe pcspeaker, pcspkr
-  /usr/sbin/modprobe pcspeaker
-  /usr/sbin/modprobe pcspkr
+  /usr/sbin/modprobe pcspeaker || true
+  /usr/sbin/modprobe pcspkr || true
+  # modprobe modules for the sensors
+  for I in coretemp k10temp hwmon-vid it87 nct6683 nct6775 adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
+    /usr/sbin/modprobe "${I}" || true
+  done
+  
   # Remove kvm module
   /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel && /usr/sbin/modprobe -r kvm_intel || true # kvm-intel.ko
   /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd && /usr/sbin/modprobe -r kvm_amd || true     # kvm-amd.ko
@@ -46,6 +51,8 @@ elif [ "${1}" = "late" ]; then
   # [ ! -L "/tmpRoot/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modprobe
   [ ! -L "/tmpRoot/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modinfo
   [ ! -L "/tmpRoot/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/depmod
+
+  [ ! -f "/tmpRoot/usr/bin/eject" ] && cp -vpf /usr/bin/eject /tmpRoot/usr/bin/eject
 
   echo "copy modules"
   export LD_LIBRARY_PATH=/tmpRoot/bin:/tmpRoot/lib
