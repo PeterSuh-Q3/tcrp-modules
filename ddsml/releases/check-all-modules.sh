@@ -143,7 +143,7 @@ function mmc_modprobe() {
 
 function usblan_modprobe() {
 
-  modules="rtl8150 asix ax88179_178a cdc_ncm r8152 r8153_ecm aqc111 cdc_ether dm9601"
+  modules="aqc111 asix ax88179_178a r8152 r8153_ecm rtl8150"
   module_dir="/lib/modules"
   
   for mod in $modules; do
