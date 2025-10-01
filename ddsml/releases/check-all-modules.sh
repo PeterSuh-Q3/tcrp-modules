@@ -143,23 +143,12 @@ function mmc_modprobe() {
 
 function usblan_modprobe() {
 
-  modules=(
-    rtl8150
-    asix
-    ax88179_178a
-    cdc_ncm
-    r8152
-    r8153_ecm
-    aqc111
-    cdc_ether
-    dm9601
-  )
-  
+  modules="rtl8150 asix ax88179_178a cdc_ncm r8152 r8153_ecm aqc111 cdc_ether dm9601"
   module_dir="/lib/modules"
   
-  for mod in "${modules[@]}"; do
+  for mod in $modules; do
     modpath="$module_dir/${mod}.ko"
-    if [[ -f $modpath ]]; then
+    if [ -f "$modpath" ]; then
       echo "Loading module: $mod"
       modprobe "$mod"
     else
