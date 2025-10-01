@@ -141,6 +141,34 @@ function mmc_modprobe() {
   fi
 }
 
+function usblan_modprobe() {
+
+  modules=(
+    rtl8150
+    asix
+    ax88179_178a
+    cdc_ncm
+    r8152
+    r8153_ecm
+    aqc111
+    cdc_ether
+    dm9601
+  )
+  
+  module_dir="/lib/modules"
+  
+  for mod in "${modules[@]}"; do
+    modpath="$module_dir/${mod}.ko"
+    if [[ -f $modpath ]]; then
+      echo "Loading module: $mod"
+      modprobe "$mod"
+    else
+      echo "Module file not found for: $mod"
+    fi
+  done
+  
+}
+
 if [ "${1}" = "modules" ]; then
     echo "ddsml - ${1}"
     tar -zxvf ./modules.alias.3.json.tgz
@@ -148,6 +176,7 @@ if [ "${1}" = "modules" ]; then
     /usr/sbin/depmod -a
     getvars
     listpci
+    usblan_modprobe
     virtio_modprobe
     case $TARGET_PLATFORM in
     avoton | bromolow | braswell | cedarview | grantley)
