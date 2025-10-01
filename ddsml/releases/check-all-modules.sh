@@ -155,7 +155,6 @@ function usblan_modprobe() {
       echo "Module file not found for: $mod"
     fi
   done
-  
 }
 
 if [ "${1}" = "modules" ]; then
