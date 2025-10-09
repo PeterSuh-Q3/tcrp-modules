@@ -1,0 +1,21 @@
+{
+"files": [
+    {
+      "name": "eudev-7.1.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/eudev-7.1.tgz",
+      "sha256": "6f97be469388ab69c5a5956901efbf9dd2c8c0e83fa411d1d4f82b74d2abeac4",
+      "packed": false
+    },
+    {
+      "name": "install_k5_81180.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/releases/install_k5_81180.sh",
+      "sha256": "d6bea47718a8e8617dd322c98f45d74bc08795f79c38c32af89e4bdcb049c284",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_early": "install_k5_81180.sh",
+    "on_boot": "install_k5_81180.sh",
+    "on_os_load": "install_k5_81180.sh"
+  }
+}
