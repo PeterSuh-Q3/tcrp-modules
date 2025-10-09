@@ -14,7 +14,6 @@ is_valid_mac() {
 
 # [NEW] MAC + addr_assign_type(=0)까지 기다리는 함수
 #        - addr_assign_type 파일이 없을 경우, "MAC만 유효하면 성공"으로 폴백
-
 wait_for_mac_and_type() {
   local dev="$1"
   local timeout="${2:-120}"
@@ -95,12 +94,30 @@ elif [ "${1}" = "modules" ]; then
   udevadm trigger --type=devices --action=add
   udevadm trigger --type=devices --action=change
 
-  # [NEW] 네트워크 서브시스템을 명시적으로 한 번 더 자극
+  # 0) [NEW] udevd 실행 중이어야 함 (이미 실행되어 있다면 건너뜀)
+  udevadm trigger -s pci --action=add
+  udevadm settle --timeout=60 || true
+
+  # 1) [NEW] 널리 쓰이는 NIC 드라이버 강제 로딩
+  for m in e1000e igb r8169 virtio_net vmxnet3 ixgbe mlx5_core; do modprobe -q "$m" || true; done
+
+  # 2) [NEW] PCI modalias 기반 오토 로딩 백업
+  for d in /sys/bus/pci/devices/*; do
+    [ -e "$d/modalias" ] || continue
+    modprobe -b "$(cat "$d/modalias")" 2>/dev/null || true
+  done
+
+  # 3) [NEW]  네트워크 서브시스템을 명시적으로 한 번 더 자극 + sett
   udevadm trigger -s net --action=add
   udevadm trigger -s net --action=change
-
   # [CHANGED] settle 시간을 충분히 늘림 (기본 60초)
   udevadm settle --timeout=60 || echo "udevadm settle failed"
+
+  # 4) 링크 업으로 드라이버 초기화 자극
+  for dev in $(ls -1 /sys/class/net | grep -v '^lo$'); do
+    [ -e "/sys/class/net/$dev/device" ] || continue
+    ip link set dev "$dev" up 2>/dev/null || true
+  done
 
   # [REMOVED/MOVED] 기존의 sleep 10 및 조기 killall udevd는 아래로 이동
   # sleep 10
@@ -118,6 +135,7 @@ elif [ "${1}" = "modules" ]; then
   READY_COUNT=0
   TOTAL_COUNT=0
 
+  # 5) [NEW] addr_assign_type==0까지 대기 
   for dev in $(ls -1 /sys/class/net | grep -v '^lo$'); do
     # 물리/가상 NIC에 매핑된 인터페이스만 처리 (bond/vlan/tun 등은 보통 device가 없음)
     [ -e "/sys/class/net/$dev/device" ] || continue
@@ -130,11 +148,9 @@ elif [ "${1}" = "modules" ]; then
       ALL_NICS_READY=false
     fi
   done
-
   if [ "$TOTAL_COUNT" -eq 0 ]; then
     echo "INFO: No eligible NICs found under /sys/class/net (excluding 'lo')."
   fi
-
   echo "NIC readiness summary: $READY_COUNT / $TOTAL_COUNT ready"
   if [ "$ALL_NICS_READY" = true ]; then
     echo "All NICs are ready with permanent MACs."
