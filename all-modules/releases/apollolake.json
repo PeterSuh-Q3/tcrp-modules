@@ -4,13 +4,13 @@
     {
       "name": "apollolake-4.4.180.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake-4.4.180.tgz",
-      "sha256": "c97ff10c36601501454a8c3108633bac0e06636125bb20d7cc22369be137497c",
+      "sha256": "4f031a797176d43030a9e6622160410fe2c8f9dccb0ec3b7460d2e314ad9dfe8",
       "packed": false
     },
     {
       "name": "apollolake-4.4.302.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake-4.4.302.tgz",
-      "sha256": "320a4b074b71072909f71d661d45ca58c1f4611e949d36b249fd65b53ab6e037",
+      "sha256": "5d91533d6ae6edfa86fc503e24132511e007e8563e329dcc508e9e87941a1254",
       "packed": false
     },
     {
