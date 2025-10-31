@@ -2,9 +2,9 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.180.tgz",
-      "sha256": "c8367439c5a59ebb006421f7507cdadc73fd40946da9f995478bac91c2d08763",
+      "name": "broadwellntbap-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.59.tgz",
+      "sha256": "d182ba453c40d3e84e9f78e2e455533d8a3ddfe0c276381185481fc66b6ba682",
       "packed": false
     },
     {

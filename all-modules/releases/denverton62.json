@@ -2,9 +2,9 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.180.tgz",
-      "sha256": "c8367439c5a59ebb006421f7507cdadc73fd40946da9f995478bac91c2d08763",
+      "name": "denverton-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.59.tgz",
+      "sha256": "a4bcf8efd01353b579569d584952717814519c6b132d510fcc7cff8132983073",
       "packed": false
     },
     {

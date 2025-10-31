@@ -2,9 +2,9 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.180.tgz",
-      "sha256": "c8367439c5a59ebb006421f7507cdadc73fd40946da9f995478bac91c2d08763",
+      "name": "grantley-3.10.105.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/grantley-3.10.105.tgz",
+      "sha256": "73abe79883dbfcc122a3dd746f482826280087e50e6906c24d10dbfecd1c188c",
       "packed": false
     },
     {

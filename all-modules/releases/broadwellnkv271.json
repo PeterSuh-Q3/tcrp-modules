@@ -8,12 +8,6 @@
       "packed": false
     },
     {
-      "name": "broadwellnkv2-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2-4.4.302.tgz",
-      "sha256": "66caa951acefceb24120860fa204584a08c9d6486c1c5eb9a51c8b963bf1247e",
-      "packed": false
-    },
-    {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",

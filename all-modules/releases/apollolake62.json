@@ -2,9 +2,9 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.180.tgz",
-      "sha256": "c8367439c5a59ebb006421f7507cdadc73fd40946da9f995478bac91c2d08763",
+      "name": "apollolake-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/apollolake-4.4.59.tgz",
+      "sha256": "4e9e5dd865db46a28a286b3f78b64149b78d278a93d0d366249da7ac4c9df3d5",
       "packed": false
     },
     {

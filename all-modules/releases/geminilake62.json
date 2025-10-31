@@ -2,9 +2,15 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-4.4.180.tgz",
-      "sha256": "c8367439c5a59ebb006421f7507cdadc73fd40946da9f995478bac91c2d08763",
+      "name": "geminilake-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.59.tgz",
+      "sha256": "01b0bb800bbcf6f6448ada96bf488f5883ac0869e9a670cb2358392b44ca2de7",
+      "packed": false
+    },
+    {
+      "name": "geminilake-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.302.tgz",
+      "sha256": "eabac0e29fea7efe05357ad72c4aa30ca63c28004453c27d8d58d2c994ffc348",
       "packed": false
     },
     {

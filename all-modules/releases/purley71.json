@@ -8,12 +8,6 @@
       "packed": false
     },
     {
-      "name": "purley-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley-4.4.302.tgz",
-      "sha256": "9af0e9f7d58c11f5f03373053d7bc6e24f8950d330313ef90a9d51416f9333ea",
-      "packed": false
-    },
-    {
       "name": "firmware.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
