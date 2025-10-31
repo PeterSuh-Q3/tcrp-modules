@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseurl="https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master"  # Base URL
+baseurl="https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main"  # Base URL
 
 ls -d */ | grep -e ddsml -e eudev | while IFS= read -r dir; do
   for baseplatform in `cat addplatforms`
