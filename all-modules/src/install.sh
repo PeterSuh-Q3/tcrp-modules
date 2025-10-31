@@ -3,7 +3,7 @@
 # install redpill tcrp modules
 #
 
-function getvars() {
+getvars() {
   TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
   LINUX_VER="$(uname -r | cut -d '+' -f1)"
   REVISION="$(uname -a | cut -d ' ' -f4)"
