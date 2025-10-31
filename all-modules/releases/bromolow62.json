@@ -14,9 +14,9 @@
       "packed": false
     },
     {
-      "name": "install.sh",
+      "name": "install62.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "67c15ccdd3e04cc0130ec969d81d037ed8202f8dda33ab9ef6d28a3762a4a781",
+      "sha256": "57cc9ec4e361e7fec7c9fb233d5c9c56c9884330d68f558a46b28c367a3dd6af",
       "packed": false
     }
   ],
