@@ -3,7 +3,7 @@
 # Inject modules detected
 #
 
-function listextension() {
+listextension() {
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
@@ -25,7 +25,7 @@ function listextension() {
 
 }
 
-function matchpciidmodule() {
+matchpciidmodule() {
 
     vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
     device="$(echo $2 | sed 's/[a-z]/\U&/g')"
@@ -40,7 +40,7 @@ function matchpciidmodule() {
 
 }
 
-function listpci() {
+listpci() {
 
 # Appears after 5 bytes, except for v1000,r1000,denverton platforms in Junior.
 
@@ -84,7 +84,7 @@ function listpci() {
 
 }
 
-function getvars() {
+getvars() {
 
     TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
     MODEL="$(uname -a | awk '{print $NF}' | cut -d '_' -f3)"
@@ -107,7 +107,7 @@ function getvars() {
     echo $MODULE_ALIAS_FILE
 }
 
-function virtio_modprobe() {
+virtio_modprobe() {
   echo "Checking for VirtIO"
   if (grep -r -q -E "(QEMU|VirtualBox)" /sys/devices/virtual/dmi/id/); then
     echo "VirtIO hypervisor detected"
@@ -125,7 +125,7 @@ function virtio_modprobe() {
   fi
 }
 
-function mmc_modprobe() {
+mmc_modprobe() {
   echo "excute modprobe for mmc(include sd)..."
   /usr/sbin/modprobe mmc_block
   /usr/sbin/modprobe mmc_core
@@ -141,7 +141,7 @@ function mmc_modprobe() {
   fi
 }
 
-function usblan_modprobe() {
+usblan_modprobe() {
 
   modules="aqc111 asix ax88179_178a r8152 r8153_ecm rtl8150"
   module_dir="/lib/modules"
