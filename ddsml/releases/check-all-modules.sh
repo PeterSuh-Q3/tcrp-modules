@@ -159,8 +159,8 @@ usblan_modprobe() {
 
 if [ "${1}" = "modules" ]; then
     echo "ddsml - ${1}"
-    tar -zxvf ./modules.alias.3.json.tgz
-    tar -zxvf ./modules.alias.4.json.tgz
+    gunzip -c ./modules.alias.3.json.tgz | tar xvf -
+    gunzip -c ./modules.alias.4.json.tgz | tar xvf -
     /usr/sbin/depmod -a
     getvars
     listpci
