@@ -12,7 +12,7 @@ if [ "${1}" = "early" ]; then
   [ ! -L "/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /usr/sbin/modprobe
   [ ! -L "/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /usr/sbin/modinfo
   #[ ! -L "/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /usr/sbin/depmod
-ip a
+
 elif [ "${1}" = "modules" ]; then
   echo "Installing addon eudev - ${1}"
 
