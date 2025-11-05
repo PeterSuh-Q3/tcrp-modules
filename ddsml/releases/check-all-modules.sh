@@ -3,6 +3,9 @@
 # Inject modules detected
 #
 
+KVER_CLEAN=$(uname -r | sed -n 's/^\([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')
+ZPADKVER=$(printf "%01d%03d%03d\n" $(echo "$KVER_CLEAN" | tr '.' ' '))
+
 listextension() {
 
     if [ ! -z $1 ]; then
@@ -129,8 +132,10 @@ mmc_modprobe() {
   echo "excute modprobe for mmc(include sd)..."
   /usr/sbin/modprobe mmc_block
   /usr/sbin/modprobe mmc_core
-  /usr/sbin/modprobe rtsx_pci
-  /usr/sbin/modprobe rtsx_pci_sdmmc
+  if [ "$ZPADKVER" -gt 4004059 ]; then
+      /usr/sbin/modprobe rtsx_pci
+      /usr/sbin/modprobe rtsx_pci_sdmmc
+  fi    
   /usr/sbin/modprobe sdhci
   /usr/sbin/modprobe sdhci_pci
   sleep 1
