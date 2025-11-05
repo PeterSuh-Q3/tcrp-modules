@@ -9,9 +9,9 @@
 if [ "${1}" = "early" ]; then
   echo "Installing addon eudev - ${1}"
   tar -zxf /exts/eudev/eudev-7.1.tgz -C /
-  [ ! -L "/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /usr/sbin/modprobe
-  [ ! -L "/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /usr/sbin/modinfo
-  #[ ! -L "/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /usr/sbin/depmod
+  [ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/bin/kmod /usr/sbin/modprobe
+  [ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/bin/kmod /usr/sbin/modinfo
+  #[ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/bin/kmod /usr/sbin/depmod
 
 elif [ "${1}" = "modules" ]; then
   echo "Installing addon eudev - ${1}"
@@ -48,9 +48,9 @@ elif [ "${1}" = "modules" ]; then
 
 elif [ "${1}" = "late" ]; then
   echo "Installing addon eudev - ${1}"
-  # [ ! -L "/tmpRoot/usr/sbin/modprobe" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modprobe
-  [ ! -L "/tmpRoot/usr/sbin/modinfo" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/modinfo
-  [ ! -L "/tmpRoot/usr/sbin/depmod" ] && ln -vsf /usr/bin/kmod /tmpRoot/usr/sbin/depmod
+  # [ ! -L "/tmpRoot/usr/sbin/modprobe" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/modprobe
+  [ ! -L "/tmpRoot/usr/sbin/modinfo" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/modinfo
+  [ ! -L "/tmpRoot/usr/sbin/depmod" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/depmod
 
   [ ! -f "/tmpRoot/usr/bin/eject" ] && cp -vpf /usr/bin/eject /tmpRoot/usr/bin/eject
 
@@ -112,6 +112,6 @@ elif [ "${1}" = "late" ]; then
     echo "WantedBy=multi-user.target"
   } >"${DEST}"
 
-  mkdir -vp /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
-  ln -vsf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
+  mkdir -p /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
+  ln -sf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
 fi
