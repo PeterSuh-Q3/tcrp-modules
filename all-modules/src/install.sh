@@ -31,6 +31,9 @@ if [ "${1}" = "modules" ]; then
   #fi
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
+  if [ -f /tmpRoot/lib/modules/r8168_tx.ko ]; then
+    rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
+  fi
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
   gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
