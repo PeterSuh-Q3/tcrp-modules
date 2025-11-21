@@ -16,6 +16,8 @@ if [ "${1}" = "modules" ]; then
     
   gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
 
+  [ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
+
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
   gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
 
