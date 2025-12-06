@@ -13,8 +13,12 @@ getvars
 
 if [ "${1}" = "modules" ]; then
   echo "all-modules - ${1}"
-    
-  gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
+
+  if [ "$TARGET_PLATFORM" = "v1000nk" ] || [ "$TARGET_PLATFORM" = "r1000nk" ] || [ "$TARGET_PLATFORM" = "geminilakenk" ]; then
+    gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - --exclude='ixgbe.ko' --exclude='i40e.ko' -C /lib/modules/ >/dev/null 2>&1
+  else
+    gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1 
+  fi
 
   #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
@@ -43,8 +47,5 @@ elif [ "${1}" = "late" ]; then
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc/VERSION
   #fi
 fi
+
 /usr/sbin/depmod -a
-#if [ "$TARGET_PLATFORM" = "apollolake" ]||[ "$TARGET_PLATFORM" = "geminilake" ]; then
-#  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /exts/all-modules/ modules.*
-#  cp -vf /exts/all-modules/modules.* /lib/modules
-#fi
