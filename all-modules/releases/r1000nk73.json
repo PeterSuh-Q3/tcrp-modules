@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "r1000nk-7.2-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000nk-7.2-5.10.55.tgz",
+      "name": "r1000nk-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000nk-7.3-5.10.55.tgz",
       "sha256": "882c629da5529f1e13c22c677b3dd48ad38a1c5156224990188bdd407f3cba9a",
       "packed": false
     },
