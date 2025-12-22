@@ -1573,6 +1573,10 @@
             "alias": "pci:v00008086d00007AE2sv*sd*bc*sc*i*"
         },
         {
+            "name": "sata_mv",
+            "alias": "pci:v00001B4Bd00009215sv*sd*bc*sc*i*"
+        },
+        {
             "name": "aic94xx",
             "alias": "pci:v00009005d00000410sv*sd*bc*sc*i*"
         },
