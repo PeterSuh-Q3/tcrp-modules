@@ -43,9 +43,11 @@ elif [ "${1}" = "late" ]; then
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc/VERSION
   #fi
+  rm -vf /lib/modules/*._*  
   /usr/sbin/depmod -a
   if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
-    [ -f /tmp/lib/modules/dca.ko ] && modprobe dca
+     ls -l /lib/modules/dca.ko
+    [ -f /lib/modules/dca.ko ] && modprobe dca
   fi
 fi
 
