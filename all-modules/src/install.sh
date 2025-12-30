@@ -13,12 +13,8 @@ getvars
 
 if [ "${1}" = "modules" ]; then
   echo "all-modules - ${1}"
-
-  #if [ "$TARGET_PLATFORM" = "v1000nk" ] || [ "$TARGET_PLATFORM" = "r1000nk" ] || [ "$TARGET_PLATFORM" = "geminilakenk" ]; then
-  #  gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - --exclude='ixgbe.ko' --exclude='i40e.ko' -C /lib/modules/ >/dev/null 2>&1
-  #else
-    gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1 
-  #fi
+    
+  gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
 
   #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
@@ -33,6 +29,7 @@ if [ "${1}" = "modules" ]; then
   #  echo 'packing="nano"' >> /etc.defaults/VERSION
   #  echo 'packing_id="1"' >> /etc.defaults/VERSION
   #fi
+  /usr/sbin/depmod -a
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
   #if lsmod | grep -q "^r8168_tx"; then
@@ -46,6 +43,13 @@ elif [ "${1}" = "late" ]; then
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc/VERSION
   #fi
+  /usr/sbin/depmod -a
+  if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
+    [ -f /tmp/lib/modules/dca.ko ] && modprobe dca
+  fi
 fi
 
-/usr/sbin/depmod -a
+#if [ "$TARGET_PLATFORM" = "apollolake" ]||[ "$TARGET_PLATFORM" = "geminilake" ]; then
+#  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /exts/all-modules/ modules.*
+#  cp -vf /exts/all-modules/modules.* /lib/modules
+#fi
