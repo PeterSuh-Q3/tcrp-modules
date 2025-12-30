@@ -29,6 +29,8 @@ if [ "${1}" = "modules" ]; then
   #  echo 'packing="nano"' >> /etc.defaults/VERSION
   #  echo 'packing_id="1"' >> /etc.defaults/VERSION
   #fi
+  [ -f /lib/modules/modules.order ]   || : > /lib/modules/modules.order
+  [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
   /usr/sbin/depmod -a
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
@@ -43,6 +45,8 @@ elif [ "${1}" = "late" ]; then
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc/VERSION
   #fi
+  [ -f /lib/modules/modules.order ]   || : > /lib/modules/modules.order
+  [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
   /usr/sbin/depmod -a
   if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
     #ls -l /lib/modules/dca.ko
