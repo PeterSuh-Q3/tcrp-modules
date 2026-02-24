@@ -78,7 +78,7 @@ elif [ "${1}" = "late" ]; then
       O=$(echo "${L}" | awk -F'###' '{print $1}')
       M=$(echo "${L}" | awk -F'###' '{print $2}')
       [ -z "${M}" ] || [ ! -f "/usr/lib/modules/${M}" ] && continue
-      if [ "$(echo "${O:0:1}" | sed 's/.*/\U&/')" = "F" ]; then
+      if [ "$(echo "${O}" | cut -c1 | sed 's/.*/\U&/')" = "F" ]; then
         /tmpRoot/bin/cp -vrf /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
       else
         /tmpRoot/bin/cp -vrn /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
