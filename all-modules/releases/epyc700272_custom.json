@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "modules-epyc7002-7.2-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/modules-epyc7002-7.2-5.10.55.tgz",
+      "sha256": "db7bf8aa06007af75be27a21ab61a3d67182d24e8169db7557e815b42fc791b9",
+      "packed": false
+    },
+    {
+      "name": "firmware-custom.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware-custom.tgz",
+      "sha256": "38bf07e797ffd0fb087e766f2bf97b6dbd7e92396bf4d257b26aa5f2fd72c47e",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "42a393c56695f8bab563534ce448950fb06489dd54a2294a4192b5e2ae4316ad",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "07b983c0f3c28582ee64a97d2fe85b8cf92b229f30e8571accbf8779d89c0a4d",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
