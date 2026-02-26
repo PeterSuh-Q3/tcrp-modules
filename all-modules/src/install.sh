@@ -14,13 +14,13 @@ getvars
 if [ "${1}" = "modules" ]; then
   echo "all-modules - ${1}"
     
-  gunzip -c /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
+  gunzip -c /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
 
   #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
-  gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
-
+  [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmware-custum.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
@@ -38,7 +38,8 @@ elif [ "${1}" = "late" ]; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
   #fi
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
-  gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmware-custum.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
