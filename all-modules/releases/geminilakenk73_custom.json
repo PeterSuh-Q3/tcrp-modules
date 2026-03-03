@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "modules-geminilakenk-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/modules-geminilakenk-7.3-5.10.55.tgz",
+      "sha256": "5b955cc8425937cf22a556bd4f40a90746628057176f18290aaee995db50a875",
+      "packed": false
+    },
+    {
+      "name": "firmware-custom.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware-custom.tgz",
+      "sha256": "2d2dcccefbd428ba6fce61f155bd679df2bf73595dd89a8d153bf3017c40c968",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "5891246b7bb65be6a0eb30f549e1658f2e3cb47e847dff1671384557c653b998",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "07b983c0f3c28582ee64a97d2fe85b8cf92b229f30e8571accbf8779d89c0a4d",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
