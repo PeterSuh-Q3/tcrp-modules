@@ -111,7 +111,31 @@ elif [ "${1}" = "late" ]; then
     echo "[Install]"
     echo "WantedBy=multi-user.target"
   } >"${DEST}"
-
+  chmod 644 "${DEST}"
   mkdir -p /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
   ln -sf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
+
+  # if custom modules exists
+  if [ -f /exts/all-modules/firmware-custom.tgz ]; then
+    # 모든 패키지(Container Manager, Plex 등)가 로드되기 전에 모듈을 올려 /dev/dri 노드를 생성
+    # 펌웨어와 모듈이 복사된 후 실행
+    DEST="/tmpRoot/usr/lib/systemd/system/mshell-amdgpu.service"
+    {
+      echo "[Unit]"
+      echo "Description=MSHELL AMDGPU Module Loader"
+      echo "After=local-fs.target"
+      echo "Before=pkgctl.target"
+      echo
+      echo "[Service]"
+      echo "Type=oneshot"
+      echo "ExecStart=/bin/sh -c '/sbin/depmod -a && /sbin/modprobe amdgpu'"
+      echo "RemainAfterExit=yes"      
+      echo
+      echo "[Install]"
+      echo "WantedBy=multi-user.target"
+    } >"${DEST}"
+    chmod 644 "${DEST}"
+    ln -sf /usr/lib/systemd/system/mshell-amdgpu.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/mshell-amdgpu.service
+  fi
+  
 fi
