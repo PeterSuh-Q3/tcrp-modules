@@ -20,7 +20,7 @@ if [ "${1}" = "modules" ]; then
 
   [ ! -d /lib/firmware ] && mkdir /lib/firmware
   [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
-  [ -f /exts/all-modules/firmware-custum.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
@@ -39,7 +39,7 @@ elif [ "${1}" = "late" ]; then
   #fi
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
   [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
-  [ -f /exts/all-modules/firmware-custum.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
