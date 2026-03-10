@@ -48,7 +48,7 @@ elif [ "${1}" = "late" ]; then
   #fi
   [ -f /lib/modules/modules.order ]   || : > /lib/modules/modules.order
   [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
-  /usr/sbin/depmod -a -b /tmpRoot
+  /usr/sbin/depmod -a
   if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
     #ls -l /lib/modules/dca.ko
     [ -f /lib/modules/dca.ko ] && modprobe dca && echo "dca loaded"
