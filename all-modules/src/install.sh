@@ -34,6 +34,9 @@ if [ "${1}" = "modules" ]; then
   /usr/sbin/depmod -a
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
+
+  gunzip -c /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /tmpRoow/lib/modules/ >/dev/null 2>&1
+
   #if lsmod | grep -q "^r8168_tx"; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
   #fi
