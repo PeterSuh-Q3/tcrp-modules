@@ -40,9 +40,11 @@ for file in /exts/all-modules/modules-${TARGET_PLATFORM}*${LINUX_VER}.tgz; do
      mkdir -p /tmp/mod_extract
      gunzip -c "$file" | tar xf - -C /tmp/mod_extract >/dev/null 2>&1
      
-     if [ -f "/tmp/mod_extract/amdgpu.ko" ]; then
-         cp -vf /tmp/mod_extract/amdgpu.ko /tmpRoot/lib/modules/
-     fi
+     for mod in amdgpu.ko gpu-sched.ko backlight.ko i2c-algo-bit.ko; do
+         if [ -f "/tmp/mod_extract/$mod" ]; then
+             cp -vf "/tmp/mod_extract/$mod" /tmpRoot/lib/modules/
+         fi
+     done
      
      if [ -d "/tmp/mod_extract/update" ]; then
          cp -vr /tmp/mod_extract/update/* /tmpRoot/lib/modules/
