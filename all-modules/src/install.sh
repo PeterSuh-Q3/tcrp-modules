@@ -35,9 +35,9 @@ if [ "${1}" = "modules" ]; then
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
 
-  MODULE_FILE="/exts/all-modules/modules-${TARGET_PLATFORM}-${LINUX_VER}.tgz"
-  if [ -f "$MODULE_FILE" ]; then
-      gunzip -c "$MODULE_FILE" | tar xvf - -C /tmpRoot/lib/modules/ >/dev/null 2>&1
+  files=( /exts/all-modules/modules-${TARGET_PLATFORM}*${LINUX_VER}.tgz )
+  if [ -f "${files[0]}" ]; then
+      gunzip -c "${files[0]}" | tar xvf - -C /tmpRoot/lib/modules/ >/dev/null 2>&1
   fi
 
   #if lsmod | grep -q "^r8168_tx"; then
