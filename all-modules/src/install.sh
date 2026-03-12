@@ -35,7 +35,10 @@ if [ "${1}" = "modules" ]; then
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
 
-  #gunzip -c /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /tmpRoot/lib/modules/ >/dev/null 2>&1
+  MODULE_FILE="/exts/all-modules/modules-${TARGET_PLATFORM}-${LINUX_VER}.tgz"
+  if [ -f "$MODULE_FILE" ]; then
+      gunzip -c "$MODULE_FILE" | tar xvf - -C /tmpRoot/lib/modules/ >/dev/null 2>&1
+  fi
 
   #if lsmod | grep -q "^r8168_tx"; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
