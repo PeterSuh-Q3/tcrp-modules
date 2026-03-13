@@ -35,26 +35,6 @@ if [ "${1}" = "modules" ]; then
 elif [ "${1}" = "late" ]; then
   echo "all-modules - ${1}"
 
-for file in /exts/all-modules/modules-${TARGET_PLATFORM}*${LINUX_VER}.tgz; do
-   if [ -f "$file" ]; then
-     mkdir -p /tmp/mod_extract
-     gunzip -c "$file" | tar xf - -C /tmp/mod_extract >/dev/null 2>&1
-     
-     for mod in amdgpu.ko gpu-sched.ko backlight.ko i2c-algo-bit.ko; do
-         if [ -f "/tmp/mod_extract/$mod" ]; then
-             cp -vf "/tmp/mod_extract/$mod" /tmpRoot/lib/modules/
-         fi
-     done
-     
-     if [ -d "/tmp/mod_extract/update" ]; then
-         cp -vr /tmp/mod_extract/update/* /tmpRoot/lib/modules/
-     fi
-     
-     rm -rf /tmp/mod_extract
-     break
-  fi
-done
-
   #if lsmod | grep -q "^r8168_tx"; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
   #fi
