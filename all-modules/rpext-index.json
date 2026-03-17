@@ -35,6 +35,7 @@
     "epyc7002_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc700273.json",
     "epyc7002_72_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc700272_custom.json",
     "epyc7002_73_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc700273_custom.json",
+    "epyc7002_73_51055_amdgpu": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc700273_amdgpu.json",
     "v1000nk_72_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000nk72.json",
     "v1000nk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000nk73.json",
     "r1000nk_72_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/r1000nk72.json",
