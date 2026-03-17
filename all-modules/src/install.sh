@@ -22,6 +22,7 @@ if [ "${1}" = "modules" ]; then
   [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmwareamdgpu.tgz ] && gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1  
   # patch smallfixversion for 7.2.0-64570-1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Modify VERSION file for 7.2.0-64570-1"
@@ -49,6 +50,7 @@ elif [ "${1}" = "late" ]; then
   [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
+  [ -f /exts/all-modules/firmwareamdgpu.tgz ] && gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
   #  cp -vf /etc.defaults/VERSION /tmpRoot/etc.defaults/VERSION
