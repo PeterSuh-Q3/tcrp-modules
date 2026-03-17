@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "amdgpu-epyc7002-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/amdgpu-epyc7002-7.3-5.10.55.tgz",
+      "sha256": "d6d9ac9a10886950c5b4affc1ce70c39e72ebe4b11426630fe1f06cee2ff971f",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "1bd337a6dccb12abca610ca8e974f11c03860ef24d0317f5426d0fb4918c8318",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "af8bf19e8b27e923c0f2c7868f0b45e23bafa101292184c6b3e5e265feba8cae",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
