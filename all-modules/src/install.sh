@@ -42,7 +42,18 @@ elif [ "${1}" = "late" ]; then
   #    break
   #  fi
   #done
-
+  
+  echo "handle modules to /tmpRoot..."
+  if [ -d /tmpRoot/usr/lib/modules.bak ]; then
+    echo "restore from backup modules..."
+    /tmpRoot/bin/rm -rf /tmpRoot/usr/lib/modules
+    /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules.bak /tmpRoot/usr/lib/modules
+  else
+    echo "backup modules..."
+    /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules /tmpRoot/usr/lib/modules.bak
+  fi
+  /tmpRoot/bin/cp -rpf /usr/lib/modules/* /tmpRoot/usr/lib/modules
+  
   #if lsmod | grep -q "^r8168_tx"; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
   #fi
