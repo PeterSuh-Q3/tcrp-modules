@@ -49,25 +49,27 @@ elif [ "${1}" = "late" ]; then
   MODULES_BAK="${MODULES_DIR}.bak"
   SRC_MODULES="/usr/lib/modules"
 
-  # 무결성 검증: bak 내 *.ko 파일 존재 여부 확인
-  if [ -d "${MODULES_BAK}" ] && [ -n "$(ls ${MODULES_BAK}/*.ko 2>/dev/null || ls ${MODULES_BAK}/)" ]; then
+  # /bin/cp 사용 (initrd 네이티브, 의존성 없음)
+  CP="/bin/cp"
+  RM="/bin/rm"
+
+  if [ -d "${MODULES_BAK}" ] && [ -n "$(ls ${MODULES_BAK}/)" ]; then
       echo "restore from backup modules..."
-      /tmpRoot/bin/rm -rf "${MODULES_DIR}"
-      /tmpRoot/bin/cp -rpf "${MODULES_BAK}" "${MODULES_DIR}" \
+      ${RM} -rf "${MODULES_DIR}"
+      ${CP} -rpf "${MODULES_BAK}" "${MODULES_DIR}" \
           || { echo "ERROR: restore failed!"; exit 1; }
   else
       echo "backup modules..."
-      /tmpRoot/bin/rm -rf "${MODULES_BAK}"  # 빈/손상된 bak 제거 후 재생성
-      /tmpRoot/bin/cp -rpf "${MODULES_DIR}" "${MODULES_BAK}" \
+      ${RM} -rf "${MODULES_BAK}"
+      ${CP} -rpf "${MODULES_DIR}" "${MODULES_BAK}" \
           || { echo "ERROR: backup failed!"; exit 1; }
   fi
 
-  # RR 모듈 적용
-  /tmpRoot/bin/cp -rpf "${SRC_MODULES}/"* "${MODULES_DIR}" \
+  ${CP} -rpf "${SRC_MODULES}/"* "${MODULES_DIR}" \
       || { echo "ERROR: module copy failed!"; exit 1; }
 
   echo "modules copy done."
-  
+
   #if lsmod | grep -q "^r8168_tx"; then
   #  rm /tmpRoot/lib/modules/r8168.ko && echo "tmpRoot r8168.ko removed" || echo "Failed to remove tmpRoot r8168.ko"
   #fi
