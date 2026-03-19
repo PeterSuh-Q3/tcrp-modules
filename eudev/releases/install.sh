@@ -54,44 +54,9 @@ elif [ "${1}" = "late" ]; then
 
   [ ! -f "/tmpRoot/usr/bin/eject" ] && cp -vpf /usr/bin/eject /tmpRoot/usr/bin/eject
 
-  echo "copy modules"
+  echo "copy firmware"
   export LD_LIBRARY_PATH=/tmpRoot/bin:/tmpRoot/lib
-  isChange=false
   /tmpRoot/bin/cp -rnf /usr/lib/firmware/* /tmpRoot/usr/lib/firmware/
-  if grep -q 'RR@RR' /proc/version 2>/dev/null; then
-    if [ -d /tmpRoot/usr/lib/modules.bak ]; then
-      /tmpRoot/bin/rm -rf /tmpRoot/usr/lib/modules
-      /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules.bak /tmpRoot/usr/lib/modules
-    else
-      echo "RR@RR, backup modules."
-      /tmpRoot/bin/cp -rpf /tmpRoot/usr/lib/modules /tmpRoot/usr/lib/modules.bak
-    fi
-    /tmpRoot/bin/cp -rpf /usr/lib/modules/* /tmpRoot/usr/lib/modules
-    isChange=true
-  else
-    if [ -d /tmpRoot/usr/lib/modules.bak ]; then
-      echo "RR@RR, restore modules from backup."
-      /tmpRoot/bin/rm -rf /tmpRoot/usr/lib/modules
-      /tmpRoot/bin/mv -rf /tmpRoot/usr/lib/modules.bak /tmpRoot/usr/lib/modules
-    fi
-    for L in $(grep -v '^\s*$\|^\s*#' /addons/modulelist 2>/dev/null | awk '{if (NF == 2) print $1"###"$2}'); do
-      O=$(echo "${L}" | awk -F'###' '{print $1}')
-      M=$(echo "${L}" | awk -F'###' '{print $2}')
-      [ -z "${M}" ] || [ ! -f "/usr/lib/modules/${M}" ] && continue
-      if [ "$(echo "${O}" | cut -c1 | sed 's/.*/\U&/')" = "F" ]; then
-        /tmpRoot/bin/cp -vrf /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
-      else
-        /tmpRoot/bin/cp -vrn /usr/lib/modules/${M} /tmpRoot/usr/lib/modules/
-      fi
-      isChange=true
-    done
-  fi
-  echo "isChange: ${isChange}"
-  [ "${isChange}" = "true" ] && /usr/sbin/depmod -a -b /tmpRoot
-
-  # Restore kvm module
-  /usr/sbin/modprobe kvm_intel || true # kvm-intel.ko
-  /usr/sbin/modprobe kvm_amd || true   # kvm-amd.ko
 
   echo "Copy rules"
   /tmpRoot/bin/cp -vrf /usr/lib/udev/* /tmpRoot/usr/lib/udev/
