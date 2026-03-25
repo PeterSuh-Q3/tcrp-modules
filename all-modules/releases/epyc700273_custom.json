@@ -4,13 +4,13 @@
     {
       "name": "modules-epyc7002-7.3-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/modules-epyc7002-7.3-5.10.55.tgz",
-      "sha256": "59edc21f4864590bcdd146171ec46924817f959172f4c3d4e7460d15136fb2f2",
+      "sha256": "2f7bb79205db714ea84a847b56e4247fb02e9d8cce5bdcc3509d76bcbf10a084",
       "packed": false
     },
     {
       "name": "firmware-custom.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware-custom.tgz",
-      "sha256": "2d2dcccefbd428ba6fce61f155bd679df2bf73595dd89a8d153bf3017c40c968",
+      "sha256": "d90c46fd73c6f6186e5d4892f00c5155cf3ba54cd1f0c0efa70c0a5fedf824d3",
       "packed": false
     },
     {

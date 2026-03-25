@@ -4,13 +4,13 @@
     {
       "name": "modules-geminilakenk-7.3-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/modules-geminilakenk-7.3-5.10.55.tgz",
-      "sha256": "56f75bccc350a796cbb82cb6769fdd61b4a676b738eb94de60dea4865dfeb58a",
+      "sha256": "b712d02130d01805aa05b7f706dc7aff6874a7acb9dcf0bd7de6704ec1031719",
       "packed": false
     },
     {
       "name": "firmware-custom.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware-custom.tgz",
-      "sha256": "2d2dcccefbd428ba6fce61f155bd679df2bf73595dd89a8d153bf3017c40c968",
+      "sha256": "d90c46fd73c6f6186e5d4892f00c5155cf3ba54cd1f0c0efa70c0a5fedf824d3",
       "packed": false
     },
     {
