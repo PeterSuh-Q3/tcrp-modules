@@ -33,13 +33,13 @@ elif [ "${1}" = "modules" ]; then
   # Give more time
   sleep 10
   # Remove from memory to not conflict with RAID mount scripts
-  /usr/bin/killall udevd
+  #/usr/bin/killall udevd #mshell 은 udev 차후 기동이 없으므로 kill 하면 HBA 에서 syno_block_info 를 생성하지 못하는 이슈 있음.
   # modprobe pcspeaker, pcspkr
-  /usr/sbin/modprobe pcspeaker || true
-  /usr/sbin/modprobe pcspkr || true
+  [ -f /lib/modules/pcspeaker.ko ] && /usr/sbin/modprobe pcspeaker || true
+  [ -f /lib/modules/pcspkr.ko ] && /usr/sbin/modprobe pcspkr || true
   # modprobe modules for the sensors
   for I in coretemp k10temp hwmon-vid it87 nct6683 nct6775 adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
-    /usr/sbin/modprobe "${I}" || true
+    [ -f /lib/modules/${I}.ko ] && /usr/sbin/modprobe "${I}" || true
   done
   
   # Remove kvm module
