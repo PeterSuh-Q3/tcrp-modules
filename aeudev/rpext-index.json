@@ -1,10 +1,10 @@
 {
-  "id": "eudev",
+  "id": "aeudev",
   "info": {
     "author_url": "https://github.com/PeterSuh-Q3/tcrp-modules/master/aeudev/",
-    "description": "Eudev binaries will assist with auto module loading",
+    "description": "aEudev binaries will assist with auto module loading",
     "help_url": "https://github.com/PeterSuh-Q3/tcrp-modules/master/aeudev/",
-    "name": "Eudev binaries",
+    "name": "aEudev binaries",
     "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/master/aeudev/"
   },
   "releases": {
