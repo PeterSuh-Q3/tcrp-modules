@@ -1,0 +1,21 @@
+{
+"files": [
+    {
+      "name": "eudev-7.1.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/aeudev/releases/eudev-7.1.tgz",
+      "sha256": "747ad23db438df18d85574d676284fa61541a359ae3b8c9759596234e7846e44",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/aeudev/releases/install.sh",
+      "sha256": "9523caeacbd39f03c1ccbaf1ef0f852aded3fb0d4f1d8efd46cda543452e6d65",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_early": "install.sh",
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
