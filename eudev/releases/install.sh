@@ -9,9 +9,9 @@
 if [ "${1}" = "early" ]; then
   echo "Installing addon eudev - ${1}"
   tar -zxf /exts/eudev/eudev-7.1.tgz -C /
-  [ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/sbin/kmod /usr/sbin/modprobe
-  [ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/sbin/kmod /usr/sbin/modinfo
-  [ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/sbin/kmod /usr/sbin/depmod
+  #[ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/sbin/kmod /usr/sbin/modprobe
+  #[ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/sbin/kmod /usr/sbin/modinfo
+  #[ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/sbin/kmod /usr/sbin/depmod
 
 elif [ "${1}" = "modules" ]; then
   echo "Installing addon eudev - ${1}"
