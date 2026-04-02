@@ -9,9 +9,9 @@
 if [ "${1}" = "early" ]; then
   echo "Installing addon eudev - ${1}"
   tar -zxf /exts/eudev/eudev-7.1.tgz -C /
-  [ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/bin/kmod /usr/sbin/modprobe
-  [ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/bin/kmod /usr/sbin/modinfo
-  #[ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/bin/kmod /usr/sbin/depmod
+  [ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/sbin/kmod /usr/sbin/modprobe
+  [ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/sbin/kmod /usr/sbin/modinfo
+  [ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/sbin/kmod /usr/sbin/depmod
 
 elif [ "${1}" = "modules" ]; then
   echo "Installing addon eudev - ${1}"
@@ -33,7 +33,7 @@ elif [ "${1}" = "modules" ]; then
   # Give more time
   sleep 10
   # Remove from memory to not conflict with RAID mount scripts
-  #/usr/bin/killall udevd #mshell 은 udev 차후 기동이 없으므로 kill 하면 HBA 에서 syno_block_info 를 생성하지 못하는 이슈 있음.
+  /usr/bin/killall udevd
   # modprobe pcspeaker, pcspkr
   [ -f /lib/modules/pcspeaker.ko ] && /usr/sbin/modprobe pcspeaker || true
   [ -f /lib/modules/pcspkr.ko ] && /usr/sbin/modprobe pcspkr || true
