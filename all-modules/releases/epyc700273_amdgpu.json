@@ -4,7 +4,7 @@
     {
       "name": "amdgpu-epyc7002-7.3-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/amdgpu-epyc7002-7.3-5.10.55.tgz",
-      "sha256": "401dfdf2c9b9a315d80af67a8bb49910598c8401a17801081237be783f405344",
+      "sha256": "f391955c0f73d4f4795cfcad10efc1f85e3d03d4486d3423e266c5669cabb9b5",
       "packed": false
     },
     {
