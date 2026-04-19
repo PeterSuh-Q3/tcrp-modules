@@ -77,13 +77,12 @@ elif [ "${1}" = "late" ]; then
     echo "modules copy done."
     [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
     [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
-    if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
-      #ls -l /lib/modules/dca.ko
-      [ -f /lib/modules/dca.ko ] && modprobe dca && echo "dca loaded"
-    fi
     echo "Rebuilding module dependencies in /tmpRoot..."
     chroot /tmpRoot /sbin/depmod -a 2>/dev/null || echo "<3>[TCRP] WARNING: chroot depmod failed" > /dev/kmsg
+  fi
 
+  if [ "$TARGET_PLATFORM" = "broadwell" ]||[ "$TARGET_PLATFORM" = "broadwellnk" ]; then
+    [ -f /lib/modules/dca.ko ] && modprobe dca && echo "dca loaded"
   fi
 
   #if lsmod | grep -q "^r8168_tx"; then
