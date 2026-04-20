@@ -39,10 +39,22 @@ if [ "${1}" = "modules" ]; then
     #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
     [ ! -d /lib/firmware ] && mkdir /lib/firmware
-    [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
-    [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
-    [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1
-    [ -f /exts/all-modules/firmwareamdgpu.tgz ] && gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1  
+    if [ -f /exts/all-modules/firmware.tgz ]; then
+      gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+        || echo "Firmware extraction failed" >&2
+    fi
+    if [ -f /exts/all-modules/firmware-custom.tgz ]; then
+      gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+        || echo "Firmware-custom extraction failed" >&2
+    fi
+    if [ -f /exts/all-modules/firmwarei915.tgz ]; then
+      gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+        || echo "Firmwarei915 extraction failed" >&2
+    fi
+    if [ -f /exts/all-modules/firmwareamdgpu.tgz ]; then
+      gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+        || echo "Firmwareamdgpu extraction failed" >&2
+    fi
     #if [ ${REVISION} = "#64570" ]; then
     #  echo "Modify VERSION file for 7.2.0-64570-1"
     #  sed -i 's#smallfixnumber="0"#smallfixnumber="1"#' /etc.defaults/VERSION
@@ -140,10 +152,22 @@ elif [ "${1}" = "late" ]; then
   #fi
 
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
-  [ -f /exts/all-modules/firmware.tgz ] && gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 || { echo "Firmware extraction failed" >&2; true; }
-  [ -f /exts/all-modules/firmware-custom.tgz ] && gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 || { echo "Firmware-custom extraction failed" >&2; true; }
-  [ -f /exts/all-modules/firmwarei915.tgz ] && gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 || { echo "Firmwarei915 extraction failed" >&2; true; }
-  [ -f /exts/all-modules/firmwareamdgpu.tgz ] && gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 || { echo "Firmwareamdgpu extraction failed" >&2; true; }    # patch smallfixversion for 7.2.0-64570-1
+  if [ -f /exts/all-modules/firmware.tgz ]; then
+    gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+      || echo "Firmware extraction failed" >&2
+  fi
+  if [ -f /exts/all-modules/firmware-custom.tgz ]; then
+    gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+      || echo "Firmware-custom extraction failed" >&2
+  fi
+  if [ -f /exts/all-modules/firmwarei915.tgz ]; then
+    gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+      || echo "Firmwarei915 extraction failed" >&2
+  fi
+  if [ -f /exts/all-modules/firmwareamdgpu.tgz ]; then
+    gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+      || echo "Firmwareamdgpu extraction failed" >&2
+  fi    # patch smallfixversion for 7.2.0-64570-1
 
   #if [ ${REVISION} = "#64570" ]; then
   #  echo "Copy the modified version files for 7.2.0-64570-1 to /tmpRoot"
