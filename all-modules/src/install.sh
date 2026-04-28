@@ -80,7 +80,8 @@ elif [ "${1}" = "late" ]; then
 
   MODULES_DIR="/tmpRoot/usr/lib/modules"
   MODULES_BAK="${MODULES_DIR}.bak"
-  META_FILE="${MODULES_DIR}.bak.meta"     # BAK 외부에 보관 (cp 시 복사되지 않도록)
+  META_FILE="${MODULES_DIR}.bak.meta"          # BAK 지문 (BAK 외부 보관)
+  PML_MARKER="${MODULES_DIR}.pml_active"       # PML 오염 흔적 마커 (지문 기록)
   SRC_MODULES="/usr/lib/modules"
 
   # /bin/cp 사용 (initrd 네이티브, 의존성 없음)
@@ -89,6 +90,7 @@ elif [ "${1}" = "late" ]; then
 
   CURRENT_FP="$(get_dsm_fingerprint /tmpRoot)"
   SAVED_FP="$(cat "${META_FILE}" 2>/dev/null || true)"
+  MARKER_FP="$(cat "${PML_MARKER}" 2>/dev/null || true)"
 
   if [ -f "/addons/pml_on" ]; then
     echo "handle modules to /tmpRoot..."
@@ -114,6 +116,10 @@ elif [ "${1}" = "late" ]; then
     ${CP} -rpf "${SRC_MODULES}/"* "${MODULES_DIR}" \
         || { echo "ERROR: module copy failed!"; exit 1; }
 
+    # PML 오염 흔적 마커 — IML 부팅 시 이 파일이 있으면 복원 트리거
+    echo "${CURRENT_FP}" > "${PML_MARKER}"
+    echo "PML pollution marker written: ${CURRENT_FP}"
+
     echo "modules copy done."
     [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
     [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
@@ -121,25 +127,35 @@ elif [ "${1}" = "late" ]; then
     chroot /tmpRoot /sbin/depmod -a 2>/dev/null || echo "<3>[TCRP] WARNING: chroot depmod failed" > /dev/kmsg
 
   else
-    # IML 모드: PML 이 남겼던 rootfs 오염을 BAK 으로 원상복원
-    # 단 지문이 완전히 일치할 때만 수행 (불일치 시 rootfs 불변 유지)
-    if [ -d "${MODULES_BAK}" ] && [ -n "$(ls ${MODULES_BAK}/ 2>/dev/null)" ] \
+    # IML 모드: PML 오염이 "확실한" 경우만 복원
+    # 조건 3중:
+    #   1) PML 마커 존재 (= 직전 부팅 중 한 번이라도 PML 오버레이 있었음)
+    #   2) 마커 지문 == 현재 지문 (= 같은 플랫폼/DSM에서 발생한 오염)
+    #   3) BAK 지문 == 현재 지문 (= BAK가 현재 DSM에 유효)
+    # 셋 다 만족할 때만 복원, 아니면 rootfs 불변
+    if [ -f "${PML_MARKER}" ] \
+       && [ "${MARKER_FP}" = "${CURRENT_FP}" ] \
+       && [ -d "${MODULES_BAK}" ] && [ -n "$(ls ${MODULES_BAK}/ 2>/dev/null)" ] \
        && [ "${SAVED_FP}" = "${CURRENT_FP}" ]; then
-        echo "IML mode: restoring pristine modules from BAK (fingerprint OK: ${CURRENT_FP})"
-        # 이전 오염본 1개만 롤링 보존 (디스크 낭비 방지)
+        echo "IML mode: PML pollution confirmed (marker=${MARKER_FP}) - restoring"
+        # 이전 오염본 1개 롤링 보존
         ${RM} -rf "${MODULES_DIR}.polluted.prev" 2>/dev/null
         /bin/mv "${MODULES_DIR}" "${MODULES_DIR}.polluted.prev" 2>/dev/null
         ${CP} -rpf "${MODULES_BAK}" "${MODULES_DIR}" \
             || { echo "ERROR: IML restore failed!"; exit 1; }
-        echo "IML restore done."
+        # 마커 제거 — 일회성 복원 (다음 IML 부팅에서 재실행 방지)
+        ${RM} -f "${PML_MARKER}"
+        echo "IML restore done, PML marker cleared."
         [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
         [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
         chroot /tmpRoot /sbin/depmod -a 2>/dev/null \
             || echo "<3>[TCRP] WARNING: IML chroot depmod failed" > /dev/kmsg
-    elif [ -d "${MODULES_BAK}" ]; then
+    elif [ -f "${PML_MARKER}" ] && [ "${MARKER_FP}" != "${CURRENT_FP}" ]; then
+        echo "<4>[TCRP] IML mode: PML marker fingerprint mismatch (marker='${MARKER_FP}' current='${CURRENT_FP}') - leave rootfs intact" > /dev/kmsg
+    elif [ -f "${PML_MARKER}" ] && [ "${SAVED_FP}" != "${CURRENT_FP}" ]; then
         echo "<4>[TCRP] IML mode: BAK fingerprint mismatch (saved='${SAVED_FP}' current='${CURRENT_FP}') - leave rootfs intact" > /dev/kmsg
     else
-        echo "IML mode: no BAK present - nothing to restore"
+        echo "IML mode: no PML pollution evidence - nothing to restore"
     fi
   fi
 
