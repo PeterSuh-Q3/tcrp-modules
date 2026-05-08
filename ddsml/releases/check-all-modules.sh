@@ -10,14 +10,26 @@ listextension() {
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
+
+        # Priority 1: try _txrx/_tx variants first (multi-queue + RSS optimization)
+        # so they bind to the PCI device before vanilla
+        for suffix in _txrx _tx; do
+            variant="${1}${suffix}"
+            if [ -f "/lib/modules/${variant}.ko" ]; then
+                echo "Loading variant first (priority): ${variant}"
+                /usr/sbin/insmod "/lib/modules/${variant}.ko" 2>/dev/null
+            fi
+        done
+
+        # Priority 2: load vanilla (will become idle if variant already claimed device)
         /usr/sbin/modprobe "${1}"
-        
+
         # Wait for 2 seconds
         sleep 2
-        
-        # Check for "Kernel driver in use: ${1}" in lspci -v output
-        if lspci -v | grep -q "Kernel driver in use: ${1}"; then
-            echo "Module ${1} loaded successfully and is in use"
+
+        # Check whether ANY variant (vanilla or _txrx/_tx) bound to the device
+        if lspci -v | grep -qE "Kernel driver in use: (${1}|${1}_txrx|${1}_tx)"; then
+            echo "Module ${1} (or variant) loaded successfully and is in use"
         else
             echo "Module ${1} not detected in use, trying insmod"
             /usr/sbin/insmod "/lib/modules/${1}.ko"
