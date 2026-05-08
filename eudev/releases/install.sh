@@ -25,6 +25,19 @@ elif [ "${1}" = "modules" ]; then
     echo "FAIL"
     exit 1
   }
+
+  # Pre-load Realtek _txrx/_tx variants BEFORE udev trigger so they bind
+  # to the PCI device first (multi-queue + RSS + PAGE_REUSE priority).
+  # Vanilla r8125/r8126/r8127/r8168 will still be loaded later by udev's
+  # modprobe but cannot rebind a device already claimed by the variant.
+  echo "Pre-loading Realtek _txrx/_tx variants for multi-queue priority"
+  for variant in r8125_txrx r8126_txrx r8127_txrx r8168_tx; do
+    if [ -f "/lib/modules/${variant}.ko" ]; then
+      echo "  insmod ${variant}"
+      /usr/sbin/insmod "/lib/modules/${variant}.ko" 2>/dev/null
+    fi
+  done
+
   echo "Triggering add events to udev"
   udevadm trigger --type=subsystems --action=add
   udevadm trigger --type=devices --action=add
