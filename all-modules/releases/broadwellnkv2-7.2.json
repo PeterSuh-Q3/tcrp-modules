@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwellnkv2-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2-4.4.302.tgz",
+      "name": "broadwellnkv2-7.2-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellnkv2-7.2-4.4.302.tgz",
       "sha256": "512cc339c114ee3f9f4ea12ec1f95bf453c41d6057f9995a945b561e495f1307",
       "packed": false
     },

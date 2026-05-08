@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "purley-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley-4.4.180.tgz",
+      "name": "purley-7.1-4.4.180.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/purley-7.1-4.4.180.tgz",
       "sha256": "90fffd7e882aa2b50591bb2f22f2736eb000696475df6a81d338f31289ded8de",
       "packed": false
     },

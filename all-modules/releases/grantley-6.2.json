@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "grantley-3.10.105.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/grantley-3.10.105.tgz",
+      "name": "grantley-6.2-3.10.105.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/grantley-6.2-3.10.105.tgz",
       "sha256": "8311d863e691c44471e10e4da86c3e65828758d1f751c4f4e398e4ab2f3eb11c",
       "packed": false
     },

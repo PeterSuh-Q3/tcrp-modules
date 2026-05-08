@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "bromolow-3.10.105.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/bromolow-3.10.105.tgz",
+      "name": "bromolow-6.2-3.10.105.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/bromolow-6.2-3.10.105.tgz",
       "sha256": "32a111faa9646a843f547cc05daa63bcf5f1f2b1003acb0d8b660c1da4d8b7f5",
       "packed": false
     },

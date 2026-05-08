@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "geminilake-4.4.59.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-4.4.59.tgz",
+      "name": "geminilake-6.2-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-6.2-4.4.59.tgz",
       "sha256": "8172c9ef850be756de451f846d395bb19b6c146dcd87959f289211d31157ec5a",
       "packed": false
     },

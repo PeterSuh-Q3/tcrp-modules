@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "v1000-4.4.59.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000-4.4.59.tgz",
+      "name": "v1000-6.2-4.4.59.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000-6.2-4.4.59.tgz",
       "sha256": "a2ffde2067d54ab73c04189ee8f512f096f203498e8dc1ce3a3ef1b577bdc3c8",
       "packed": false
     },

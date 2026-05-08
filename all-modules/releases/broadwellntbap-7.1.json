@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwellntbap-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-4.4.180.tgz",
+      "name": "broadwellntbap-7.1-4.4.180.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-7.1-4.4.180.tgz",
       "sha256": "94070856c0687b9ddf069a61fb647d4d6f2b253413ee9414c9ca1236cae4ca55",
       "packed": false
     },

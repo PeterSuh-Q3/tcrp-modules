@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "broadwell-3.10.105.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-3.10.105.tgz",
+      "name": "broadwell-6.2-3.10.105.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwell-6.2-3.10.105.tgz",
       "sha256": "1d8babc2031caf5cab56891df54bd945642f447901f9a7c2811d2be52c1d3f9d",
       "packed": false
     },
