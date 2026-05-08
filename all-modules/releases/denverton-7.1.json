@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "denverton-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-4.4.180.tgz",
+      "name": "denverton-7.1-4.4.180.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/denverton-7.1-4.4.180.tgz",
       "sha256": "0ba1c8fedd3fb9c64630c184927b7428dd5966b928db09d9a0245b9870935410",
       "packed": false
     },

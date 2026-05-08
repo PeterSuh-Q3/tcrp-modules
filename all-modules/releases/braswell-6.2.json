@@ -2,8 +2,8 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "braswell-3.10.105.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/braswell-3.10.105.tgz",
+      "name": "braswell-6.2-3.10.105.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/braswell-6.2-3.10.105.tgz",
       "sha256": "aebc095d0e7b7cf9b18b93a41adcf3792bddb2c900eeab26c1477ce627980a77",
       "packed": false
     },
