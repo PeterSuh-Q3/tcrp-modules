@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "epyc7002-7.2-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.2-5.10.55.tgz",
-      "sha256": "ea667055c080b28fc9128e4b9b324501a9eb2d34bc4d70f498b4f7a082b5a4eb",
+      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.13/epyc7002-7.2-5.10.55.tgz",
+      "sha256": "e789baf03581af7d2e7b8235dc4815e9e737a6c4979c7a5a5d1c1cd6b25fbb7a",
       "packed": false
     },
     {

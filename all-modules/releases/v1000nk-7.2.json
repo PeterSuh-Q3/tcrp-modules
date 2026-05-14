@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "v1000nk-7.2-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/v1000nk-7.2-5.10.55.tgz",
-      "sha256": "113589d73b5c3f438229810ca8ae089c82a3018d1bbccd10e95276a72ddbea8f",
+      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.13/v1000nk-7.2-5.10.55.tgz",
+      "sha256": "fc685acd2f25a97cfdec5d61776e840d4bdb77545a0dd1c877c542f26a61a303",
       "packed": false
     },
     {

@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwellntbap-7.1-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/broadwellntbap-7.1-4.4.180.tgz",
-      "sha256": "a6635b17e730fa250b7a16ec8f92cb388648d9e543d04914ce600fa034a3151d",
+      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.13/broadwellntbap-7.1-4.4.180.tgz",
+      "sha256": "c0e48926a13cb76d7ffd410d2eebc94922604004ce13154aaf69031ce7a91c3c",
       "packed": false
     },
     {
