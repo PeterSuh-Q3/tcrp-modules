@@ -56,20 +56,19 @@ jobs:
           # ---- 1) 플랫폼 tgz 파일 다운로드 --------------------------------
           # 패턴: {소문자+숫자}-{X.Y}-{커널버전}.tgz
           # 제외: firmware.tgz, firmwarei915.tgz 등
-          echo ""
-          echo "=== tgz 파일 다운로드 → ${DEST} ==="
-          TGZ_LIST=$(echo "${ALL_ASSETS}" \
-            | grep -E '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*\.tgz$' || true)
-
-          if [ -z "${TGZ_LIST}" ]; then
-            echo "::warning::다운로드할 플랫폼 tgz 파일이 없습니다."
-          else
-            while IFS= read -r FNAME; do
-              [ -z "${FNAME}" ] && continue
-              echo "  다운로드: ${FNAME}"
-              curl -fsSL "${BASE_URL}/${FNAME}" -o "${DEST}/${FNAME}"
-            done <<< "${TGZ_LIST}"
-          fi
+          #echo ""
+          #echo "=== tgz 파일 다운로드 → ${DEST} ==="
+          #TGZ_LIST=$(echo "${ALL_ASSETS}" \
+          #  | grep -E '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*\.tgz$' || true)
+          #if [ -z "${TGZ_LIST}" ]; then
+          #  echo "::warning::다운로드할 플랫폼 tgz 파일이 없습니다."
+          #else
+          #  while IFS= read -r FNAME; do
+          #    [ -z "${FNAME}" ] && continue
+          #    echo "  다운로드: ${FNAME}"
+          #    curl -fsSL "${BASE_URL}/${FNAME}" -o "${DEST}/${FNAME}"
+          #  done <<< "${TGZ_LIST}"
+          #fi
 
           # ---- 2) 플랫폼 json 파일 다운로드 --------------------------------
           # arpl-modules repo main 브랜치 루트의 {platform}-{X.Y}.json 목록을
