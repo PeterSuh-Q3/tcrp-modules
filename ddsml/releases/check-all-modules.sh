@@ -89,7 +89,12 @@ listpci() {
             echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
         0300)
-            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            # Intel 내장 GPU는 misc 애드온에서 i915 패치 후 처리하므로 SKIP
+            if [ "${vendor}" = "8086" ]; then
+                echo "Skip Intel VGA Controller : pciid ${vendor}d0000${device} (handled by misc addon)"
+            else
+                echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            fi
             ;;
         0c04)
             echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
