@@ -3,7 +3,7 @@
     {
       "name": "check-all-modules.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/ddsml/releases/check-all-modules.sh",
-      "sha256": "8ad7bc5696bcff0028408406d147ce77826f29e1ccbba0bca6d7ac938099ee0b",
+      "sha256": "09b665d9c3ef0b8733d8acea4d3795fd0d46c36b6c8651e9c37511bfac0a1a32",
       "packed": false
     },
     {
