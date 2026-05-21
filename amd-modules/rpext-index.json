@@ -1,0 +1,13 @@
+{
+  "id": "amd-modules",
+  "info": {
+    "author_url": "https://github.com/PeterSuh-Q3",
+    "description": "Adds AMD GPU modules Support (amdgpu + DRM dependencies)",
+    "help_url": "<todo>",
+    "name": "amd-modules",
+    "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/tree/main/amd-modules"
+  },
+  "releases": {
+    "epyc7002_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/epyc7002-7.3.json"
+  }
+}
