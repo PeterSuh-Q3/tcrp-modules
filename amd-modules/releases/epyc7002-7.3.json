@@ -4,7 +4,7 @@
     {
       "name": "epyc7002-7.3-5.10.55.tgz",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/epyc7002-7.3-5.10.55.tgz",
-      "sha256": "813f9c66460b2888685716b235c37ba17de9a70253b872978ef171682198a5b6",
+      "sha256": "d14dac9f5ceba153f8fa35cddbd93790a03f792adefce0da64b3b1f7d519afb9",
       "packed": false
     },
     {
