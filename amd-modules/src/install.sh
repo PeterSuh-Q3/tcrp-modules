@@ -30,29 +30,29 @@ get_dsm_fingerprint() {
 getvars
 
 if [ "${1}" = "modules" ]; then
-  echo "all-modules - ${1}"
+  echo "amd-modules - ${1}"
   [ -f "/addons/pml_on" ] && echo "/addons/pml_on file exists PML METHOD" || echo "/addons/pml_on file not exists IML METHOD"
 
   if [ ! -f "/addons/pml_on" ]; then
-    gunzip -c /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
+    gunzip -c /exts/amd-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
 
     #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
     [ ! -d /lib/firmware ] && mkdir /lib/firmware
-    if [ -f /exts/all-modules/firmware.tgz ]; then
-      gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+    if [ -f /exts/amd-modules/firmware.tgz ]; then
+      gunzip -c /exts/amd-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmware extraction failed" >&2
     fi
-    if [ -f /exts/all-modules/firmware-custom.tgz ]; then
-      gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+    if [ -f /exts/amd-modules/firmware-custom.tgz ]; then
+      gunzip -c /exts/amd-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmware-custom extraction failed" >&2
     fi
-    if [ -f /exts/all-modules/firmwarei915.tgz ]; then
-      gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+    if [ -f /exts/amd-modules/firmwarei915.tgz ]; then
+      gunzip -c /exts/amd-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmwarei915 extraction failed" >&2
     fi
-    if [ -f /exts/all-modules/firmwareamdgpu.tgz ]; then
-      gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+    if [ -f /exts/amd-modules/firmwareamdgpu.tgz ]; then
+      gunzip -c /exts/amd-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmwareamdgpu extraction failed" >&2
     fi
     #if [ ${REVISION} = "#64570" ]; then
@@ -67,9 +67,9 @@ if [ "${1}" = "modules" ]; then
   fi
 
 elif [ "${1}" = "late" ]; then
-  echo "all-modules - ${1}"
+  echo "amd-modules - ${1}"
 
-  #for file in /exts/all-modules/modules-${TARGET_PLATFORM}*${LINUX_VER}.tgz; do
+  #for file in /exts/amd-modules/modules-${TARGET_PLATFORM}*${LINUX_VER}.tgz; do
   #  if [ -f "$file" ]; then
   #    gunzip -c "$file" | tar xvf - -C /tmpRoot/lib/modules/ >/dev/null 2>&1
   #    break
@@ -168,20 +168,20 @@ elif [ "${1}" = "late" ]; then
   #fi
 
   [ ! -d /tmpRoot/lib/firmware ] && mkdir /tmpRoot/lib/firmware
-  if [ -f /exts/all-modules/firmware.tgz ]; then
-    gunzip -c /exts/all-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+  if [ -f /exts/amd-modules/firmware.tgz ]; then
+    gunzip -c /exts/amd-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
       || echo "Firmware extraction failed" >&2
   fi
-  if [ -f /exts/all-modules/firmware-custom.tgz ]; then
-    gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+  if [ -f /exts/amd-modules/firmware-custom.tgz ]; then
+    gunzip -c /exts/amd-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
       || echo "Firmware-custom extraction failed" >&2
   fi
-  if [ -f /exts/all-modules/firmwarei915.tgz ]; then
-    gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+  if [ -f /exts/amd-modules/firmwarei915.tgz ]; then
+    gunzip -c /exts/amd-modules/firmwarei915.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
       || echo "Firmwarei915 extraction failed" >&2
   fi
-  if [ -f /exts/all-modules/firmwareamdgpu.tgz ]; then
-    gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
+  if [ -f /exts/amd-modules/firmwareamdgpu.tgz ]; then
+    gunzip -c /exts/amd-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
       || echo "Firmwareamdgpu extraction failed" >&2
   fi    # patch smallfixversion for 7.2.0-64570-1
 
@@ -194,6 +194,6 @@ elif [ "${1}" = "late" ]; then
 fi
 
 #if [ "$TARGET_PLATFORM" = "apollolake" ]||[ "$TARGET_PLATFORM" = "geminilake" ]; then
-#  tar xvfz /exts/all-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /exts/all-modules/ modules.*
-#  cp -vf /exts/all-modules/modules.* /lib/modules
+#  tar xvfz /exts/amd-modules/${TARGET_PLATFORM}*${LINUX_VER}.tgz -C /exts/amd-modules/ modules.*
+#  cp -vf /exts/amd-modules/modules.* /lib/modules
 #fi
