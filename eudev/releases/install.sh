@@ -80,27 +80,8 @@ elif [ "${1}" = "late" ]; then
   mkdir -p /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
   ln -sf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
 
-  # if custom modules or amdgpu modules exists
-  if [[ -f /exts/all-modules/firmware-custom.tgz || -f /exts/all-modules/firmwareamdgpu.tgz ]]; then
-    # 모든 패키지(Container Manager, Plex 등)가 로드되기 전에 모듈을 올려 /dev/dri 노드를 생성
-    # 펌웨어와 모듈이 복사된 후 실행
-    DEST="/tmpRoot/usr/lib/systemd/system/mshell-amdgpu.service"
-    {
-      echo "[Unit]"
-      echo "Description=MSHELL AMDGPU Module Loader"
-      echo "After=local-fs.target"
-      echo "Before=pkgctl.target"
-      echo
-      echo "[Service]"
-      echo "Type=oneshot"
-      echo "ExecStart=/bin/sh -c '/sbin/depmod -a && /sbin/modprobe amdgpu'"
-      echo "RemainAfterExit=yes"      
-      echo
-      echo "[Install]"
-      echo "WantedBy=multi-user.target"
-    } >"${DEST}"
-    chmod 644 "${DEST}"
-    ln -sf /usr/lib/systemd/system/mshell-amdgpu.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/mshell-amdgpu.service
-  fi
-  
+  # AMDGPU module loader systemd unit 은 tcrp-addons/misc/releases/install-all.sh
+  # 의 fixamdgpu() 로 이전됨 (플랫폼 비종속 공통 루틴).
+  # 조건도 /exts/amd-modules 또는 /exts/custom-modules 디렉토리 존재 여부로 변경됨.
+
 fi
