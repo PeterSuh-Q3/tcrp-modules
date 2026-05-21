@@ -1,0 +1,15 @@
+{
+  "id": "custom-modules",
+  "info": {
+    "author_url": "https://github.com/PeterSuh-Q3",
+    "description": "Adds Custom modules Support (kernel 5.10.55 platforms)",
+    "help_url": "<todo>",
+    "name": "custom-modules",
+    "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/tree/main/custom-modules"
+  },
+  "releases": {
+    "epyc7002_72_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/epyc7002-7.2_custom.json",
+    "epyc7002_73_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/epyc7002-7.3_custom.json",
+    "geminilakenk_73_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/geminilakenk-7.3_custom.json"
+  }
+}
