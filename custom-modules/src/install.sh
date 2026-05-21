@@ -43,10 +43,6 @@ if [ "${1}" = "modules" ]; then
       gunzip -c /exts/custom-modules/firmware.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmware extraction failed" >&2
     fi
-    if [ -f /exts/custom-modules/firmware-custom.tgz ]; then
-      gunzip -c /exts/custom-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
-        || echo "Firmware-custom extraction failed" >&2
-    fi
     if [ -f /exts/custom-modules/firmwareamdgpu.tgz ]; then
       gunzip -c /exts/custom-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmwareamdgpu extraction failed" >&2
@@ -167,10 +163,6 @@ elif [ "${1}" = "late" ]; then
   if [ -f /exts/custom-modules/firmware.tgz ]; then
     gunzip -c /exts/custom-modules/firmware.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
       || echo "Firmware extraction failed" >&2
-  fi
-  if [ -f /exts/custom-modules/firmware-custom.tgz ]; then
-    gunzip -c /exts/custom-modules/firmware-custom.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
-      || echo "Firmware-custom extraction failed" >&2
   fi
   if [ -f /exts/custom-modules/firmwareamdgpu.tgz ]; then
     gunzip -c /exts/custom-modules/firmwareamdgpu.tgz | tar xvf - -C /tmpRoot/lib/firmware/ >/dev/null 2>&1 \
