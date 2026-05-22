@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "geminilake-7.3-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/geminilake-7.3-4.4.302.tgz",
+      "sha256": "88794d896a85140eca210148cc5b27a0dbe1cc72058f604bb327e0163336bbb0",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/src/install.sh",
+      "sha256": "d6897437f55e1adcd903d87fc302c420388b55784e5bb1712ede9f6831dd207c",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "af8bf19e8b27e923c0f2c7868f0b45e23bafa101292184c6b3e5e265feba8cae",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
