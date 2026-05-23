@@ -17,7 +17,11 @@
     "r1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/r1000-7.3.json",
     "v1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/v1000-7.3.json",
     "purley_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/purley-7.3.json",
-    "denverton_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/denverton-7.3.json"
+    "denverton_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/denverton-7.3.json",
+    "broadwell_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/broadwell-7.3.json",
+    "broadwellnk_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/broadwellnk-7.3.json",
+    "broadwellnkv2_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/broadwellnkv2-7.3.json",
+    "broadwellntbap_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/broadwellntbap-7.3.json"
   },
   "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/rpext-index.json"
 }
