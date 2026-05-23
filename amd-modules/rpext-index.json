@@ -16,7 +16,8 @@
     "apollolake_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/apollolake-7.3.json",
     "r1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/r1000-7.3.json",
     "v1000_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/v1000-7.3.json",
-    "purley_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/purley-7.3.json"
+    "purley_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/purley-7.3.json",
+    "denverton_44302": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/denverton-7.3.json"
   },
   "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/rpext-index.json"
 }
