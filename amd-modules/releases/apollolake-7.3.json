@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "apollolake-7.3-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/apollolake-7.3-4.4.302.tgz",
+      "sha256": "24aa37dcd553b046e69a6d95a8ef5fc7f6ea9f445ee9aa2f761d18d2bb5c0cf2",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/src/install.sh",
+      "sha256": "eeb0c61a88e84ed352ed41598f0aa6d7307b321752c47015e6aa05090d2bb6f8",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "af8bf19e8b27e923c0f2c7868f0b45e23bafa101292184c6b3e5e265feba8cae",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
