@@ -42,9 +42,22 @@ elif [ "${1}" = "modules" ]; then
     [ -f /lib/modules/${I}.ko ] && /usr/sbin/modprobe "${I}" || true
   done
   
-  # Remove kvm module
-  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel && /usr/sbin/modprobe -r kvm_intel || true # kvm-intel.ko
-  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd && /usr/sbin/modprobe -r kvm_amd || true     # kvm-amd.ko
+  # Remove kvm module (only unload the one not supported by this CPU) for mshell
+  if grep -qm1 'vmx' /proc/cpuinfo; then
+    # Intel CPU (VMX) → kvm_amd 만 제거, kvm_intel 유지
+    /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd \
+      && /usr/sbin/modprobe -r kvm_amd || true      # kvm-amd.ko
+  elif grep -qm1 'svm' /proc/cpuinfo; then
+    # AMD CPU (SVM) → kvm_intel 만 제거, kvm_amd 유지
+    /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel \
+      && /usr/sbin/modprobe -r kvm_intel || true    # kvm-intel.ko
+  else
+    # 가상화 미지원 CPU → 둘 다 제거
+    /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel \
+      && /usr/sbin/modprobe -r kvm_intel || true    # kvm-intel.ko
+    /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd \
+      && /usr/sbin/modprobe -r kvm_amd   || true    # kvm-amd.ko
+  fi
 
 elif [ "${1}" = "late" ]; then
   echo "Installing addon eudev - ${1}"
