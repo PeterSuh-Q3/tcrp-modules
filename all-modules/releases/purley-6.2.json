@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "purley-6.2-4.4.59.tgz",
-      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.26/purley-6.2-4.4.59.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.26/purley-6.2-4.4.59.tgz",
       "sha256": "aff1e26c2635581b57d177ff53d06981874fe462837d9353972f4865a3327018",
       "packed": false
     },

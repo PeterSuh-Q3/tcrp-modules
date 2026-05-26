@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "r1000-7.2-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.26/r1000-7.2-4.4.302.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.26/r1000-7.2-4.4.302.tgz",
       "sha256": "ca94bc619e20be986b4a02ba96be2d492d33096fd51b2eefcb6f0b9545ff1e4d",
       "packed": false
     },

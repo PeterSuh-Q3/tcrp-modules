@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "v1000-7.0-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/arpl-modules/releases/download/26.5.26/v1000-7.0-4.4.180.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.26/v1000-7.0-4.4.180.tgz",
       "sha256": "26d487be86a9dd5f8b21583fa17a6fac6c8107dc0f744d4f461857f4ec820de5",
       "packed": false
     },
