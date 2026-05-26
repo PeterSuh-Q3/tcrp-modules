@@ -1,0 +1,242 @@
+name: Update SHA256 from Latest Release
+
+on:
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: '갱신할 릴리즈 태그 (비워두면 latest 사용)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write  # JSON 파일 커밋을 위해 필요
+
+jobs:
+  update-sha256:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ------------------------------------------------------------------ #
+      # 1. 소스 체크아웃
+      # ------------------------------------------------------------------ #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ------------------------------------------------------------------ #
+      # 2. 대상 릴리즈 태그 결정
+      #    - release 이벤트 → github.event.release.tag_name
+      #    - workflow_dispatch + 태그 입력 → inputs.release_tag
+      #    - workflow_dispatch + 태그 미입력 → GitHub API로 latest 조회
+      # ------------------------------------------------------------------ #
+      - name: Determine target release tag
+        id: get_tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+          elif [ -n "${{ inputs.release_tag }}" ]; then
+            TAG="${{ inputs.release_tag }}"
+          else
+            TAG=$(gh release view --repo "${{ github.repository }}" --json tagName -q '.tagName')
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "대상 릴리즈 태그: ${TAG}"
+
+      # ------------------------------------------------------------------ #
+      # 3. 릴리즈 asset 중 files-chksum 파일만 다운로드하여 sha256 맵 생성
+      #    files-chksum 형식 (공백 구분 3열):
+      #      <sha256hex>  <파일명>  <체크섬파일명>
+      #    예:
+      #      8a7d9870...  apollolake-7.2-4.4.302.tgz  modpack.sha256
+      #      9cbf4506...  firmware.tgz                 firmware.sha256
+      #
+      #    이 중 {플랫폼}-{DSM버전}-{커널버전}.tgz 행만 추출하여 JSON 맵으로 변환
+      #    → 실제 tgz 파일은 일절 다운로드하지 않음
+      # ------------------------------------------------------------------ #
+      - name: Parse files-chksum and build SHA256 map
+        id: sha256_map
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.get_tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          REPO="${{ github.repository }}"
+          WORK_DIR="$(mktemp -d)"
+          CHKSUM_FILE="${WORK_DIR}/files-chksum"
+          SHA256_MAP="${WORK_DIR}/sha256_map.json"
+
+          echo "{}" > "${SHA256_MAP}"
+
+          echo "=== files-chksum 다운로드: ${TAG} ==="
+          gh release download "${TAG}" \
+            --repo "${REPO}" \
+            --pattern "files-chksum" \
+            --dir "${WORK_DIR}" \
+            --clobber
+
+          echo "=== files-chksum 내용 ==="
+          cat "${CHKSUM_FILE}"
+          echo ""
+
+          echo "=== 플랫폼 tgz 행 파싱 ==="
+          # 패턴: {플랫폼}-{DSM버전}-{커널버전}.tgz 행만 추출
+          # 예: apollolake-7.2-4.4.302.tgz  /  broadwellnk-7.1-4.4.180.tgz
+          # 제외: firmware.tgz, firmwarei915.tgz 등 (플랫폼-X.Y- 패턴이 아닌 것)
+          while IFS=' ' read -r SHA256 FILENAME _REST; do
+            [ -z "${SHA256}" ] || [ -z "${FILENAME}" ] && continue
+
+            # 플랫폼 tgz 패턴: {소문자+숫자}-{숫자.숫자}-{숫자...}.tgz
+            if ! echo "${FILENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*\.tgz$'; then
+              echo "  건너뜀: ${FILENAME}"
+              continue
+            fi
+
+            echo "  등록: ${FILENAME} → ${SHA256}"
+
+            SHA256_MAP_TMP=$(jq \
+              --arg name "${FILENAME}" \
+              --arg hash "${SHA256}" \
+              '. + {($name): $hash}' \
+              "${SHA256_MAP}")
+            echo "${SHA256_MAP_TMP}" > "${SHA256_MAP}"
+          done < "${CHKSUM_FILE}"
+
+          echo "sha256_map_file=${SHA256_MAP}" >> "$GITHUB_OUTPUT"
+          echo ""
+          echo "=== 최종 SHA256 맵 ==="
+          cat "${SHA256_MAP}"
+
+      # ------------------------------------------------------------------ #
+      # 4. 갱신 대상 JSON 파일을 backup_json.zip 으로 백업
+      # ------------------------------------------------------------------ #
+      - name: Backup JSON files
+        run: |
+          set -euo pipefail
+
+          # {platform}-{dsm_ver}.json 패턴 파일만 zip 으로 묶음
+          BACKUP_LIST=()
+          for JSON_FILE in *.json; do
+            if echo "${JSON_FILE}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+\.json$'; then
+              BACKUP_LIST+=("${JSON_FILE}")
+            fi
+          done
+
+          if [ ${#BACKUP_LIST[@]} -eq 0 ]; then
+            echo "::warning::백업할 JSON 파일이 없습니다."
+            exit 0
+          fi
+
+          zip backup_json.zip "${BACKUP_LIST[@]}"
+          echo "백업 완료: backup_json.zip (${#BACKUP_LIST[@]}개 파일)"
+          zipinfo -1 backup_json.zip
+
+      # ------------------------------------------------------------------ #
+      # 5. JSON 파일의 sha256 값 갱신
+      #    - 워크스페이스 루트의 {platform}-{dsm_ver}.json 파일을 스캔
+      #    - files[] 중 name이 {platform}-{dsm_ver}-{kernel_ver}.tgz 인 항목만 갱신
+      # ------------------------------------------------------------------ #
+      - name: Update sha256 in JSON files
+        id: update_json
+        env:
+          SHA256_MAP_FILE: ${{ steps.sha256_map.outputs.sha256_map_file }}
+          TAG: ${{ steps.get_tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          CHANGED_FILES=()
+
+          # 루트의 {platform}-{dsm_ver}.json 파일 순회
+          # 예: apollolake-7.2.json, broadwellnk-7.1.json, ...
+          for JSON_FILE in *.json; do
+            # platform-X.Y.json 패턴인지 확인 (rpext-index.json 등 제외)
+            if ! echo "${JSON_FILE}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+\.json$'; then
+              echo "건너뜀 (패턴 불일치): ${JSON_FILE}"
+              continue
+            fi
+
+            # files[] 배열에서 name이 .tgz 로 끝나고 sha256_map에 있는 항목만 갱신
+            # . as $file 로 요소를 캡처해 has() 에 명시적 문자열 키를 전달,
+            # null name 으로 인한 "Cannot check whether object has a null key" 오류 방지
+            UPDATED=$(jq \
+              --slurpfile sha_map "${SHA256_MAP_FILE}" \
+              --arg release_tag "${TAG}" \
+              '
+              .files |= map(
+                . as $file
+                | if (
+                    ($file.name | type == "string")
+                    and ($file.name | test("\\.tgz$"))
+                    and (($sha_map[0] | type == "object") and ($sha_map[0] | has($file.name)))
+                  )
+                  then
+                    $file
+                    | .sha256 = $sha_map[0][$file.name]
+                    | .url = (
+                        "https://github.com/${{ github.repository }}/releases/download/"
+                        + $release_tag + "/" + $file.name
+                      )
+                  else
+                    $file
+                  end
+              )
+              ' "${JSON_FILE}")
+
+            # 변경이 있을 때만 파일 덮어쓰기
+            CURRENT=$(cat "${JSON_FILE}")
+            if [ "${CURRENT}" != "${UPDATED}" ]; then
+              echo "${UPDATED}" | jq '.' > "${JSON_FILE}"
+              echo "  업데이트됨: ${JSON_FILE}"
+              CHANGED_FILES+=("${JSON_FILE}")
+            else
+              echo "  변경 없음: ${JSON_FILE}"
+            fi
+          done
+
+          if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "changed_list=" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            # 공백 구분 리스트
+            echo "changed_list=${CHANGED_FILES[*]}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ------------------------------------------------------------------ #
+      # 5. 변경된 JSON 파일 커밋 & 푸시
+      # ------------------------------------------------------------------ #
+      - name: Commit and push updated JSON files
+        if: steps.update_json.outputs.changed == 'true'
+        env:
+          TAG: ${{ steps.get_tag.outputs.tag }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 변경된 JSON 파일 및 백업 zip 스테이징
+          for F in ${{ steps.update_json.outputs.changed_list }}; do
+            git add "${F}"
+          done
+          git add backup_json.zip
+
+          git commit -m "chore: update sha256 for release ${TAG}
+
+          Updated files:
+          ${{ steps.update_json.outputs.changed_list }}
+
+          Source: https://github.com/${{ github.repository }}/releases/tag/${TAG}"
+
+          git push
+
+      # ------------------------------------------------------------------ #
+      # 6. 변경 없으면 알림
+      # ------------------------------------------------------------------ #
+      - name: No changes detected
+        if: steps.update_json.outputs.changed == 'false'
+        run: |
+          echo "모든 JSON 파일의 sha256 값이 이미 최신 상태입니다."
+         
