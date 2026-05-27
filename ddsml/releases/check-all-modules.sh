@@ -154,6 +154,10 @@ mmc_modprobe() {
       /usr/sbin/modprobe rtsx_pci_sdmmc
   fi    
   /usr/sbin/modprobe sdhci
+  # sdhci_pci (cqhci-capable backport) needs these providers; load them
+  # explicitly in case modules.dep is stale and does not auto-pull them.
+  /usr/sbin/modprobe cqhci 2>/dev/null
+  /usr/sbin/modprobe sdhci-pci-data 2>/dev/null
   /usr/sbin/modprobe sdhci_pci
   sleep 1
   if [ `/sbin/lsmod |grep -i mmc|wc -l` -gt 0 ] ; then
