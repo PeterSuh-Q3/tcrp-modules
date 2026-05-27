@@ -1,0 +1,33 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "r1000-7.2-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/r1000-7.2-4.4.302.tgz",
+      "sha256": "24fca288ee00e617f97cacc9ee09d23e43711dcc974883d36d79c8d2e407bc2b",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/src/install.sh",
+      "sha256": "eeb0c61a88e84ed352ed41598f0aa6d7307b321752c47015e6aa05090d2bb6f8",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "af8bf19e8b27e923c0f2c7868f0b45e23bafa101292184c6b3e5e265feba8cae",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
