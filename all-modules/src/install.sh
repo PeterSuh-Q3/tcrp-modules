@@ -64,6 +64,12 @@ if [ "${1}" = "modules" ]; then
     [ -f /lib/modules/modules.order ]   || : > /lib/modules/modules.order
     [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
     /usr/sbin/depmod -a
+    # Pre-load these with dependency resolution so DSM's later direct insmod
+    # (SYNOLoadModules, no deps) finds them already loaded and skips them,
+    # avoiding boot-time "Unknown symbol" on their providers.
+    /usr/sbin/modprobe cpufreq_ondemand 2>/dev/null
+    /usr/sbin/modprobe cpufreq_conservative 2>/dev/null
+    /usr/sbin/modprobe i40e 2>/dev/null
   fi
 
 elif [ "${1}" = "late" ]; then
