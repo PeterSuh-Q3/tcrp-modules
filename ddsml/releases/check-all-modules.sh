@@ -188,6 +188,12 @@ if [ "${1}" = "modules" ]; then
     gunzip -c ./modules.alias.3.json.tgz | tar xvf -
     gunzip -c ./modules.alias.4.json.tgz | tar xvf -
     /usr/sbin/depmod -a
+    # Pre-load LSI Fusion MPT base/scsi providers so PCI-triggered HBA drivers
+    # (mptsas/mptspi/mpt3sas) resolve their mpt_*/mptscsih_* symbols even if
+    # listextension falls back to a dependency-less insmod.
+    /usr/sbin/modprobe scsi_transport_sas 2>/dev/null
+    /usr/sbin/modprobe mptbase 2>/dev/null
+    /usr/sbin/modprobe mptscsih 2>/dev/null
     getvars
     listpci
     usblan_modprobe
