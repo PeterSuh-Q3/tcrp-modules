@@ -1,0 +1,137 @@
+name: Update SHA256 for amd-modules
+
+# refresh_json.yml 의 amd-modules 버전.
+# - 릴리즈 자산이 아니라 레포 내 amd-modules/releases/files-chksum 를 직접 참조
+# - amd-modules/releases/{platform}-{dsm}.json 의 files[] 중
+#   {platform}-{dsm}-{kernel}.tgz 항목 sha256 만 갱신 (url 은 raw 경로이므로 유지)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-sha256:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # --------------------------------------------------------------- #
+      # 1. amd-modules/releases/files-chksum 파싱하여 sha256 맵 생성
+      #    형식(공백 3열): <sha256hex> <파일명> <체크섬라벨>
+      #    예: 0d048a05...  apollolake-7.3-4.4.302.tgz  modpack.sha256
+      # --------------------------------------------------------------- #
+      - name: Build SHA256 map from files-chksum
+        id: sha256_map
+        run: |
+          set -euo pipefail
+
+          CHKSUM_FILE="./amd-modules/releases/files-chksum"
+          SHA256_MAP="$(mktemp)"
+          echo "{}" > "${SHA256_MAP}"
+
+          if [ ! -f "${CHKSUM_FILE}" ]; then
+            echo "::error::${CHKSUM_FILE} 없음 (copy-amd-modules 워크플로우 먼저 실행 필요)"
+            exit 1
+          fi
+
+          echo "=== files-chksum 내용 ==="
+          cat "${CHKSUM_FILE}"; echo ""
+
+          echo "=== 플랫폼 tgz 행 파싱 ==="
+          while IFS=' ' read -r SHA256 FILENAME _REST; do
+            { [ -z "${SHA256}" ] || [ -z "${FILENAME}" ]; } && continue
+
+            # 플랫폼 tgz 패턴: {소문자+숫자}-{X.Y}-{커널...}.tgz (firmware/install.sh 제외)
+            if ! echo "${FILENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*\.tgz$'; then
+              echo "  건너뜀: ${FILENAME}"
+              continue
+            fi
+
+            echo "  등록: ${FILENAME} -> ${SHA256}"
+            TMP=$(jq --arg name "${FILENAME}" --arg hash "${SHA256}" \
+              '. + {($name): $hash}' "${SHA256_MAP}")
+            echo "${TMP}" > "${SHA256_MAP}"
+          done < "${CHKSUM_FILE}"
+
+          echo "sha256_map_file=${SHA256_MAP}" >> "$GITHUB_OUTPUT"
+          echo "=== 최종 SHA256 맵 ==="; cat "${SHA256_MAP}"
+
+      # --------------------------------------------------------------- #
+      # 2. amd-modules/releases/{platform}-{dsm}.json 의 sha256 갱신
+      #    (url 은 raw 경로 유지, sha256 만 교체)
+      # --------------------------------------------------------------- #
+      - name: Update sha256 in amd JSON files
+        id: update_json
+        env:
+          SHA256_MAP_FILE: ${{ steps.sha256_map.outputs.sha256_map_file }}
+        run: |
+          set -euo pipefail
+          CHANGED_FILES=()
+
+          for JSON_FILE in ./amd-modules/releases/*.json; do
+            BASENAME=$(basename "${JSON_FILE}")
+            if ! echo "${BASENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+\.json$'; then
+              echo "건너뜀 (패턴 불일치): ${JSON_FILE}"
+              continue
+            fi
+
+            UPDATED=$(jq \
+              --slurpfile sha_map "${SHA256_MAP_FILE}" \
+              '
+              .files |= map(
+                . as $file
+                | if (
+                    ($file.name | type == "string")
+                    and ($file.name | test("\\.tgz$"))
+                    and (($sha_map[0] | type == "object") and ($sha_map[0] | has($file.name)))
+                  )
+                  then $file | .sha256 = $sha_map[0][$file.name]
+                  else $file
+                  end
+              )
+              ' "${JSON_FILE}")
+
+            CURRENT=$(cat "${JSON_FILE}")
+            if [ "${CURRENT}" != "${UPDATED}" ]; then
+              echo "${UPDATED}" | jq '.' > "${JSON_FILE}"
+              echo "  업데이트됨: ${JSON_FILE}"
+              CHANGED_FILES+=("${JSON_FILE}")
+            else
+              echo "  변경 없음: ${JSON_FILE}"
+            fi
+          done
+
+          if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "changed_list=" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed_list=${CHANGED_FILES[*]}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # --------------------------------------------------------------- #
+      # 3. 변경된 JSON 커밋 & 푸시
+      # --------------------------------------------------------------- #
+      - name: Commit and push updated JSON files
+        if: steps.update_json.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for F in ${{ steps.update_json.outputs.changed_list }}; do
+            git add "${F}"
+          done
+          git commit -m "chore: update amd-modules sha256 from files-chksum
+
+          Updated files:
+          ${{ steps.update_json.outputs.changed_list }}"
+          git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || true
+          git push
+
+      - name: No changes detected
+        if: steps.update_json.outputs.changed == 'false'
+        run: echo "모든 amd JSON 의 sha256 값이 이미 최신 상태입니다."
