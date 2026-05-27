@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "r1000-7.2-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.27/r1000-7.2-4.4.302.tgz",
-      "sha256": "4fd930f8fa66ea3e095109e01a307521b4a3db090baa922b5517749af7b2fdd3",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.28/r1000-7.2-4.4.302.tgz",
+      "sha256": "a8c82a2c58367c5226adf93e2e372186a7aeee1beedc5dbd7c6ce348042aedcf",
       "packed": false
     },
     {
