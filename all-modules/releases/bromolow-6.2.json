@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "bromolow-6.2-3.10.105.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.31/bromolow-6.2-3.10.105.tgz",
-      "sha256": "d036def2459e8521657f450269ee30ae7f00c447abd9f7e427bbf904b0538abd",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.5.29/bromolow-6.2-3.10.105.tgz",
+      "sha256": "2dd16c585aa16d4daef7744bb29ae367e6ab99f297ccb3428d32bf4179214f6d",
       "packed": false
     },
     {
