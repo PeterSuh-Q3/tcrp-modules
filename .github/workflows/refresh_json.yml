@@ -8,6 +8,10 @@ on:
         description: '갱신할 릴리즈 태그 (비워두면 latest 사용)'
         required: false
         default: ''
+      release_body:
+        description: 'Release note (커밋 메시지 본문에 기록)'
+        required: false
+        default: ''
 
 permissions:
   contents: write  # JSON 파일 커밋을 위해 필요
@@ -215,6 +219,7 @@ jobs:
         if: steps.update_json.outputs.changed == 'true'
         env:
           TAG: ${{ steps.get_tag.outputs.tag }}
+          BODY: ${{ inputs.release_body }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -231,6 +236,11 @@ jobs:
           ${{ steps.update_json.outputs.changed_list }}
 
           Source: https://github.com/${{ github.repository }}/releases/tag/${TAG}"
+
+          # 릴리즈노트(입력값)가 있으면 별도 커밋 본문으로 추가
+          if [ -n "$BODY" ]; then
+            git commit --allow-empty -m "release note: ${TAG}" -m "$BODY"
+          fi
 
           git push
 
