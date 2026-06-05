@@ -1,27 +1,33 @@
 {
-  "mod_version": "v1",
-  "files": [
-    {
-      "name": "v1000-7.3-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.6.5/v1000-7.3-4.4.302.tgz",
-      "sha256": "412d50bf442977a6b49e43464d3be945184b34ec51a99dadf841c07899d2fbbf",
-      "packed": false
-    },
-    {
-      "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
-      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
-      "packed": false
-    },
-    {
-      "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
-      "sha256": "5127eb8e0abfd3e6dbb6611346449eda6f1d08cfff38bb58a5931583e82a5740",
-      "packed": false
+    "mod_version": "v1",
+    "files": [
+        {
+            "name": "v1000-7.3-4.4.302.tgz",
+            "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.6.5/v1000-7.3-4.4.302.tgz",
+            "sha256": "412d50bf442977a6b49e43464d3be945184b34ec51a99dadf841c07899d2fbbf",
+            "packed": false
+        },
+        {
+            "name": "firmware.tgz",
+            "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
+            "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+            "packed": false
+        },
+        {
+            "name": "install.sh",
+            "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+            "sha256": "5127eb8e0abfd3e6dbb6611346449eda6f1d08cfff38bb58a5931583e82a5740",
+            "packed": false
+        },
+        {
+            "name": "firmwarei915.tgz",
+            "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+            "sha256": "07b983c0f3c28582ee64a97d2fe85b8cf92b229f30e8571accbf8779d89c0a4d",
+            "packed": false
+        }
+    ],
+    "scripts": {
+        "on_boot": "install.sh",
+        "on_os_load": "install.sh"
     }
-  ],
-  "scripts": {
-    "on_boot": "install.sh",
-    "on_os_load": "install.sh"
-  }
 }
