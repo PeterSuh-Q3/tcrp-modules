@@ -10,7 +10,9 @@
   "releases": {
     "epyc7002_72_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/epyc7002-7.2.json",
     "epyc7002_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/epyc7002-7.3.json",
-    "geminilakenk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/geminilakenk-7.3.json"
+    "geminilakenk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/geminilakenk-7.3.json",
+    "r1000nk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/r1000nk-7.3.json",
+    "v1000nk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/v1000nk-7.3.json"    
   },
   "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/rpext-index.json"
 }
