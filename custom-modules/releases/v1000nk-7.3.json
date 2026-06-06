@@ -1,0 +1,27 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "v1000nk-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/v1000nk-7.3-5.10.55.tgz",
+      "sha256": "729877fa1835325a94e72b29aa8dcb0d7cdf07735ee236bc22edf7e0cad3e0e4",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/firmware.tgz",
+      "sha256": "d90c46fd73c6f6186e5d4892f00c5155cf3ba54cd1f0c0efa70c0a5fedf824d3",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/src/install.sh",
+      "sha256": "0a3565670cf0a2996b8ac122af53a0329f10e02f00b7be29c5952ce089410ee8",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
