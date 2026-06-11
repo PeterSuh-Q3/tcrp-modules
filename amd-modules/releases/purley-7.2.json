@@ -3,26 +3,26 @@
   "files": [
     {
       "name": "purley-7.2-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/purley-7.2-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/amd-modules/releases/purley-7.2-4.4.302.tgz",
       "sha256": "a6f97ebb5600188bc7756aeb8effadf0838ffd0c5044c84eacec675aac19d5b9",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/amd-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/src/install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/amd-modules/src/install.sh",
       "sha256": "ca1620567755d8cb93a98409e07343fe01a0041fbe5bf786eb561066989c3486",
       "packed": false
     },
     {
       "name": "firmwareamdgpu.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/amd-modules/releases/firmwareamdgpu.tgz",
-      "sha256": "af8bf19e8b27e923c0f2c7868f0b45e23bafa101292184c6b3e5e265feba8cae",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/amd-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
     }
   ],
