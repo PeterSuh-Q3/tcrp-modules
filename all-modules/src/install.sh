@@ -71,17 +71,30 @@ if [ "${1}" = "modules" ]; then
     /usr/sbin/modprobe cpufreq_conservative 2>/dev/null
     /usr/sbin/modprobe i40e 2>/dev/null
 
-    # i915: 4.4.302 커널 한정, MSHELL@PeterSuh-Q3 서명 확인 후 Intel GPU 검출 시 선제 적재
-    if [ "${LINUX_VER}" = "4.4.302" ] && [ -f /lib/modules/i915.ko ]; then
-      if grep -qa "MSHELL@PeterSuh-Q3" /lib/modules/i915.ko; then
+    # i915 선제 적재:
+    #  - 4.4.302: MSHELL@PeterSuh-Q3 서명 확인 후 Intel GPU 검출 시 적재
+    #  - 5.10.55: 서명 확인 없이 Intel GPU 검출 시 적재
+    if [ -f /lib/modules/i915.ko ]; then
+      I915_OK=0
+      case "${LINUX_VER}" in
+        4.4.302)
+          if grep -qa "MSHELL@PeterSuh-Q3" /lib/modules/i915.ko; then
+            I915_OK=1
+          else
+            echo "all-modules: i915.ko MSHELL signature not found - skip"
+          fi
+          ;;
+        5.10.55)
+          I915_OK=1
+          ;;
+      esac
+      if [ "${I915_OK}" = "1" ]; then
         if lspci 2>/dev/null | grep -qE "Class 0300.*Device 8086|8086.*Class 0300"; then
-          echo "all-modules: Intel GPU detected (4.4.302/MSHELL) - loading i915"
+          echo "all-modules: Intel GPU detected (${LINUX_VER}) - loading i915"
           /usr/sbin/modprobe i915 && echo "i915 loaded OK" || echo "i915 modprobe failed"
         else
           echo "all-modules: no Intel GPU found at PCI class 0300 vendor 8086"
         fi
-      else
-        echo "all-modules: i915.ko MSHELL signature not found - skip"
       fi
     fi
 
