@@ -1,0 +1,27 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "epyc7002-7.2-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/nodrm-modules/releases/epyc7002-7.2-5.10.55.tgz",
+      "sha256": "70fb7bddd93cc282d0acc0a01b75e514d6a2b0f7e63e55e9547441b9efa2c38c",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/nodrm-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/nodrm-modules/src/install.sh",
+      "sha256": "9605367c010ff54aba263c4eeccb91c711bb79cfcd67bf6cb8891b509969910b",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
