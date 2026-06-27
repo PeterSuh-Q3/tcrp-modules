@@ -7,6 +7,15 @@ getvars() {
   TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
   LINUX_VER="$(uname -r | cut -d '+' -f1)"
   REVISION="$(uname -a | cut -d ' ' -f4)"
+  # DSM major.minor (예: 7.2) — 모듈팩 tgz 파일명 정확 지정용 (glob * 배제)
+  # 출처: Synology VERSION 파일의 productversion (get_dsm_fingerprint 와 동일 소스)
+  DSM_VER=""
+  for _vf in /etc.defaults/VERSION /etc/VERSION; do
+    if [ -f "${_vf}" ]; then
+      DSM_VER="$(grep '^productversion=' "${_vf}" | cut -d= -f2 | tr -d '"')"
+      [ -n "${DSM_VER}" ] && break
+    fi
+  done
 }
 
 # DSM/플랫폼/커널 조합 지문 계산 (BAK 유효성 판단용)
@@ -34,7 +43,20 @@ if [ "${1}" = "modules" ]; then
   [ -f "/addons/pml_on" ] && echo "/addons/pml_on file exists PML METHOD" || echo "/addons/pml_on file not exists IML METHOD"
 
   if [ ! -f "/addons/pml_on" ]; then
-    gunzip -c /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz | tar xvf - -C /lib/modules/ >/dev/null 2>&1
+    # 모듈팩 tgz 정확 지정: <platform>-<DSM_VER>-<LINUX_VER>.tgz (예: geminilake-7.2-4.4.302.tgz)
+    MODPACK="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}.tgz"
+    if [ ! -f "${MODPACK}" ]; then
+      # DSM_VER 미확정 등 예외 시에만 glob 폴백 (회귀 방지)
+      MODPACK="$(ls /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz 2>/dev/null | head -1)"
+    fi
+    if [ -z "${MODPACK}" ] || [ ! -f "${MODPACK}" ]; then
+      echo "<3>[TCRP] all-modules: module pack NOT found (platform=${TARGET_PLATFORM} dsm=${DSM_VER} kver=${LINUX_VER}) - /lib/modules will be empty" > /dev/kmsg
+    else
+      echo "all-modules: extracting ${MODPACK}"
+      if ! gunzip -c "${MODPACK}" | tar xf - -C /lib/modules/ 2>/dev/null; then
+        echo "<3>[TCRP] all-modules: extraction FAILED (${MODPACK})" > /dev/kmsg
+      fi
+    fi
 
     #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
