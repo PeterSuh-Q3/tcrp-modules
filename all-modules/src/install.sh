@@ -7,15 +7,25 @@ getvars() {
   TARGET_PLATFORM="$(uname -a | awk '{print $NF}' | cut -d '_' -f2)"
   LINUX_VER="$(uname -r | cut -d '+' -f1)"
   REVISION="$(uname -a | cut -d ' ' -f4)"
-  # DSM major.minor (예: 7.2) — 모듈팩 tgz 파일명 정확 지정용 (glob * 배제)
-  # 출처: Synology VERSION 파일의 productversion (get_dsm_fingerprint 와 동일 소스)
+  # DSM major.minor (예: 7.3) — 모듈팩 tgz 파일명 정확 지정용 (glob * 배제)
+  # productversion 은 "7.3.2" 처럼 micro 를 포함하므로 부적합 → major / minor 변수만 사용
+  # VERSION 파일은 var="value" 형식이라 source(.) 로 안전하게 읽음
   DSM_VER=""
+  _verfile=""
   for _vf in /etc.defaults/VERSION /etc/VERSION; do
-    if [ -f "${_vf}" ]; then
-      DSM_VER="$(grep '^productversion=' "${_vf}" | cut -d= -f2 | tr -d '"')"
-      [ -n "${DSM_VER}" ] && break
-    fi
+    [ -f "${_vf}" ] && { _verfile="${_vf}"; break; }
   done
+  if [ -z "${_verfile}" ]; then
+    echo "<3>[TCRP] all-modules: VERSION file not found (/etc.defaults/VERSION, /etc/VERSION) - DSM_VER unset" > /dev/kmsg
+  else
+    major=""; minor=""
+    . "${_verfile}"
+    if [ -n "${major}" ] && [ -n "${minor}" ]; then
+      DSM_VER="${major}.${minor}"
+    else
+      echo "<3>[TCRP] all-modules: cannot build DSM_VER from ${_verfile} (major='${major}' minor='${minor}')" > /dev/kmsg
+    fi
+  fi
 }
 
 # DSM/플랫폼/커널 조합 지문 계산 (BAK 유효성 판단용)
@@ -43,14 +53,23 @@ if [ "${1}" = "modules" ]; then
   [ -f "/addons/pml_on" ] && echo "/addons/pml_on file exists PML METHOD" || echo "/addons/pml_on file not exists IML METHOD"
 
   if [ ! -f "/addons/pml_on" ]; then
-    # 모듈팩 tgz 정확 지정: <platform>-<DSM_VER>-<LINUX_VER>.tgz (예: geminilake-7.2-4.4.302.tgz)
-    MODPACK="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}.tgz"
-    if [ ! -f "${MODPACK}" ]; then
-      # DSM_VER 미확정 등 예외 시에만 glob 폴백 (회귀 방지)
-      MODPACK="$(ls /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz 2>/dev/null | head -1)"
+    # 모듈팩 tgz 선택: 1) DSM_VER 정확 지정 <platform>-<DSM_VER>-<LINUX_VER>.tgz 우선
+    #                  2) 실패 시 glob 폴백 - 단 '유효한 gzip'만 채택(손상본 invalid magic 회피)
+    MODPACK=""
+    _exact="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}.tgz"
+    if [ -n "${DSM_VER}" ] && [ -f "${_exact}" ] && gunzip -t "${_exact}" 2>/dev/null; then
+      MODPACK="${_exact}"
+    else
+      for _cand in /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}.tgz; do
+        [ -f "${_cand}" ] || continue
+        if gunzip -t "${_cand}" 2>/dev/null; then
+          MODPACK="${_cand}"; break
+        fi
+        echo "<4>[TCRP] all-modules: corrupt pack skipped (${_cand})" > /dev/kmsg
+      done
     fi
-    if [ -z "${MODPACK}" ] || [ ! -f "${MODPACK}" ]; then
-      echo "<3>[TCRP] all-modules: module pack NOT found (platform=${TARGET_PLATFORM} dsm=${DSM_VER} kver=${LINUX_VER}) - /lib/modules will be empty" > /dev/kmsg
+    if [ -z "${MODPACK}" ]; then
+      echo "<3>[TCRP] all-modules: no valid module pack (platform=${TARGET_PLATFORM} dsm=${DSM_VER} kver=${LINUX_VER}) - /lib/modules will be empty" > /dev/kmsg
     else
       echo "all-modules: extracting ${MODPACK}"
       if ! gunzip -c "${MODPACK}" | tar xf - -C /lib/modules/ 2>/dev/null; then
