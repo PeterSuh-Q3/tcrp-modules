@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "icelaked-7.3-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/epyc7002-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/icelaked-7.3-5.10.55.tgz",
       "sha256": "e3c75b56220f4af268e5e5fcfaf87840337f34c6fc7b3ec2f266a6fe29e64c4c",
       "packed": false
     },

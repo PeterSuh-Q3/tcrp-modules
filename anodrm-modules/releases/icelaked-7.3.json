@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "icelaked-7.3-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/epyc7002-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/icelaked-7.3-5.10.55.tgz",
       "sha256": "2902596f866d047e23bdacb6f5fb2adca56215888a420a92d19794984a369fbb",
       "packed": false
     },
