@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "braswell-6.2-3.10.105.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.6.15/braswell-6.2-3.10.105.tgz",
-      "sha256": "663378753e245eed9c744100a41827d715e6114f699b05646532cd3add3c47ce",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.9/braswell-6.2-3.10.105.tgz",
+      "sha256": "60c60a0a5370da9907c80f92d033e374e47587b26fce35503379458e347a2291",
       "packed": false
     },
     {
