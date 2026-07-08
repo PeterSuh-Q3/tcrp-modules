@@ -1,0 +1,200 @@
+name: Refresh anodrm-modules from all-modules release
+
+# anodrm-modules 는 all-modules 의 최종 릴리즈 tgz 에서 i915 / amdgpu 등
+# DRM(그래픽) 모듈 셋을 제거하고 다시 압축한 자산이다.
+# 이 워크플로우는:
+#   1) 지정한 all-modules 릴리즈의 모듈 tgz 를 내려받고
+#   2) DRM_SET 목록의 .ko 를 제거한 뒤 재압축하여
+#   3) anodrm-modules/releases/<same-name>.tgz 로 커밋하고
+#   4) 대응하는 <plat>-<ver>.json recipe 의 sha256 을 갱신한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'all-modules 소스 릴리즈 태그 (비우면 latest)'
+        required: false
+        default: ''
+      versions:
+        description: '처리할 DSM 버전(공백 구분, 비우면 릴리즈에 있는 전 버전). 예: "7.4" 또는 "7.3 7.4"'
+        required: false
+        default: ''
+      release_body:
+        description: '커밋 메시지 본문'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  build-anodrm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------------------------------------------------------------- #
+      # 소스 릴리즈 태그 결정 (입력 없으면 latest)
+      # ---------------------------------------------------------------- #
+      - name: Determine source release tag
+        id: tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -n "${{ inputs.release_tag }}" ]; then
+            TAG="${{ inputs.release_tag }}"
+          else
+            TAG=$(gh release view --repo "${{ github.repository }}" --json tagName -q '.tagName')
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "소스 릴리즈: ${TAG}"
+
+      # ---------------------------------------------------------------- #
+      # all-modules tgz -> DRM 제거 -> anodrm tgz + recipe 갱신
+      # ---------------------------------------------------------------- #
+      - name: Build anodrm assets
+        id: build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.tag.outputs.tag }}
+          VERSIONS: ${{ inputs.versions }}
+        run: |
+          set -euo pipefail
+
+          # 제거 대상 DRM / framebuffer / GPU 모듈 셋 (플랫폼별 관측치의 합집합).
+          # 존재하지 않는 모듈은 자동 skip 되므로 전 플랫폼 공통으로 안전하다.
+          DRM_SET="
+            amdgpu.ko amdxcp.ko
+            i915.ko i915-compat.ko intel-gtt.ko
+            drm.ko drm_buddy.ko drm_display_helper.ko drm_kms_helper.ko
+            drm_mipi_dsi.ko drm_panel_orientation_quirks.ko
+            drm_suballoc_helper.ko drm_ttm_helper.ko
+            ttm.ko gpu-sched.ko dmabuf.ko sync_file.ko
+            fb.ko fb_sys_fops.ko fbcon.ko efifb.ko vesafb.ko vga16fb.ko
+            cfbcopyarea.ko cfbfillrect.ko cfbimgblt.ko
+            syscopyarea.ko sysfillrect.ko sysimgblt.ko
+            bitblit.ko softcursor.ko font.ko backlight.ko hdmi.ko
+            i2c-algo-bit.ko
+          "
+
+          REL_DIR="anodrm-modules/releases"
+          SRC_INSTALL="anodrm-modules/src/install.sh"
+
+          # firmware.tgz / install.sh sha256 (recipe 공통 항목) - repo 파일에서 실시간 계산
+          FW_TGZ="${REL_DIR}/firmware.tgz"
+          [ -f "${FW_TGZ}" ] || { echo "::error::${FW_TGZ} 없음"; exit 1; }
+          [ -f "${SRC_INSTALL}" ] || { echo "::error::${SRC_INSTALL} 없음"; exit 1; }
+          FW_SHA=$(sha256sum "${FW_TGZ}" | awk '{print $1}')
+          INSTALL_SHA=$(sha256sum "${SRC_INSTALL}" | awk '{print $1}')
+          RAW_BASE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/master/anodrm-modules"
+
+          workdir=$(mktemp -d)
+          changed=0
+
+          # 릴리즈의 모듈 tgz 목록 (firmware*.tgz / .lst 제외)
+          mapfile -t ASSETS < <(gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" \
+            --json assets -q '.assets[].name' \
+            | grep -E '\.tgz$' | grep -vE '^firmware' | sort)
+
+          for NAME in "${ASSETS[@]}"; do
+            # NAME 형식: <plat>-<ver>-<kver>.tgz  (예: epyc7002-7.4-5.10.55.tgz)
+            base="${NAME%.tgz}"                 # epyc7002-7.4-5.10.55
+            recipe_base="${base%-*}"            # epyc7002-7.4  (마지막 -<kver> 제거)
+            VER="${recipe_base##*-}"            # 7.4
+
+            # 버전 필터
+            if [ -n "${VERSIONS}" ]; then
+              case " ${VERSIONS} " in
+                *" ${VER} "*) : ;;
+                *) echo "skip ${NAME} (버전 ${VER} 미대상)"; continue ;;
+              esac
+            fi
+
+            echo "==== ${NAME} (recipe=${recipe_base}.json) ===="
+            ex="${workdir}/${base}"
+            mkdir -p "${ex}"
+            curl -sSL "https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}" \
+              -o "${workdir}/${NAME}"
+            tar xzf "${workdir}/${NAME}" -C "${ex}"
+
+            # DRM 셋 제거 (없는 것은 무시)
+            removed=0
+            for m in ${DRM_SET}; do
+              if [ -e "${ex}/${m}" ]; then
+                rm -f "${ex}/${m}"
+                removed=$((removed+1))
+              fi
+            done
+            echo "  제거된 DRM 모듈: ${removed} 개"
+
+            # 재압축 (원본과 동일한 flat 구조, 이름순 고정)
+            out="${REL_DIR}/${NAME}"
+            ( cd "${ex}" && tar czf "${GITHUB_WORKSPACE}/${out}" \
+                --sort=name --owner=0 --group=0 --numeric-owner . 2>/dev/null \
+              || tar czf "${GITHUB_WORKSPACE}/${out}" . )
+            NEW_SHA=$(sha256sum "${GITHUB_WORKSPACE}/${out}" | awk '{print $1}')
+            echo "  anodrm tgz sha256: ${NEW_SHA}"
+
+            # recipe json 재생성
+            cat > "${REL_DIR}/${recipe_base}.json" <<JSON
+          {
+            "mod_version": "v1",
+            "files": [
+              {
+                "name": "${NAME}",
+                "url": "${RAW_BASE}/releases/${NAME}",
+                "sha256": "${NEW_SHA}",
+                "packed": false
+              },
+              {
+                "name": "firmware.tgz",
+                "url": "${RAW_BASE}/releases/firmware.tgz",
+                "sha256": "${FW_SHA}",
+                "packed": false
+              },
+              {
+                "name": "install.sh",
+                "url": "${RAW_BASE}/src/install.sh",
+                "sha256": "${INSTALL_SHA}",
+                "packed": false
+              }
+            ],
+            "scripts": {
+              "on_boot": "install.sh",
+              "on_os_load": "install.sh"
+            }
+          }
+          JSON
+            python3 -c "import json,sys;json.load(open('${REL_DIR}/${recipe_base}.json'))" \
+              || { echo "::error::recipe json 유효성 실패: ${recipe_base}.json"; exit 1; }
+            changed=$((changed+1))
+          done
+
+          rm -rf "${workdir}"
+          echo "처리된 tgz: ${changed} 개"
+          echo "count=${changed}" >> "$GITHUB_OUTPUT"
+
+      # ---------------------------------------------------------------- #
+      # 변경 커밋 & 푸시
+      # ---------------------------------------------------------------- #
+      - name: Commit and push
+        if: steps.build.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add anodrm-modules/releases/*.tgz anodrm-modules/releases/*.json
+          if git diff --cached --quiet; then
+            echo "변경 없음 - 커밋 생략"
+            exit 0
+          fi
+          BODY="${{ inputs.release_body }}"
+          git commit -m "chore(anodrm): rebuild from all-modules ${{ steps.tag.outputs.tag }} (strip i915/amdgpu DRM set)" \
+                     ${BODY:+-m "${BODY}"}
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git push origin HEAD:"${GITHUB_REF_NAME}"
