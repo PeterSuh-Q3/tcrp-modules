@@ -72,6 +72,7 @@
     "epyc7002_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.3.json",
     "epyc7002_74_51055_amdgpu": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.3_amdgpu.json",
     "epyc7002_74_51055_custom": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7002-7.3_custom.json",
+    "epyc7003_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7003ntb-7.4.json",
     "epyc7003ntb_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/epyc7003ntb-7.4.json",
     "geminilake_62_4459": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-6.2.json",
     "geminilake_70_44180": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/geminilake-7.0.json",
