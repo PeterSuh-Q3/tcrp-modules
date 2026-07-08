@@ -2,9 +2,9 @@
   "mod_version": "v1",
   "files": [
     {
-      "name": "icelaked-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.6.15/icelaked-7.3-5.10.55.tgz",
-      "sha256": "d0c7dc808d296f1eafb3fa08010cb98bca9b0bea5ca3bdc1385cd03497ca5879",
+      "name": "broadwellnkv2-7.4-4.4.302.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.9/broadwellnkv2-7.4-4.4.302.tgz",
+      "sha256": "6f50a7c326ec3bfc6aedb6ad53bc86de94eb7b255520bada49ff8d2a6788fe3b",
       "packed": false
     },
     {
@@ -27,7 +27,7 @@
     },
     {
       "name": "firmwareamdgpu.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/releases/firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
     }
