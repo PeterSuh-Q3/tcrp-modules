@@ -77,6 +77,29 @@ if [ "${1}" = "modules" ]; then
       fi
     fi
 
+    # DRM 전용 팩(i915/amdgpu 등, <platform>-<DSM_VER>-<LINUX_VER>-drm.tgz)이
+    # 별도로 배포된 조합이면 기본 모듈팩과 나란히 추가로 풀어준다.
+    # 없는 조합(예: epyc7003ntb)에서는 조용히 skip - 에러 아님.
+    DRMPACK=""
+    _exact_drm="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}-drm.tgz"
+    if [ -n "${DSM_VER}" ] && [ -f "${_exact_drm}" ] && gunzip -t "${_exact_drm}" 2>/dev/null; then
+      DRMPACK="${_exact_drm}"
+    else
+      for _cand in /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}-drm.tgz; do
+        [ -f "${_cand}" ] || continue
+        if gunzip -t "${_cand}" 2>/dev/null; then
+          DRMPACK="${_cand}"; break
+        fi
+        echo "<4>[TCRP] all-modules: corrupt drm pack skipped (${_cand})" > /dev/kmsg
+      done
+    fi
+    if [ -n "${DRMPACK}" ]; then
+      echo "all-modules: extracting drm pack ${DRMPACK}"
+      if ! gunzip -c "${DRMPACK}" | tar xf - -C /lib/modules/ 2>/dev/null; then
+        echo "<3>[TCRP] all-modules: drm pack extraction FAILED (${DRMPACK})" > /dev/kmsg
+      fi
+    fi
+
     #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
     [ ! -d /lib/firmware ] && mkdir /lib/firmware
