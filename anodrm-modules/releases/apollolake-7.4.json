@@ -1,0 +1,27 @@
+{
+  "mod_version": "v1",
+  "files": [
+    {
+      "name": "apollolake-7.4-4.4.302.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/apollolake-7.4-4.4.302.tgz",
+      "sha256": "947d50c34529c82fe6de2fd308a143a670b3d8df292b0b2a5318cd49fc612bf3",
+      "packed": false
+    },
+    {
+      "name": "firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
+      "packed": false
+    },
+    {
+      "name": "install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
+      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "packed": false
+    }
+  ],
+  "scripts": {
+    "on_boot": "install.sh",
+    "on_os_load": "install.sh"
+  }
+}
