@@ -88,14 +88,16 @@ jobs:
           echo ""
 
           echo "=== 플랫폼 tgz 행 파싱 ==="
-          # 패턴: {플랫폼}-{DSM버전}-{커널버전}.tgz 행만 추출
+          # 패턴: {플랫폼}-{DSM버전}-{커널버전}[-drm].tgz 행만 추출
           # 예: apollolake-7.2-4.4.302.tgz  /  broadwellnk-7.1-4.4.180.tgz
+          #     apollolake-7.4-4.4.302-drm.tgz (i915/amdgpu 전용 팩, 명시 포함)
           # 제외: firmware.tgz, firmwarei915.tgz 등 (플랫폼-X.Y- 패턴이 아닌 것)
           while IFS=' ' read -r SHA256 FILENAME _REST; do
             [ -z "${SHA256}" ] || [ -z "${FILENAME}" ] && continue
 
-            # 플랫폼 tgz 패턴: {소문자+숫자}-{숫자.숫자}-{숫자...}.tgz
-            if ! echo "${FILENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*\.tgz$'; then
+            # 플랫폼 tgz 패턴: {소문자+숫자}-{숫자.숫자}-{숫자...}[-drm].tgz
+            # (-drm 접미사는 선택 사항 - i915/amdgpu 전용 팩도 동일 로직으로 매칭)
+            if ! echo "${FILENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+-[0-9]+.*(-drm)?\.tgz$'; then
               echo "  건너뜀: ${FILENAME}"
               continue
             fi
@@ -123,8 +125,11 @@ jobs:
           set -euo pipefail
 
           # {platform}-{dsm_ver}.json 패턴 파일만 zip 으로 묶음
+          # all-modules 뿐 아니라 anodrm-modules 도 동일 패턴/동일 tgz 를
+          # 참조하므로 함께 백업/갱신 대상에 포함한다.
           BACKUP_LIST=()
-          for JSON_FILE in ./all-modules/releases/*.json; do
+          for JSON_FILE in ./all-modules/releases/*.json ./anodrm-modules/releases/*.json; do
+            [ -f "${JSON_FILE}" ] || continue
             BASENAME=$(basename "${JSON_FILE}")
             if echo "${BASENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+\.json$'; then
               BACKUP_LIST+=("${JSON_FILE}")
@@ -143,7 +148,10 @@ jobs:
       # ------------------------------------------------------------------ #
       # 5. JSON 파일의 sha256 값 갱신
       #    - 워크스페이스 루트의 {platform}-{dsm_ver}.json 파일을 스캔
-      #    - files[] 중 name이 {platform}-{dsm_ver}-{kernel_ver}.tgz 인 항목만 갱신
+      #      (all-modules 뿐 아니라 anodrm-modules 도 동일 tgz - 모듈팩과
+      #       -drm 팩 - 을 참조하므로 함께 갱신한다)
+      #    - files[] 중 name이 {platform}-{dsm_ver}-{kernel_ver}[-drm].tgz
+      #      인 항목만 갱신 (base 모듈팩 + DRM 전용 팩 모두 포함)
       # ------------------------------------------------------------------ #
       - name: Update sha256 in JSON files
         id: update_json
@@ -155,9 +163,11 @@ jobs:
 
           CHANGED_FILES=()
 
-          # all-modules/releases/ 의 {platform}-{dsm_ver}.json 파일 순회
+          # all-modules/releases/ 와 anodrm-modules/releases/ 의
+          # {platform}-{dsm_ver}.json 파일 순회
           # 예: apollolake-7.2.json, broadwellnk-7.1.json, ...
-          for JSON_FILE in ./all-modules/releases/*.json; do
+          for JSON_FILE in ./all-modules/releases/*.json ./anodrm-modules/releases/*.json; do
+            [ -f "${JSON_FILE}" ] || continue
             BASENAME=$(basename "${JSON_FILE}")
             # platform-X.Y.json 패턴인지 확인 (rpext-index.json 등 제외)
             if ! echo "${BASENAME}" | grep -qE '^[a-z0-9]+-[0-9]+\.[0-9]+\.json$'; then
