@@ -3,20 +3,20 @@
   "files": [
     {
       "name": "v1000-7.0-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/v1000-7.0-4.4.180.tgz",
-      "sha256": "ab335b6fbb09ec62a4cc89445cd5315e756c87bbeae649b5fcc5f673d583752b",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/v1000-7.0-4.4.180.tgz",
+      "sha256": "7f444039c17013edfa9db731d270c8d6e1893b8899162f44f28f504fe8ae1544",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
     }
   ],

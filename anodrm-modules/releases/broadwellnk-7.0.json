@@ -3,20 +3,20 @@
   "files": [
     {
       "name": "broadwellnk-7.0-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/broadwellnk-7.0-4.4.180.tgz",
-      "sha256": "1932de344ee6f7bb169566661bea98c7b34e5d41d20293c0984daa43aeebf845",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/broadwellnk-7.0-4.4.180.tgz",
+      "sha256": "c8b02ef22331c4ccfac5dc478d8854ba9761a483b7a17f507a8debacd90aa4d8",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
     }
   ],

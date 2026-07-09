@@ -3,20 +3,38 @@
   "files": [
     {
       "name": "geminilakenk-7.4-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/geminilakenk-7.4-5.10.55.tgz",
-      "sha256": "19bec76a961fee7715e44d0bc04d9406ea621f3d5fe96d3f7ca881e13283b86f",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/geminilakenk-7.4-5.10.55.tgz",
+      "sha256": "1c4ad1d54d399f82e988a7307ab940ae79114da8ad5b614a1694cd08a6553604",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
+      "packed": false
+    },
+    {
+      "name": "geminilakenk-7.4-5.10.55-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/geminilakenk-7.4-5.10.55-drm.tgz",
+      "sha256": "d10c5bdad258211b71680ddc8666786458643dda53e5fb50177f37f14e650a87",
       "packed": false
     }
   ],

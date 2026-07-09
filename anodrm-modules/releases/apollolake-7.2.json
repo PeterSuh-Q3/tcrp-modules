@@ -3,20 +3,38 @@
   "files": [
     {
       "name": "apollolake-7.2-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/apollolake-7.2-4.4.302.tgz",
-      "sha256": "2cdcc3c33a106904925476ef33f801083d8b7b25dd82b947acd06d11de5509c0",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/apollolake-7.2-4.4.302.tgz",
+      "sha256": "cb1cf8d81629733128f1edf2ce1f8f4822d1e4f0e179f49fd4de24b7d64b8c64",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
+      "packed": false
+    },
+    {
+      "name": "apollolake-7.2-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/apollolake-7.2-4.4.302-drm.tgz",
+      "sha256": "4a8788143219c6dee97743a0b5f17eaf57af5e357dab6b0d9aa05b507ae466e5",
       "packed": false
     }
   ],

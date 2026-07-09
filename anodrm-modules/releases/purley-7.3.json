@@ -3,20 +3,38 @@
   "files": [
     {
       "name": "purley-7.3-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/purley-7.3-4.4.302.tgz",
-      "sha256": "6c2254b154c26b82b932de6866728c2c8c64d02a517b2a7395ccc12ba2792aa0",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/purley-7.3-4.4.302.tgz",
+      "sha256": "c44ab98206450b9a949e048a3da906d145c6eeccb78a991f9f2c6bb90f02a94f",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
+      "packed": false
+    },
+    {
+      "name": "purley-7.3-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/purley-7.3-4.4.302-drm.tgz",
+      "sha256": "b73cf5d4ddf0342663afc9caefcffc1ead8e1fdd3226067d5a9e133a2a4687ad",
       "packed": false
     }
   ],

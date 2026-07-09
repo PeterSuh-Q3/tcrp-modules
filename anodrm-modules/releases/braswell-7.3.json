@@ -3,20 +3,20 @@
   "files": [
     {
       "name": "braswell-7.3-3.10.108.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/braswell-7.3-3.10.108.tgz",
-      "sha256": "41881e725f1244eb4bf48ed87938285ba15606676e8532e95d12bdf263f3cca6",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/braswell-7.3-3.10.108.tgz",
+      "sha256": "e6ec302f0d0bf17466852ddc4de8d55eca315e3bcfb93c0da86ccdb73a64344d",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
     }
   ],

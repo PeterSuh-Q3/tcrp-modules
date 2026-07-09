@@ -3,20 +3,38 @@
   "files": [
     {
       "name": "denverton-7.3-4.4.302.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/denverton-7.3-4.4.302.tgz",
-      "sha256": "5144f509bfe9dea0d76e2623ba7777d980418bb9bf7cdb393b98d8f1d8a1d742",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-7.3-4.4.302.tgz",
+      "sha256": "d753cc30eb4ee8cb0860b91cd2edd602026468822a0718b1365fc064e270bf36",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
+      "packed": false
+    },
+    {
+      "name": "denverton-7.3-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-7.3-4.4.302-drm.tgz",
+      "sha256": "fdd90c811099fd86a0850408b1d4be8ae27a0501bb8c743e71c12d782ba80f07",
       "packed": false
     }
   ],

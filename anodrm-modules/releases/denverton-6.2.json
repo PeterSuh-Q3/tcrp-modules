@@ -3,20 +3,20 @@
   "files": [
     {
       "name": "denverton-6.2-4.4.59.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/denverton-6.2-4.4.59.tgz",
-      "sha256": "4bb5696dc03404dedb5ded3c6edacf1ecf8a4f8a646273d3f7909a6867ba1e54",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-6.2-4.4.59.tgz",
+      "sha256": "fa9ddf356de9cbf3d7db09e2e33a45fc8dcdde1dc04a6f8f08c0aea08b10c6f0",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
     }
   ],

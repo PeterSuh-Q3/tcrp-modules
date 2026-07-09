@@ -3,20 +3,38 @@
   "files": [
     {
       "name": "epyc7002-7.3-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/epyc7002-7.3-5.10.55.tgz",
-      "sha256": "2902596f866d047e23bdacb6f5fb2adca56215888a420a92d19794984a369fbb",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/epyc7002-7.3-5.10.55.tgz",
+      "sha256": "5ac064e63f98b09dc3b1cdb2d55d36371cb78dade576b56aeacf0a3c148fd550",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "firmwareamdgpu.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/releases/firmwareamdgpu.tgz",
+      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
+      "packed": false
+    },
+    {
+      "name": "epyc7002-7.3-5.10.55-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/epyc7002-7.3-5.10.55-drm.tgz",
+      "sha256": "1f1f8ce2252a007a839e06eeacb3197bd9097edd53035eeca935d1eb3db3a327",
       "packed": false
     }
   ],

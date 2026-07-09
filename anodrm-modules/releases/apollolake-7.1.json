@@ -3,20 +3,32 @@
   "files": [
     {
       "name": "apollolake-7.1-4.4.180.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/apollolake-7.1-4.4.180.tgz",
-      "sha256": "0ad9797a056d0cbd201d674010b08bf10d3050f38cb1923b2f13c0f2f82fdfb9",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/apollolake-7.1-4.4.180.tgz",
+      "sha256": "6fbf4bd7a44e2b85bbcf64d50cabd12aec4e45b8ebfd5b0d7d55988b6346c250",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmware.tgz",
       "sha256": "19e3bd79c9e4a60b309e50d379179a140c0743173996731c4633cb190fc8c814",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/anodrm-modules/src/install.sh",
-      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
+      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "packed": false
+    },
+    {
+      "name": "firmwarei915.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
+      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
+      "packed": false
+    },
+    {
+      "name": "apollolake-7.1-4.4.180-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/apollolake-7.1-4.4.180-drm.tgz",
+      "sha256": "ab94d22471cfefda9b246e1d2734675c0a4ff5bd6bf72551fd433d5ea771fc22",
       "packed": false
     }
   ],
