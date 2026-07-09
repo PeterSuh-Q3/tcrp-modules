@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "icelaked-7.4-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.9/icelaked-7.4-5.10.55.tgz",
-      "sha256": "53d01ca59c69530a7e9070088c8552f881ceef2bb5b8cf78bb46c449fe96606c",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/icelaked-7.4-5.10.55.tgz",
+      "sha256": "5093a834a7ff5aede7f7f058707a06c6a27ba12026c615ca69ea2d53b03c62c4",
       "packed": false
     },
     {
