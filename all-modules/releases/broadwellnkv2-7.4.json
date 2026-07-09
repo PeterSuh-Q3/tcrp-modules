@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "broadwellnkv2-7.4-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/broadwellnkv2-7.4-4.4.302-drm.tgz",
+      "sha256": "eecc00a64689c8d7e412589a091cf8fcf9c0c549b9042983fadf51a6a049f7aa",
+      "packed": false
     }
   ],
   "scripts": {

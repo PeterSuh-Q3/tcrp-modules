@@ -24,6 +24,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
       "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
       "packed": false
+    },
+    {
+      "name": "apollolake-7.0-4.4.180-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/apollolake-7.0-4.4.180-drm.tgz",
+      "sha256": "bebab6cef761985c890e6fa1e1d8b63de32855c2344719e2839330e8ee910d31",
+      "packed": false
     }
   ],
   "scripts": {

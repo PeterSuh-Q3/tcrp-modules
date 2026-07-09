@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "epyc7002-7.2-5.10.55-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/epyc7002-7.2-5.10.55-drm.tgz",
+      "sha256": "daea04ef1decd8be15447383b71b0efa1e7937949964f55cd6f062aa0ca6d2f3",
+      "packed": false
     }
   ],
   "scripts": {

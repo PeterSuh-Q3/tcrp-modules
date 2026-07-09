@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "r1000-7.4-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/r1000-7.4-4.4.302-drm.tgz",
+      "sha256": "d956382ffc82ffef6eb572e8b93f1e116792fe563f3615d4f51b0f6bee039031",
+      "packed": false
     }
   ],
   "scripts": {

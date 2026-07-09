@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "geminilake-7.3-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/geminilake-7.3-4.4.302-drm.tgz",
+      "sha256": "02cb197e37a6eaa634b86d10a03b98b6c273c9cc41efcbf62f702c723d1d3065",
+      "packed": false
     }
   ],
   "scripts": {

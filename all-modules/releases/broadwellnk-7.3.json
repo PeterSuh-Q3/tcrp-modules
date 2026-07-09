@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "broadwellnk-7.3-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/broadwellnk-7.3-4.4.302-drm.tgz",
+      "sha256": "2de6a4c3bd9384b2d7902019794a7982753f2f5f135349cb2549799880dd9f6a",
+      "packed": false
     }
   ],
   "scripts": {

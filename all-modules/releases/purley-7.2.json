@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "purley-7.2-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/purley-7.2-4.4.302-drm.tgz",
+      "sha256": "96ba1af67af52a3d3ed55db52d8e27f65db761831a62d56e3fcf9718d77f4e9d",
+      "packed": false
     }
   ],
   "scripts": {

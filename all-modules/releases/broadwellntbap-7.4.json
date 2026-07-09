@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "broadwellntbap-7.4-4.4.302-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/broadwellntbap-7.4-4.4.302-drm.tgz",
+      "sha256": "dec14e739b5318f74f598719b1e82f250610830f42ee439d5b144503e5112e61",
+      "packed": false
     }
   ],
   "scripts": {

@@ -30,6 +30,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/releases/firmwareamdgpu.tgz",
       "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
       "packed": false
+    },
+    {
+      "name": "v1000nk-7.2-5.10.55-drm.tgz",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/v1000nk-7.2-5.10.55-drm.tgz",
+      "sha256": "899fd77b8d01578f67084fd0ca5b066f610471bbe047abf3634806acd48191ee",
+      "packed": false
     }
   ],
   "scripts": {
