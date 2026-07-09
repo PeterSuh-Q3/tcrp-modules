@@ -125,8 +125,10 @@ jobs:
           set -euo pipefail
 
           # {platform}-{dsm_ver}.json 패턴 파일만 zip 으로 묶음
-          # all-modules 뿐 아니라 anodrm-modules 도 동일 패턴/동일 tgz 를
-          # 참조하므로 함께 백업/갱신 대상에 포함한다.
+          # anodrm-modules 는 base 모듈팩(<plat>-<ver>-<kver>.tgz)만 all-modules
+          # 와 동일 파일/sha256 을 공유한다(-drm.tgz 는 절대 공유하지 않음 -
+          # anodrm 은 DRM 모듈이 아예 없는 팩이므로 recipe 에도 -drm 항목이
+          # 없다). 그래도 base 모듈팩 sha256 갱신을 위해 함께 대상에 포함한다.
           BACKUP_LIST=()
           for JSON_FILE in ./all-modules/releases/*.json ./anodrm-modules/releases/*.json; do
             [ -f "${JSON_FILE}" ] || continue
@@ -148,10 +150,11 @@ jobs:
       # ------------------------------------------------------------------ #
       # 5. JSON 파일의 sha256 값 갱신
       #    - 워크스페이스 루트의 {platform}-{dsm_ver}.json 파일을 스캔
-      #      (all-modules 뿐 아니라 anodrm-modules 도 동일 tgz - 모듈팩과
-      #       -drm 팩 - 을 참조하므로 함께 갱신한다)
+      #      (all-modules 는 base 모듈팩 + -drm 팩 모두, anodrm-modules 는
+      #       base 모듈팩만 files[] 에 보유 - jq 는 이름이 실제로 존재하는
+      #       항목만 갱신하므로 anodrm 에 -drm 항목이 추가되는 일은 없다)
       #    - files[] 중 name이 {platform}-{dsm_ver}-{kernel_ver}[-drm].tgz
-      #      인 항목만 갱신 (base 모듈팩 + DRM 전용 팩 모두 포함)
+      #      인 항목만 갱신 (해당 파일이 recipe 에 이미 있는 경우에 한함)
       # ------------------------------------------------------------------ #
       - name: Update sha256 in JSON files
         id: update_json
