@@ -18,18 +18,6 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
       "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
-    },
-    {
-      "name": "firmwarei915.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
-      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
-      "packed": false
-    },
-    {
-      "name": "geminilake-7.0-4.4.180-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/geminilake-7.0-4.4.180-drm.tgz",
-      "sha256": "ee500acc6e88720b820f4205eb28338e618ad2b6d73c51cc66d873337021ece2",
-      "packed": false
     }
   ],
   "scripts": {

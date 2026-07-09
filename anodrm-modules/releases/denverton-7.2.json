@@ -18,24 +18,6 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/src/install.sh",
       "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
       "packed": false
-    },
-    {
-      "name": "firmwarei915.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwarei915.tgz",
-      "sha256": "443c13a6f5d474251b3750b8bcbceea21fb9998595287bb750b7bf4f9199ca8e",
-      "packed": false
-    },
-    {
-      "name": "firmwareamdgpu.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/releases/firmwareamdgpu.tgz",
-      "sha256": "c24525d644dbcd8dc7c5777be7223ca8c5236d2487314dd3810a223f7dcc6225",
-      "packed": false
-    },
-    {
-      "name": "denverton-7.2-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-7.2-4.4.302-drm.tgz",
-      "sha256": "9466d06a0abf6b65177f2303971234da97d265df37fdea18aeb02bb5da680899",
-      "packed": false
     }
   ],
   "scripts": {
