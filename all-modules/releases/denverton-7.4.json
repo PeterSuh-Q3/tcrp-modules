@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "denverton-7.4-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-7.4-4.4.302.tgz",
-      "sha256": "9eb16c250fd74551eeb1895ba1b560df8e1520e473f3890d1f2e994a18f1dad9",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/denverton-7.4-4.4.302.tgz",
+      "sha256": "19e535fb54e39932a6abc112d1b269acbf71a2f1c0c9beb778c2a4bd8f9752c5",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "denverton-7.4-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/denverton-7.4-4.4.302-drm.tgz",
-      "sha256": "8f0de81eaa7be8d83bd5c0c76b6725029e845a8547cbb58fbcd435c55be58d05",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/denverton-7.4-4.4.302-drm.tgz",
+      "sha256": "6d72f5f4a0adcf15eaf36eb8a274b2923d1d90130502715a2e19e9e4603350a4",
       "packed": false
     }
   ],

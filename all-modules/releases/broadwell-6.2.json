@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwell-6.2-3.10.105.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.10/broadwell-6.2-3.10.105.tgz",
-      "sha256": "0c7bde3f8fb5180147f2a37c62394316719f52f564615385384f1104333cdfb5",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/broadwell-6.2-3.10.105.tgz",
+      "sha256": "12c5403847770bb8916115431e3d1927711d4d95bd3538866304a1fd3d5ee010",
       "packed": false
     },
     {
