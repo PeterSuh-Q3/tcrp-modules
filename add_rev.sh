@@ -11,7 +11,7 @@ curl -kLO https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my
 source myfunc.h # my.sh / myv.sh common use 
 
 rev="$1"
-baseurl="https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master"  # Base URL
+baseurl="https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main"  # Base URL
 
 ls -d */ | grep -v -e "all-modules" | while IFS= read -r dir; do
   for basemodel in `cat models.72`

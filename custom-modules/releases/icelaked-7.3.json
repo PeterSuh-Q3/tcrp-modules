@@ -3,19 +3,19 @@
   "files": [
     {
       "name": "icelaked-7.3-5.10.55.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/icelaked-7.3-5.10.55.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/icelaked-7.3-5.10.55.tgz",
       "sha256": "923cc55940d76930df2d9e95a67fa42622a6cadd2864d4b5806f326547e6e4c9",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/firmware.tgz",
       "sha256": "d90c46fd73c6f6186e5d4892f00c5155cf3ba54cd1f0c0efa70c0a5fedf824d3",
       "packed": false
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/custom-modules/src/install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/src/install.sh",
       "sha256": "0a3565670cf0a2996b8ac122af53a0329f10e02f00b7be29c5952ce089410ee8",
       "packed": false
     }
