@@ -9,14 +9,15 @@
   },
   "releases": {
     "epyc7002_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/epyc7002-7.3.json",
-    "epyc7002_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/epyc7002-7.3.json",
+    "epyc7002_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/epyc7002-7.4.json",
     "geminilakenk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/geminilakenk-7.3.json",
-    "geminilakenk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/geminilakenk-7.3.json",
-    "icelaked_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/icelaked-7.3.json",
+    "geminilakenk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/geminilakenk-7.4.json",
     "r1000nk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/r1000nk-7.3.json",
-    "r1000nk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/r1000nk-7.3.json",
+    "r1000nk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/r1000nk-7.4.json",
     "v1000nk_73_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/v1000nk-7.3.json",
-    "v1000nk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/v1000nk-7.3.json"
+    "v1000nk_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/v1000nk-7.4.json",
+    "icelaked_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/icelaked-7.4.json",
+    "epyc7003_74_51055": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/epyc7003-7.4.json"
   },
   "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/rpext-index.json"
 }
