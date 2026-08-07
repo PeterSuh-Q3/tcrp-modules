@@ -27,11 +27,20 @@ LOG="/var/log/mshell-manager-install.log"
 SYNOPKG="/usr/syno/bin/synopkg"
 
 log() { echo "$(date '+%F %T') mshell-manager: $*" >> "${LOG}"; }
+start_package() {
+  log "starting ${PKG}"
+  if "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
+    log "package started"
+    return 0
+  fi
+  log "package start failed; retrying next boot"
+  return 1
+}
 
 [ -x "${SYNOPKG}" ] || { log "synopkg is not ready; retrying next boot"; exit 0; }
 if [ -d "/var/packages/${PKG}" ] || "${SYNOPKG}" status "${PKG}" >/dev/null 2>&1; then
-  log "${PKG} is already installed"
-  rm -f "${SPK}" "$0"
+  log "${PKG} is already installed; ensuring it is started"
+  start_package && rm -f "${SPK}" "$0"
   exit 0
 fi
 
@@ -49,7 +58,7 @@ fi
 log "installing ${PKG}"
 if "${SYNOPKG}" install "${SPK}" >> "${LOG}" 2>&1; then
   log "installation completed"
-  rm -f "${SPK}" "$0"
+  start_package && rm -f "${SPK}" "$0"
 else
   log "installation failed; retrying next boot"
 fi
