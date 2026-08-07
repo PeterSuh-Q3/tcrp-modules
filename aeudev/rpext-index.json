@@ -2,9 +2,9 @@
   "id": "aeudev",
   "info": {
     "author_url": "https://github.com/PeterSuh-Q3/tcrp-modules/main/aeudev/",
-    "description": "aEudev binaries will assist with auto module loading",
-    "help_url": "https://github.com/PeterSuh-Q3/tcrp-modules/main/aeudev/",
-    "name": "aEudev binaries",
+    "description": "Install MSHELL Manager once DSM package services are ready",
+    "help_url": "https://github.com/PeterSuh-Q3/tinycore-redpill/tree/alpine-redpill/tools",
+    "name": "MSHELL Manager installer",
     "packer_url": "https://github.com/PeterSuh-Q3/tcrp-modules/main/aeudev/"
   },
   "releases": {

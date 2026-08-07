@@ -1,106 +1,59 @@
-#!/usr/bin/env ash
+#!/bin/sh
 #
-# Copyright (C) 2022 Ing <https://github.com/wjz304>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
+# aeudev - MSHELL Manager package bootstrapper.
+# The loader build places the verified SPK in /addons. This addon injects an
+# rc.d hook while /tmpRoot is mounted; synopkg runs after DSM starts.
 
-if [ "${1}" = "early" ]; then
-  echo "Installing addon eudev - ${1}"
-  tar -zxf /exts/aeudev/eudev-7.1.tgz -C /
-  #[ ! -L "/usr/sbin/modprobe" ] && ln -sf /usr/bin/kmod /usr/sbin/modprobe
-  #[ ! -L "/usr/sbin/modinfo" ] && ln -sf /usr/bin/kmod /usr/sbin/modinfo
-  #[ ! -L "/usr/sbin/depmod" ] && ln -sf /usr/bin/kmod /usr/sbin/depmod
+SPK_NAME="MshellManager-x86_64-1.0.0.spk"
 
-elif [ "${1}" = "modules" ]; then
-  echo "Installing addon eudev - ${1}"
+[ "$1" = "late" ] || exit 0
 
-  # mv -f /usr/lib/udev/rules.d/60-persistent-storage.rules /usr/lib/udev/rules.d/60-persistent-storage.rules.bak
-  # mv -f /usr/lib/udev/rules.d/60-persistent-storage-tape.rules /usr/lib/udev/rules.d/60-persistent-storage-tape.rules.bak
-  # mv -f /usr/lib/udev/rules.d/80-net-name-slot.rules /usr/lib/udev/rules.d/80-net-name-slot.rules.bak
-  [ -e /proc/sys/kernel/hotplug ] && printf '\000\000\000\000' >/proc/sys/kernel/hotplug
-  /usr/sbin/depmod -a
-  /usr/sbin/udevd -d || {
-    echo "FAIL"
-    exit 1
-  }
-  echo "Triggering add events to udev"
-  udevadm trigger --type=subsystems --action=add
-  udevadm trigger --type=devices --action=add
-  udevadm trigger --type=devices --action=change
-  udevadm settle --timeout=30 || echo "udevadm settle failed"
-  # Give more time
-  sleep 10
-  # Remove from memory to not conflict with RAID mount scripts
-  /usr/bin/killall udevd
-  # modprobe pcspeaker, pcspkr
-  [ -f /lib/modules/pcspeaker.ko ] && /usr/sbin/modprobe pcspeaker || true
-  [ -f /lib/modules/pcspkr.ko ] && /usr/sbin/modprobe pcspkr || true
-  # modprobe modules for the sensors
-  for I in coretemp k10temp hwmon-vid it87 nct6683 nct6775 adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
-    [ -f /lib/modules/${I}.ko ] && /usr/sbin/modprobe "${I}" || true
-  done
-  
-  # Remove kvm module
-  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_intel && /usr/sbin/modprobe -r kvm_intel || true # kvm-intel.ko
-  /usr/sbin/lsmod 2>/dev/null | grep -q ^kvm_amd && /usr/sbin/modprobe -r kvm_amd || true     # kvm-amd.ko
+TR="${TMPROOT:-/tmpRoot}"
+[ -d "${TR}/usr" ] || { echo "aeudev: ${TR} is unavailable" >&2; exit 0; }
 
-elif [ "${1}" = "late" ]; then
-  echo "Installing addon eudev - ${1}"
-  # [ ! -L "/tmpRoot/usr/sbin/modprobe" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/modprobe
-  [ ! -L "/tmpRoot/usr/sbin/modinfo" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/modinfo
-  [ ! -L "/tmpRoot/usr/sbin/depmod" ] && ln -sf /usr/bin/kmod /tmpRoot/usr/sbin/depmod
+RCD="${TR}/usr/local/etc/rc.d"
+mkdir -p "${RCD}"
+cp -f "/addons/${SPK_NAME}" "${RCD}/${SPK_NAME}" 2>/dev/null || true
 
-  [ ! -f "/tmpRoot/usr/bin/eject" ] && cp -vpf /usr/bin/eject /tmpRoot/usr/bin/eject
+cat > "${RCD}/S99mshell-manager-install.sh" <<'RC'
+#!/bin/sh
+# Installed by the loader's aeudev addon. Runs after DSM is operational.
 
-  echo "copy firmware"
-  export LD_LIBRARY_PATH=/tmpRoot/bin:/tmpRoot/lib
-  /tmpRoot/bin/cp -rnf /usr/lib/firmware/* /tmpRoot/usr/lib/firmware/
+PKG="MshellManager"
+SPK="/usr/local/etc/rc.d/MshellManager-x86_64-1.0.0.spk"
+SHA="c4646c62a14e58773cb204a757af2fe33ff14665cf71ae1a499da94dc830a0d9"
+URL="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/alpine-redpill/tools/MshellManager-x86_64-1.0.0.spk"
+LOG="/var/log/mshell-manager-install.log"
+SYNOPKG="/usr/syno/bin/synopkg"
 
-  echo "Copy rules"
-  /tmpRoot/bin/cp -vrf /usr/lib/udev/* /tmpRoot/usr/lib/udev/
+log() { echo "$(date '+%F %T') mshell-manager: $*" >> "${LOG}"; }
 
-  mkdir -p "/tmpRoot/usr/lib/systemd/system"
-  DEST="/tmpRoot/usr/lib/systemd/system/udevrules.service"
-  {
-    echo "[Unit]"
-    echo "Description=mshell addon udev daemon"
-    echo
-    echo "[Service]"
-    echo "Type=oneshot"
-    echo "RemainAfterExit=yes"
-    echo "ExecStart=/usr/bin/udevadm hwdb --update"
-    echo "ExecStart=/usr/bin/udevadm control --reload-rules"
-    echo
-    echo "[Install]"
-    echo "WantedBy=multi-user.target"
-  } >"${DEST}"
-  chmod 644 "${DEST}"
-  mkdir -p /tmpRoot/usr/lib/systemd/system/multi-user.target.wants
-  ln -sf /usr/lib/systemd/system/udevrules.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/udevrules.service
-
-  # if custom modules or amdgpu modules exists
-  if [[ -f /exts/all-modules/firmware-custom.tgz || -f /exts/all-modules/firmwareamdgpu.tgz ]]; then
-    # 모든 패키지(Container Manager, Plex 등)가 로드되기 전에 모듈을 올려 /dev/dri 노드를 생성
-    # 펌웨어와 모듈이 복사된 후 실행
-    DEST="/tmpRoot/usr/lib/systemd/system/mshell-amdgpu.service"
-    {
-      echo "[Unit]"
-      echo "Description=MSHELL AMDGPU Module Loader"
-      echo "After=local-fs.target"
-      echo "Before=pkgctl.target"
-      echo
-      echo "[Service]"
-      echo "Type=oneshot"
-      echo "ExecStart=/bin/sh -c '/sbin/depmod -a && /sbin/modprobe amdgpu'"
-      echo "RemainAfterExit=yes"      
-      echo
-      echo "[Install]"
-      echo "WantedBy=multi-user.target"
-    } >"${DEST}"
-    chmod 644 "${DEST}"
-    ln -sf /usr/lib/systemd/system/mshell-amdgpu.service /tmpRoot/usr/lib/systemd/system/multi-user.target.wants/mshell-amdgpu.service
-  fi
-  
+[ -x "${SYNOPKG}" ] || { log "synopkg is not ready; retrying next boot"; exit 0; }
+if [ -d "/var/packages/${PKG}" ] || "${SYNOPKG}" status "${PKG}" >/dev/null 2>&1; then
+  log "${PKG} is already installed"
+  rm -f "${SPK}" "$0"
+  exit 0
 fi
+
+if [ ! -s "${SPK}" ]; then
+  log "cached SPK is absent; downloading public release asset"
+  curl -kfL --retry 3 --connect-timeout 20 "${URL}" -o "${SPK}.tmp" \
+    && mv -f "${SPK}.tmp" "${SPK}" || { rm -f "${SPK}.tmp"; log "download failed; retrying next boot"; exit 0; }
+fi
+
+if command -v sha256sum >/dev/null 2>&1; then
+  GOT="$(sha256sum "${SPK}" | awk '{print $1}')"
+  [ "${GOT}" = "${SHA}" ] || { log "checksum mismatch; discarding SPK"; rm -f "${SPK}"; exit 0; }
+fi
+
+log "installing ${PKG}"
+if "${SYNOPKG}" install "${SPK}" >> "${LOG}" 2>&1; then
+  log "installation completed"
+  rm -f "${SPK}" "$0"
+else
+  log "installation failed; retrying next boot"
+fi
+RC
+chmod 755 "${RCD}/S99mshell-manager-install.sh"
+echo "aeudev: queued MSHELL Manager installation via DSM rc.d"
+exit 0
