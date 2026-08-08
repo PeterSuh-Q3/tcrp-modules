@@ -26,6 +26,11 @@ cat > "${RCD}/S99mshell-manager-install.sh" <<'RC'
 #!/bin/sh
 # Installed by aeudev. Runs only after DSM is operational.
 
+# DSM invokes rc.d scripts for both start and stop.  An update is a startup
+# action only; running it while packages are shutting down can leave synopkg
+# with the same transient state as an early-boot update.
+[ "$1" = "start" ] || exit 0
+
 PKG="MshellManager"
 RCD="/usr/local/etc/rc.d"
 META="${RCD}/mshell-manager.json"
@@ -59,6 +64,36 @@ version_is_newer() {
 }
 start_package() {
   "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
+}
+wait_for_package_manager() {
+  # pkg-rclocal runs before DSM starts third-party package units in parallel.
+  # Let that wave finish before asking synopkg to stop/replace this package.
+  # The fixed delay also covers DSM versions where pkg-ready is already
+  # active when its package-unit jobs are still queued.
+  log "waiting for DSM package services to settle"
+  sleep 30
+}
+install_with_retry() {
+  attempt=1
+  while [ "${attempt}" -le 8 ]; do
+    result="$("${SYNOPKG}" install "${SPK}" 2>&1)"
+    status=$?
+    printf '%s\n' "${result}" >> "${LOG}"
+    [ "${status}" -eq 0 ] && return 0
+
+    # During boot synopkg returns 263 while the existing package's systemd
+    # unit is activating/deactivating.  This condition is transient; retain
+    # the verified payload and retry after package startup has progressed.
+    if printf '%s' "${result}" | grep -Eq '"code":263|code.?263|activating/deactivating'; then
+      log "synopkg is transitioning ${PKG} (attempt ${attempt}/8); retrying in 15 seconds"
+      attempt=$((attempt + 1))
+      sleep 15
+      continue
+    fi
+
+    return "${status}"
+  done
+  return 1
 }
 
 [ -x "${SYNOPKG}" ] || { log "synopkg is not ready; retrying next boot"; exit 0; }
@@ -99,8 +134,9 @@ GOT="$(sha256sum "${SPK}" 2>/dev/null | awk '{print $1}')"
   log "checksum mismatch; discarding SPK"; rm -f "${SPK}"; exit 0;
 }
 
+wait_for_package_manager
 log "installing ${PKG} ${TARGET_VERSION}"
-if "${SYNOPKG}" install "${SPK}" >> "${LOG}" 2>&1; then
+if install_with_retry; then
   log "installation completed"
   start_package && rm -f "${SPK}" "${META}" "$0"
 else
