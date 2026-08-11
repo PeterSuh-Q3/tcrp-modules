@@ -22,6 +22,13 @@ mkdir -p "${RCD}"
 cp -f "${SPK_SOURCE}" "${RCD}/$(basename "${SPK_SOURCE}")"
 cp -f "${META_SOURCE}" "${RCD}/mshell-manager.json"
 
+AMDGPU_SOURCE="$(find /addons -maxdepth 1 -type f -name 'syno-amdgpu-runtime-*.spk' -print -quit 2>/dev/null)"
+AMDGPU_META_SOURCE="/addons/amdgpu-driver.json"
+if [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; then
+  cp -f "${AMDGPU_SOURCE}" "${RCD}/$(basename "${AMDGPU_SOURCE}")"
+  cp -f "${AMDGPU_META_SOURCE}" "${RCD}/amdgpu-driver.json"
+fi
+
 cat > "${RCD}/S99mshell-manager-install.sh" <<'RC'
 #!/bin/sh
 # Installed by aeudev. Runs only after DSM is operational.
@@ -145,4 +152,36 @@ fi
 RC
 chmod 755 "${RCD}/S99mshell-manager-install.sh"
 echo "aeudev: queued MSHELL Manager installation/update via DSM rc.d"
+
+if [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; then
+cat > "${RCD}/S99amdgpu-runtime-install.sh" <<'RC'
+#!/bin/sh
+[ "$1" = "start" ] || exit 0
+PKG="syno-amdgpu-runtime"
+RCD="/usr/local/etc/rc.d"
+META="${RCD}/amdgpu-driver.json"
+SPK="$(find "${RCD}" -maxdepth 1 -type f -name 'syno-amdgpu-runtime-*.spk' -print -quit 2>/dev/null)"
+LOG="/var/log/amdgpu-runtime-install.log"
+SYNOPKG="/usr/syno/bin/synopkg"
+log() { echo "$(date '+%F %T') amdgpu-runtime: $*" >> "${LOG}"; }
+[ -x "${SYNOPKG}" ] && [ -s "${SPK}" ] && [ -s "${META}" ] || { log "payload or synopkg is absent"; exit 0; }
+attempt=1
+while [ "${attempt}" -le 8 ]; do
+  result="$(${SYNOPKG} install "${SPK}" 2>&1)"; status=$?
+  printf '%s\n' "${result}" >> "${LOG}"
+  if [ "${status}" -eq 0 ]; then
+    "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
+    rm -f "${SPK}" "${META}" "$0"
+    exit 0
+  fi
+  printf '%s' "${result}" | grep -Eq '"code":263|code.?263|activating/deactivating' || break
+  log "synopkg transition (attempt ${attempt}/8); retrying in 15 seconds"
+  attempt=$((attempt + 1)); sleep 15
+done
+log "installation failed; retrying next boot"
+exit 0
+RC
+chmod 755 "${RCD}/S99amdgpu-runtime-install.sh"
+echo "aeudev: queued AMDGPU runtime installation via DSM rc.d"
+fi
 exit 0
