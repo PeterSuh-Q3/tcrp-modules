@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwellnkv2-7.3-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/broadwellnkv2-7.3-4.4.302.tgz",
-      "sha256": "57d31ffa0641389779380321f26dfc925c6b9cdf9b5695f4c72999d27f984c22",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.14/broadwellnkv2-7.3-4.4.302.tgz",
+      "sha256": "ff34c7878ad61780533fdf7ef17bc9396ea2db3c5500ae31ecb1c654c5deb22f",
       "packed": false
     },
     {

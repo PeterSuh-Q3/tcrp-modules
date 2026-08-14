@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "cedarview-7.0-3.10.108.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/cedarview-7.0-3.10.108.tgz",
-      "sha256": "ec80d7ed3476d121d1796a619a663b7e599ed4782f9454a2be566a7333118c5e",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.14/cedarview-7.0-3.10.108.tgz",
+      "sha256": "312dfa3dd4fc89055e30d81cc78270a5ea6418691300cf30a21e1bcda3d49086",
       "packed": false
     },
     {

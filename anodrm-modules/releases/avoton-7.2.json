@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "avoton-7.2-3.10.108.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.7.11/avoton-7.2-3.10.108.tgz",
-      "sha256": "863c877e434b3e8e904c47a6961ce67b5366421018bf12aba082e2d624c5e0ef",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.14/avoton-7.2-3.10.108.tgz",
+      "sha256": "6c722e82d87409c130eee545daa9b03023815e972ea152b2f3aa6c7d15ef15dd",
       "packed": false
     },
     {
