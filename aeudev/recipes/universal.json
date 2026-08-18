@@ -8,9 +8,9 @@
     }
   ],
   "mshell_manager": {
-    "name": "MshellManager-x86_64-1.0.7.spk",
-    "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/alpine-redpill/tools/MshellManager-x86_64-1.0.7.spk",
-    "sha256": "63166cdb31e5a1b1073d3ec469aa3e155e329f37c123a8528d1720f0a359d8e9"
+    "name": "MshellManager-x86_64-1.0.8.spk",
+    "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/alpine-redpill/tools/MshellManager-x86_64-1.0.8.spk",
+    "sha256": "99beb1010e09f12c9476c03a3933509e40ff3aeb4f6017ffac767c726b3f8f9a"
   },
   "scripts": {
     "on_os_load": "install.sh"
