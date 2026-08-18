@@ -34,7 +34,7 @@
     {
       "name": "r1000-7.4-4.4.302-drm.tgz",
       "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.15/r1000-7.4-4.4.302-drm.tgz",
-      "sha256": "5a8440aa0b491ed7e4613c9b640b868e796d210eea46cdfda25447ce1dccb5b6",
+      "sha256": "e9851fa2dec10925699cd87d0d5eca616641b13206872d897883698418f0177b",
       "packed": false
     }
   ],
