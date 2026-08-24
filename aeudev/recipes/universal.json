@@ -5,6 +5,12 @@
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/releases/install.sh",
       "sha256": "83b4066658498864d2479b9173e0446e2f0fc351d3c4b47e4282e4268725bb34",
       "packed": false
+    },
+    {
+      "name": "latest.json",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/recipes/latest.json",
+      "sha256": "64cb10403cd3509fe226eb3a1ed171ba35b6e3957727c11c0d9fb1e7c3068718",
+      "packed": false
     }
   ],
   "scripts": {
