@@ -70,8 +70,19 @@ jobs:
               }
             }' | jq -S '.' > "${tmp}"
 
-          if [ -f "${output}" ] && cmp -s "${tmp}" "${output}"; then
-            echo "No package metadata changes."
+          # universal.json carries the checksum used by the aeudev extension
+          # downloader. Keep it synchronized whenever latest.json changes.
+          manifest_sha256="$(sha256sum "${tmp}" | awk '{print $1}')"
+          universal_tmp="$(mktemp)"
+          jq --arg hash "${manifest_sha256}" '
+            .files |= map(
+              if .name == "latest.json" then .sha256 = $hash else . end
+            )
+          ' aeudev/recipes/universal.json > "${universal_tmp}"
+          mv "${universal_tmp}" aeudev/recipes/universal.json
+
+          if cmp -s "${tmp}" "${output}" && git diff --quiet -- aeudev/recipes/universal.json; then
+            echo "No package metadata or checksum changes."
             exit 0
           fi
 
