@@ -11,17 +11,25 @@
 TR="${TMPROOT:-/tmpRoot}"
 [ -d "${TR}/usr" ] || { echo "aeudev: ${TR} is unavailable" >&2; exit 0; }
 
-SPK_SOURCE="$(find /addons -maxdepth 1 -type f -name 'MshellManager-x86_64-*.spk' -print -quit 2>/dev/null)"
-META_SOURCE="/addons/mshell-manager.json"
-[ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ] || {
-  echo "aeudev: MSHELL Manager SPK or metadata is absent; skipped" >&2
-  exit 0
-}
-
+# Each of the three packages below is staged/queued independently -
+# one's SPK/metadata being absent from /addons (a transient GitHub
+# hiccup during the ramdisk build, a checksum mismatch, etc.) must
+# not prevent the other two from being queued. This used to be a
+# single early `exit 0` gated on MSHELL Manager alone, which silently
+# skipped AMDGPU runtime and Syno Smart Info too whenever only MSHELL
+# Manager's fetch failed - a single point of failure across three
+# unrelated packages.
 RCD="${TR}/usr/local/etc/rc.d"
 mkdir -p "${RCD}"
-cp -f "${SPK_SOURCE}" "${RCD}/$(basename "${SPK_SOURCE}")"
-cp -f "${META_SOURCE}" "${RCD}/mshell-manager.json"
+
+SPK_SOURCE="$(find /addons -maxdepth 1 -type f -name 'MshellManager-x86_64-*.spk' -print -quit 2>/dev/null)"
+META_SOURCE="/addons/mshell-manager.json"
+if [ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ]; then
+  cp -f "${SPK_SOURCE}" "${RCD}/$(basename "${SPK_SOURCE}")"
+  cp -f "${META_SOURCE}" "${RCD}/mshell-manager.json"
+else
+  echo "aeudev: MSHELL Manager SPK or metadata is absent; skipped" >&2
+fi
 
 AMDGPU_SOURCE="$(find /addons -maxdepth 1 -type f -name 'syno-amdgpu-runtime-*.spk' -print -quit 2>/dev/null)"
 AMDGPU_META_SOURCE="/addons/amdgpu-driver.json"
@@ -37,6 +45,7 @@ if [ -s "${SSI_SOURCE}" ] && [ -s "${SSI_META_SOURCE}" ]; then
   cp -f "${SSI_META_SOURCE}" "${RCD}/synosmartinfo.json"
 fi
 
+if [ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ]; then
 cat > "${RCD}/S99mshell-manager-install.sh" <<'RC'
 #!/bin/sh
 # Installed by aeudev. Runs only after DSM is operational.
@@ -160,6 +169,7 @@ fi
 RC
 chmod 755 "${RCD}/S99mshell-manager-install.sh"
 echo "aeudev: queued MSHELL Manager installation/update via DSM rc.d"
+fi
 
 if [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; then
 cat > "${RCD}/S99amdgpu-runtime-install.sh" <<'RC'
