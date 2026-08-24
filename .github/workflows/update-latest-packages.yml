@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Check the three public release mirrors every five minutes.
-    - cron: '0/5 * * * *'
+    - cron: '*/15 * * * *'
 
 permissions:
   contents: write
