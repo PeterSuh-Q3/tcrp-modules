@@ -17,7 +17,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # GITHUB_TOKEN is scoped to this repository and cannot reliably inspect
+      # release assets in the three source repositories.
+      GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
     steps:
       - name: Checkout repository
