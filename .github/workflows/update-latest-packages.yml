@@ -16,10 +16,6 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      # GITHUB_TOKEN is scoped to this repository and cannot reliably inspect
-      # release assets in the three source repositories.
-      GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -34,20 +30,20 @@ jobs:
           tmp="$(mktemp)"
           mkdir -p "$(dirname "${output}")"
 
-          gh api --paginate \
+          curl --fail --silent --show-error --location \
+            -H 'Accept: application/vnd.github+json' \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
-            repos/PeterSuh-Q3/mshell-manager/releases \
-            --jq '[.[] | select(.draft == false and .prerelease == false)] | sort_by(.published_at) | last' \
+            'https://api.github.com/repos/PeterSuh-Q3/mshell-manager/releases/latest' \
             > /tmp/mshell-release.json
-          gh api --paginate \
+          curl --fail --silent --show-error --location \
+            -H 'Accept: application/vnd.github+json' \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
-            repos/PeterSuh-Q3/SynoSmartInfo/releases \
-            --jq '[.[] | select(.draft == false and .prerelease == false)] | sort_by(.published_at) | last' \
+            'https://api.github.com/repos/PeterSuh-Q3/SynoSmartInfo/releases/latest' \
             > /tmp/synosmartinfo-release.json
-          gh api --paginate \
+          curl --fail --silent --show-error --location \
+            -H 'Accept: application/vnd.github+json' \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
-            repos/PeterSuh-Q3/syno-amdgpu-driver/releases \
-            --jq '[.[] | select(.draft == false and .prerelease == false)] | sort_by(.published_at) | last' \
+            'https://api.github.com/repos/PeterSuh-Q3/syno-amdgpu-driver/releases/latest' \
             > /tmp/amdgpu-release.json
 
           jq -n \
@@ -56,7 +52,7 @@ jobs:
             --slurpfile amdgpu /tmp/amdgpu-release.json \
             '
             def release($r; $asset_filter):
-              ($r[0]) as $x |
+              $r as $x |
               {
                 repository: $x.html_url | sub("/releases/.*$"; "") | sub("https://github.com/"; ""),
                 tag: $x.tag_name,
