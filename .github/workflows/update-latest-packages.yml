@@ -1,10 +1,10 @@
 name: Update latest package metadata
 
 on:
-  schedule:
-    # GitHub Actions supports a minimum schedule interval of five minutes.
-    - cron: '*/5 * * * *'
   workflow_dispatch:
+  schedule:
+    # Check the three public release mirrors every five minutes.
+    - cron: '0/5 * * * *'
 
 permissions:
   contents: write
