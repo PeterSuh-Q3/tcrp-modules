@@ -89,6 +89,13 @@ jobs:
           mv "${tmp}" "${output}"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "${output}"
+          # universal.json was already rewritten above to match this run's
+          # latest.json checksum - it MUST be added here too, or the sync
+          # logic above computes a value that's silently discarded when the
+          # runner's workspace is torn down (confirmed live: this exact gap
+          # caused a real checksum-mismatch failure on real hardware, since
+          # universal.json's pinned sha256 hadn't moved since 2026-08-24
+          # while latest.json kept getting refreshed every 15 minutes).
+          git add "${output}" aeudev/recipes/universal.json
           git commit -m 'chore: refresh latest package metadata'
           git push
