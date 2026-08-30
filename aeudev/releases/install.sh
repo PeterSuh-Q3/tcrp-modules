@@ -38,6 +38,13 @@ if [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; then
   cp -f "${AMDGPU_META_SOURCE}" "${RCD}/amdgpu-driver.json"
 fi
 
+AMDGPU_TOP_SOURCE="$(find /addons -maxdepth 1 -type f -name 'syno-amdgpu-top-*.spk' -print -quit 2>/dev/null)"
+AMDGPU_TOP_META_SOURCE="/addons/amdgpu-top.json"
+if [ -s "${AMDGPU_TOP_SOURCE}" ] && [ -s "${AMDGPU_TOP_META_SOURCE}" ]; then
+  cp -f "${AMDGPU_TOP_SOURCE}" "${RCD}/$(basename "${AMDGPU_TOP_SOURCE}")"
+  cp -f "${AMDGPU_TOP_META_SOURCE}" "${RCD}/amdgpu-top.json"
+fi
+
 SSI_SOURCE="$(find /addons -maxdepth 1 -type f -name 'Synosmartinfo-x86_64-*.spk' -print -quit 2>/dev/null)"
 SSI_META_SOURCE="/addons/synosmartinfo.json"
 if [ -s "${SSI_SOURCE}" ] && [ -s "${SSI_META_SOURCE}" ]; then
@@ -171,36 +178,100 @@ chmod 755 "${RCD}/S99mshell-manager-install.sh"
 echo "aeudev: queued MSHELL Manager installation/update via DSM rc.d"
 fi
 
-if [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; then
-cat > "${RCD}/S99amdgpu-runtime-install.sh" <<'RC'
+if { [ -s "${AMDGPU_SOURCE}" ] && [ -s "${AMDGPU_META_SOURCE}" ]; } || \
+   { [ -s "${AMDGPU_TOP_SOURCE}" ] && [ -s "${AMDGPU_TOP_META_SOURCE}" ]; }; then
+  # Replace the older runtime-only hook when this addon is rebuilt.
+  rm -f "${RCD}/S99amdgpu-runtime-install.sh"
+cat > "${RCD}/S99amdgpu-packages-install.sh" <<'RC'
 #!/bin/sh
+# Installed by aeudev.  Runtime and amdgpu_top are separate packages and
+# are deliberately processed independently: a failed optional tool update
+# must never suppress the runtime update.
 [ "$1" = "start" ] || exit 0
-PKG="syno-amdgpu-runtime"
+
 RCD="/usr/local/etc/rc.d"
-META="${RCD}/amdgpu-driver.json"
-SPK="$(find "${RCD}" -maxdepth 1 -type f -name 'syno-amdgpu-runtime-*.spk' -print -quit 2>/dev/null)"
-LOG="/var/log/amdgpu-runtime-install.log"
+LOG="/var/log/amdgpu-packages-install.log"
 SYNOPKG="/usr/syno/bin/synopkg"
-log() { echo "$(date '+%F %T') amdgpu-runtime: $*" >> "${LOG}"; }
-[ -x "${SYNOPKG}" ] && [ -s "${SPK}" ] && [ -s "${META}" ] || { log "payload or synopkg is absent"; exit 0; }
-attempt=1
-while [ "${attempt}" -le 8 ]; do
-  result="$(${SYNOPKG} install "${SPK}" 2>&1)"; status=$?
-  printf '%s\n' "${result}" >> "${LOG}"
-  if [ "${status}" -eq 0 ]; then
-    "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
-    rm -f "${SPK}" "${META}" "$0"
-    exit 0
+PENDING=0
+
+log() { echo "$(date '+%F %T') amdgpu: $*" >> "${LOG}"; }
+meta() {
+  python3 - "$1" "$2" <<'PY'
+import json, sys
+try:
+    with open(sys.argv[1], encoding="utf-8") as f:
+        value = json.load(f)[sys.argv[2]]
+    print(value if isinstance(value, str) else "")
+except Exception:
+    pass
+PY
+}
+version_is_newer() {
+  awk -v installed="$1" -v candidate="$2" '
+    BEGIN {
+      n=split(installed, a, "."); m=split(candidate, b, "."); max=(n>m?n:m)
+      for (i=1; i<=max; i++) {
+        x=(i in a ? a[i]+0 : 0); y=(i in b ? b[i]+0 : 0)
+        if (y>x) exit 0
+        if (y<x) exit 1
+      }
+      exit 1
+    }'
+}
+install_with_retry() {
+  attempt=1
+  while [ "${attempt}" -le 8 ]; do
+    result="$("${SYNOPKG}" install "$1" 2>&1)"; status=$?
+    printf '%s\n' "${result}" >> "${LOG}"
+    [ "${status}" -eq 0 ] && return 0
+    printf '%s' "${result}" | grep -Eq '"code":263|code.?263|activating/deactivating' || return "${status}"
+    log "package transition (attempt ${attempt}/8); retrying in 15 seconds"
+    attempt=$((attempt + 1)); sleep 15
+  done
+  return 1
+}
+process_package() {
+  PKG="$1"; PREFIX="$2"; META="$3"
+  [ -s "${META}" ] || return 0
+  SPK_NAME="$(meta "${META}" name)"
+  URL="$(meta "${META}" url)"
+  SHA="$(meta "${META}" sha256)"
+  TARGET_VERSION="$(printf '%s' "${SPK_NAME}" | sed -n "s/^${PREFIX}-\\([0-9][0-9.]*\\)-7\\.4-x86_64-kernel.*\\.spk$/\\1/p")"
+  SPK="${RCD}/${SPK_NAME}"
+  if ! echo "${SPK_NAME}" | grep -Eq "^${PREFIX}-[0-9]+\\.[0-9]+\\.[0-9]+-7\\.4-x86_64-kernel(5\\.10\\.55|4\\.4\\.x)\\.spk$" || \
+     [ "${URL##*/}" != "${SPK_NAME}" ] || ! echo "${SHA}" | grep -Eq '^[a-f0-9]{64}$'; then
+    log "${PKG}: release metadata is invalid; retrying next boot"; PENDING=1; return 0
   fi
-  printf '%s' "${result}" | grep -Eq '"code":263|code.?263|activating/deactivating' || break
-  log "synopkg transition (attempt ${attempt}/8); retrying in 15 seconds"
-  attempt=$((attempt + 1)); sleep 15
-done
-log "installation failed; retrying next boot"
+  INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
+  if [ -n "${INSTALLED_VERSION}" ] && ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
+    log "${PKG} ${INSTALLED_VERSION} is current; ensuring it is started"
+    "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1
+    rm -f "${SPK}" "${META}"
+    return 0
+  fi
+  [ -s "${SPK}" ] || { log "${PKG}: cached SPK is absent"; PENDING=1; return 0; }
+  GOT="$(sha256sum "${SPK}" 2>/dev/null | awk '{print $1}')"
+  [ "${GOT}" = "${SHA}" ] || { log "${PKG}: checksum mismatch"; rm -f "${SPK}"; PENDING=1; return 0; }
+  log "installing ${PKG} ${TARGET_VERSION}${INSTALLED_VERSION:+ (from ${INSTALLED_VERSION})}"
+  if install_with_retry "${SPK}"; then
+    "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1
+    rm -f "${SPK}" "${META}"
+  else
+    log "${PKG}: installation failed; retrying next boot"; PENDING=1
+  fi
+}
+
+[ -x "${SYNOPKG}" ] || { log "synopkg is not ready; retrying next boot"; exit 0; }
+# DSM starts third-party package units in parallel with rc.d.  Let that wave
+# settle once before either package asks synopkg to replace an older version.
+sleep 30
+process_package "syno-amdgpu-runtime" "syno-amdgpu-runtime" "${RCD}/amdgpu-driver.json"
+process_package "syno-amdgpu-top" "syno-amdgpu-top" "${RCD}/amdgpu-top.json"
+[ "${PENDING}" -eq 0 ] && rm -f "$0"
 exit 0
 RC
-chmod 755 "${RCD}/S99amdgpu-runtime-install.sh"
-echo "aeudev: queued AMDGPU runtime installation via DSM rc.d"
+chmod 755 "${RCD}/S99amdgpu-packages-install.sh"
+echo "aeudev: queued AMDGPU runtime and amdgpu_top installation/update via DSM rc.d"
 fi
 
 if [ -s "${SSI_SOURCE}" ] && [ -s "${SSI_META_SOURCE}" ]; then
