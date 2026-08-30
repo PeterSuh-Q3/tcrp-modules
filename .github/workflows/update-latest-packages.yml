@@ -45,11 +45,17 @@ jobs:
             -H 'X-GitHub-Api-Version: 2022-11-28' \
             'https://api.github.com/repos/PeterSuh-Q3/syno-amdgpu-driver/releases/latest' \
             > /tmp/amdgpu-release.json
+          curl --fail --silent --show-error --location \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            'https://api.github.com/repos/PeterSuh-Q3/syno-amdgpu-top/releases/latest' \
+            > /tmp/amdgpu-top-release.json
 
           jq -n \
             --slurpfile manager /tmp/mshell-release.json \
             --slurpfile smart /tmp/synosmartinfo-release.json \
             --slurpfile amdgpu /tmp/amdgpu-release.json \
+            --slurpfile amdgpu_top /tmp/amdgpu-top-release.json \
             '
             def release($r; $asset_filter):
               ($r[0]) as $x |
@@ -66,7 +72,8 @@ jobs:
               packages: {
                 mshell_manager: release($manager; "\\.spk$") ,
                 syno_smart_info: release($smart; "\\.spk$"),
-                amd_gpu_runtime: release($amdgpu; "\\.spk$")
+                amd_gpu_runtime: release($amdgpu; "\\.spk$"),
+                amdgpu_top: release($amdgpu_top; "\\.spk$")
               }
             }' | jq -S '.' > "${tmp}"
 
