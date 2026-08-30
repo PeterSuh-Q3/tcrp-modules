@@ -23,14 +23,14 @@
       "assets": [
         {
           "name": "syno-amdgpu-top-0.1.1-7.4-x86_64-kernel4.4.x.spk",
-          "sha256": "7fa9634046f5cb0609f1a90844c4dd038c8f8750632503798dd94dca22b0dfae",
-          "size": 9072640,
+          "sha256": "65d215c636643f9a22e52f548384ce7d93f79d777c956062761aa7ccaa4a2ec7",
+          "size": 9123840,
           "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-top/releases/download/v0.1.1/syno-amdgpu-top-0.1.1-7.4-x86_64-kernel4.4.x.spk"
         },
         {
           "name": "syno-amdgpu-top-0.1.1-7.4-x86_64-kernel5.10.55.spk",
-          "sha256": "235349a7c83fdacd34ed4fcd006afd778b8e17a98732e6fc2d452d2bc3ccf66d",
-          "size": 9072640,
+          "sha256": "a485c65393c6f8bf62534eed31a45c179fb9cc70ebab0765ef25dd9dc9631597",
+          "size": 9123840,
           "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-top/releases/download/v0.1.1/syno-amdgpu-top-0.1.1-7.4-x86_64-kernel5.10.55.spk"
         }
       ],
