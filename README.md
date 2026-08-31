@@ -1,3 +1,5 @@
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/PeterSuhQ3)
+
 ### Integrated extension driver pack of ARPL_MODULES used for ARPL (https://github.com/fbelavenuto/arpl-modules) Applied to be usable in TCRP.
 
 ### like ARPL bromolow | apollolake | broadwell | broadwellnk | v1000 | denverton | Geminilake | r1000 uses 8 platform-specific integrated extension driver packs,
