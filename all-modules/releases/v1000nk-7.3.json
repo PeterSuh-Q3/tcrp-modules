@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "v1000nk-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.15/v1000nk-7.3-5.10.55.tgz",
-      "sha256": "35a99d3d36e67278f7fcfa739dcb893294c30cac5708caa8c8db1f61e7744cf9",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.1/v1000nk-7.3-5.10.55.tgz",
+      "sha256": "8aea930e1117a0c3d27d0b2bf10f8275fa261295f611f6e3010ab9eabeeb44b8",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "v1000nk-7.3-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.15/v1000nk-7.3-5.10.55-drm.tgz",
-      "sha256": "8b4b6f8b71222af40d174a89bc2bc0d778980ff2a9ba3329b20e9c7df12943d7",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.1/v1000nk-7.3-5.10.55-drm.tgz",
+      "sha256": "7f2fe17a4c6c4494d95c14fda997231f96cfa633db26b738d448aead39808983",
       "packed": false
     }
   ],

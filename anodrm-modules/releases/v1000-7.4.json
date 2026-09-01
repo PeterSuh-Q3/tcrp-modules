@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "v1000-7.4-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.8.15/v1000-7.4-4.4.302.tgz",
-      "sha256": "ca51226228bf87a6400c9272493d9258360102d88e886c5f9ca668fc34f5935d",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.1/v1000-7.4-4.4.302.tgz",
+      "sha256": "7a4de6bee2fc203060ba600e31209b856658c45cdceee08405f593ebeabef911",
       "packed": false
     },
     {
