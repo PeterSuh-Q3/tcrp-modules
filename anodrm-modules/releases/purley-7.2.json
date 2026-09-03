@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "purley-7.2-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.1/purley-7.2-4.4.302.tgz",
-      "sha256": "0f2aa1af77d8802c24ff9a20af3b433f7019a531ced4c80df52cc486ce410a79",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/purley-7.2-4.4.302.tgz",
+      "sha256": "a9bb9c8c97886854f79d6c4d6540c4ea7ed25d399e7b9869bee0e4ca36f95820",
       "packed": false
     },
     {

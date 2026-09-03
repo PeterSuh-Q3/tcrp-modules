@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "r1000nk-7.2-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.1/r1000nk-7.2-5.10.55.tgz",
-      "sha256": "08e8220737bd3b3604812eae1b64fee6386b42f3ee5bfaebacd5b1a863176898",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/r1000nk-7.2-5.10.55.tgz",
+      "sha256": "d4f5dfade1f6630bdfd386a8a923c2192bee4040f4730d724d2df0502ae303c5",
       "packed": false
     },
     {
