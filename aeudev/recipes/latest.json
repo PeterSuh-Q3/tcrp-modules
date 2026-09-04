@@ -38,6 +38,19 @@
       "repository": "PeterSuh-Q3/syno-amdgpu-top",
       "tag": "v0.1.1"
     },
+    "intel_gpu_top": {
+      "assets": [
+        {
+          "name": "syno-intel-gpu-top-0.1.1-x86_64-kernel5.10.55.spk",
+          "sha256": "d724004a5fe378515d0e2c2fa3893e2b3d329f6c98b8abbeff31d5c029426005",
+          "size": 430080,
+          "url": "https://github.com/PeterSuh-Q3/syno-intel-gpu-top/releases/download/v0.1.1/syno-intel-gpu-top-0.1.1-x86_64-kernel5.10.55.spk"
+        }
+      ],
+      "published_at": "2026-09-03T08:00:00Z",
+      "repository": "PeterSuh-Q3/syno-intel-gpu-top",
+      "tag": "v0.1.1"
+    },
     "mshell_manager": {
       "assets": [
         {

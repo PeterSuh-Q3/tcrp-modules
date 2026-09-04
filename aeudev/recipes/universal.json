@@ -3,13 +3,13 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/releases/install.sh",
-      "sha256": "f1bcc86dca2f81cf30067c4fe1dffd1b723db6ace1aaaff4a2c04904d70a4b9d",
+      "sha256": "de70aa89c39353a05fd6944bea7b388f899085e6758ed7cbcb61726178b8b53e",
       "packed": false
     },
     {
       "name": "latest.json",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/recipes/latest.json",
-      "sha256": "efb5a061a90958f62727ced9abf9ae7e9359d5b0b25396e08e1216fa449b9bd2",
+      "sha256": "4e4d8e94eb504e235fb85e977802bb467ff5ffb4b5ba46bdb24d80a2dc7f7d74",
       "packed": false
     }
   ],

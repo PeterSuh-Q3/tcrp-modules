@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # aeudev - third-party package bootstrapper (MSHELL Manager, AMD runtime,
-# Syno Smart Info). The loader build supplies a verified SPK plus its
+# Syno Smart Info, Intel GPU Top). The loader build supplies a verified SPK plus its
 # release metadata in /addons for each one it staged. This addon queues a
 # DSM rc.d hook per package; synopkg is only usable after DSM has completed
 # startup.
@@ -11,14 +11,14 @@
 TR="${TMPROOT:-/tmpRoot}"
 [ -d "${TR}/usr" ] || { echo "aeudev: ${TR} is unavailable" >&2; exit 0; }
 
-# Each of the three packages below is staged/queued independently -
+# Each package below is staged/queued independently -
 # one's SPK/metadata being absent from /addons (a transient GitHub
 # hiccup during the ramdisk build, a checksum mismatch, etc.) must
-# not prevent the other two from being queued. This used to be a
+# not prevent the other packages from being queued. This used to be a
 # single early `exit 0` gated on MSHELL Manager alone, which silently
 # skipped AMDGPU runtime and Syno Smart Info too whenever only MSHELL
-# Manager's fetch failed - a single point of failure across three
-# unrelated packages.
+# Manager's fetch failed - a single point of failure across unrelated
+# packages.
 RCD="${TR}/usr/local/etc/rc.d"
 mkdir -p "${RCD}"
 
@@ -50,6 +50,13 @@ SSI_META_SOURCE="/addons/synosmartinfo.json"
 if [ -s "${SSI_SOURCE}" ] && [ -s "${SSI_META_SOURCE}" ]; then
   cp -f "${SSI_SOURCE}" "${RCD}/$(basename "${SSI_SOURCE}")"
   cp -f "${SSI_META_SOURCE}" "${RCD}/synosmartinfo.json"
+fi
+
+INTEL_GPU_TOP_SOURCE="$(find /addons -maxdepth 1 -type f -name 'syno-intel-gpu-top-*.spk' -print -quit 2>/dev/null)"
+INTEL_GPU_TOP_META_SOURCE="/addons/intel-gpu-top.json"
+if [ -s "${INTEL_GPU_TOP_SOURCE}" ] && [ -s "${INTEL_GPU_TOP_META_SOURCE}" ]; then
+  cp -f "${INTEL_GPU_TOP_SOURCE}" "${RCD}/$(basename "${INTEL_GPU_TOP_SOURCE}")"
+  cp -f "${INTEL_GPU_TOP_META_SOURCE}" "${RCD}/intel-gpu-top.json"
 fi
 
 if [ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ]; then
@@ -398,5 +405,108 @@ fi
 RC
 chmod 755 "${RCD}/S99synosmartinfo-install.sh"
 echo "aeudev: queued Syno Smart Info installation/update via DSM rc.d"
+fi
+
+if [ -s "${INTEL_GPU_TOP_SOURCE}" ] && [ -s "${INTEL_GPU_TOP_META_SOURCE}" ]; then
+cat > "${RCD}/S99intel-gpu-top-install.sh" <<'RC'
+#!/bin/sh
+# Installed by aeudev. Runs only after DSM is operational.
+[ "$1" = "start" ] || exit 0
+
+PKG="syno-intel-gpu-top"
+RCD="/usr/local/etc/rc.d"
+META="${RCD}/intel-gpu-top.json"
+LOG="/var/log/intel-gpu-top-install.log"
+SYNOPKG="/usr/syno/bin/synopkg"
+
+log() { echo "$(date '+%F %T') intel-gpu-top: $*" >> "${LOG}"; }
+meta() {
+  python3 - "$META" "$1" <<'PY'
+import json, sys
+try:
+    with open(sys.argv[1], encoding="utf-8") as f:
+        value = json.load(f)[sys.argv[2]]
+    print(value if isinstance(value, str) else "")
+except Exception:
+    pass
+PY
+}
+version_is_newer() {
+  awk -v installed="$1" -v candidate="$2" '
+    BEGIN {
+      n=split(installed, a, "."); m=split(candidate, b, "."); max=(n>m?n:m)
+      for (i=1; i<=max; i++) {
+        x=(i in a ? a[i]+0 : 0); y=(i in b ? b[i]+0 : 0)
+        if (y>x) exit 0
+        if (y<x) exit 1
+      }
+      exit 1
+    }'
+}
+install_with_retry() {
+  attempt=1
+  while [ "${attempt}" -le 8 ]; do
+    result="$("${SYNOPKG}" install "${SPK}" 2>&1)"
+    status=$?
+    printf '%s\n' "${result}" >> "${LOG}"
+    [ "${status}" -eq 0 ] && return 0
+    if printf '%s' "${result}" | grep -Eq '"code":263|code.?263|activating/deactivating'; then
+      log "synopkg is transitioning ${PKG} (attempt ${attempt}/8); retrying in 15 seconds"
+      attempt=$((attempt + 1))
+      sleep 15
+      continue
+    fi
+    return "${status}"
+  done
+  return 1
+}
+
+[ -x "${SYNOPKG}" ] || { log "synopkg is not ready; retrying next boot"; exit 0; }
+[ -s "${META}" ] || { log "release metadata is absent; retrying next boot"; exit 0; }
+
+SPK_NAME="$(meta name)"
+URL="$(meta url)"
+SHA="$(meta sha256)"
+TARGET_VERSION="$(printf '%s' "${SPK_NAME}" | sed -n 's/^syno-intel-gpu-top-\([0-9][0-9.]*\)-x86_64-kernel[^/]*\.spk$/\1/p')"
+SPK="${RCD}/${SPK_NAME}"
+
+if ! echo "${SPK_NAME}" | grep -Eq '^syno-intel-gpu-top-[0-9]+\.[0-9]+\.[0-9]+-x86_64-kernel[^/]+\.spk$' || \
+   [ "${URL##*/}" != "${SPK_NAME}" ] || \
+   ! echo "${SHA}" | grep -Eq '^[a-f0-9]{64}$'; then
+  log "release metadata is invalid; retrying next boot"
+  exit 0
+fi
+
+INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
+if [ -n "${INSTALLED_VERSION}" ] && ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
+  log "${PKG} ${INSTALLED_VERSION} is current"
+  rm -f "${SPK}" "${META}" "$0"
+  exit 0
+fi
+
+if [ ! -s "${SPK}" ]; then
+  log "cached SPK is absent; downloading ${TARGET_VERSION}"
+  curl -kfL --retry 3 --connect-timeout 20 "${URL}" -o "${SPK}" || {
+    rm -f "${SPK}"; log "download failed; retrying next boot"; exit 0;
+  }
+fi
+
+GOT="$(sha256sum "${SPK}" 2>/dev/null | awk '{print $1}')"
+[ "${GOT}" = "${SHA}" ] || {
+  log "checksum mismatch; discarding SPK"; rm -f "${SPK}"; exit 0;
+}
+
+# Let DSM's initial package-service wave settle before installing/upgrading.
+sleep 30
+log "installing ${PKG} ${TARGET_VERSION}${INSTALLED_VERSION:+ (from ${INSTALLED_VERSION})}"
+if install_with_retry; then
+  log "installation completed"
+  rm -f "${SPK}" "${META}" "$0"
+else
+  log "installation failed; retrying next boot"
+fi
+RC
+chmod 755 "${RCD}/S99intel-gpu-top-install.sh"
+echo "aeudev: queued Intel GPU Top installation/update via DSM rc.d"
 fi
 exit 0
