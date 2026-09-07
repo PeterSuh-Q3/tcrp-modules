@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "apollolake-7.1-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/apollolake-7.1-4.4.180.tgz",
-      "sha256": "9a3cafde843a0a39f581ec6b9063ddb66080bc87cf7fe993e17b8f2007efad81",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/apollolake-7.1-4.4.180.tgz",
+      "sha256": "dc1edc27b19c1fd8d03e4e9fc1321e44d2541c5f6fffcb04e83bc1d7f0d61e2d",
       "packed": false
     },
     {
@@ -27,8 +27,8 @@
     },
     {
       "name": "apollolake-7.1-4.4.180-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/apollolake-7.1-4.4.180-drm.tgz",
-      "sha256": "e953fc1d559916749168d377e6f31305ad04d90d2f03b6ed60f6f98e8bf0ca2e",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/apollolake-7.1-4.4.180-drm.tgz",
+      "sha256": "98238c1ec5543140bc1b575ad8135795987b3c3613d3a4017164f3e57c9d09ad",
       "packed": false
     }
   ],

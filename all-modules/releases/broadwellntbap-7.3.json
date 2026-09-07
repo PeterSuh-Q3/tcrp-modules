@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwellntbap-7.3-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/broadwellntbap-7.3-4.4.302.tgz",
-      "sha256": "389540256e1d64a5742ee66f2888f0f978077717b89c9e50fcd77042de2cca2d",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/broadwellntbap-7.3-4.4.302.tgz",
+      "sha256": "6982068f653e5e4fba9b386d36b5e213cc4a097f8e90689c63a98c40a52aa4a3",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "broadwellntbap-7.3-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.3/broadwellntbap-7.3-4.4.302-drm.tgz",
-      "sha256": "83a4cc4981f9dfbc0171448717cea3002bff024769ac251f4d130c508f1039ca",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/broadwellntbap-7.3-4.4.302-drm.tgz",
+      "sha256": "62831e7ecfe3269b331563d6c7f4e9317c5ab7eb064080c1cc7cdfa432d1aa37",
       "packed": false
     }
   ],
