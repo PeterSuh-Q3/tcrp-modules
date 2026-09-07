@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwellnk-7.3-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/broadwellnk-7.3-4.4.302.tgz",
-      "sha256": "fe91232755d2722e87b0f7e34b3313e66d16f072576c688da91b6870990a0ff8",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.8/broadwellnk-7.3-4.4.302.tgz",
+      "sha256": "e67eb7e143b90597fe5b540006b8d7a965ce9f70af6bc4c3289b2471a776ce32",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "broadwellnk-7.3-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.7/broadwellnk-7.3-4.4.302-drm.tgz",
-      "sha256": "29d283f1850f78810c3ad9d284ef62e0ceb877e3c04d0b7d4bd809c5eb1f6f44",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.8/broadwellnk-7.3-4.4.302-drm.tgz",
+      "sha256": "39a2d040e7dcebc821f20d55f007a55142e9a8ec5247aa50d14c48c1b8e7c412",
       "packed": false
     }
   ],
