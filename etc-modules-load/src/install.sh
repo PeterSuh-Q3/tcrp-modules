@@ -59,10 +59,21 @@ if [ "${1}" = "modules" ]; then
   load_module_with_dependencies pcspeaker || true
   load_module_with_dependencies pcspkr || true
 
-  # Hardware-monitoring sensor modules.  coretemp and k10temp are harmless
-  # when the CPU family does not match; the driver simply exposes no device.
+  # Hardware-monitoring sensor modules.  These Synology kernel families export
+  # syno_k10cpu_temperature from vmlinux.  Loading an external k10temp.ko on
+  # them causes a duplicate-export error, so skip it explicitly.
+  _ml_platform="$(uname -a 2>/dev/null)"
+  _ml_skip_k10temp=0
+  case "${_ml_platform}" in
+    *synology_epyc7002*|*synology_epyc7003*|*synology_r1000nk*|*synology_v1000nk*)
+      _ml_skip_k10temp=1
+      echo "etc-modules-load: skip k10temp (Synology kernel exports syno_k10cpu_temperature)"
+      ;;
+  esac
+
   for I in coretemp k10temp hwmon-vid it87 nct6683 nct6775 \
            adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
+    [ "${I}" = "k10temp" ] && [ "${_ml_skip_k10temp}" = "1" ] && continue
     load_module_with_dependencies "${I}" || true
   done
 
