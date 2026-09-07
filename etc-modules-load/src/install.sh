@@ -46,10 +46,21 @@ load_module_with_dependencies() {
     }
   done
 
-  /usr/sbin/modprobe "${_ml_name}" || {
-    echo "etc-modules-load: failed to load ${_ml_name}"
-    return 1
-  }
+  _ml_modprobe_output="$(/usr/sbin/modprobe "${_ml_name}" 2>&1)"
+  _ml_modprobe_status=$?
+  if [ "${_ml_modprobe_status}" -ne 0 ]; then
+    case "${_ml_modprobe_output}" in
+      *"No such device"*)
+        echo "etc-modules-load: ${_ml_name} is not applicable to this hardware"
+        return 0
+        ;;
+      *)
+        [ -n "${_ml_modprobe_output}" ] && echo "${_ml_modprobe_output}" >&2
+        echo "etc-modules-load: failed to load ${_ml_name}"
+        return 1
+        ;;
+    esac
+  fi
 }
 
 if [ "${1}" = "modules" ]; then
