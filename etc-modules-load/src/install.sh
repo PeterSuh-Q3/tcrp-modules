@@ -70,21 +70,28 @@ if [ "${1}" = "modules" ]; then
   load_module_with_dependencies pcspeaker || true
   load_module_with_dependencies pcspkr || true
 
-  # Hardware-monitoring sensor modules.  These Synology kernel families export
-  # syno_k10cpu_temperature from vmlinux.  Loading an external k10temp.ko on
-  # them causes a duplicate-export error, so skip it explicitly.
-  _ml_platform="$(uname -a 2>/dev/null)"
-  _ml_skip_k10temp=0
-  case "${_ml_platform}" in
-    *synology_epyc7002*|*synology_epyc7003*|*synology_r1000nk*|*synology_v1000nk*)
-      _ml_skip_k10temp=1
-      echo "etc-modules-load: skip k10temp (Synology kernel exports syno_k10cpu_temperature)"
-      ;;
-  esac
+  # CPU temperature drivers are mutually exclusive.  Select the driver from
+  # the actual CPU vendor, then avoid an external module if Synology already
+  # exports the matching temperature callback from vmlinux.
+  if grep -qm1 '^vendor_id[[:space:]]*:.*GenuineIntel' /proc/cpuinfo; then
+    if grep -qw 'syno_cpu_temperature' /proc/kallsyms 2>/dev/null; then
+      echo "etc-modules-load: skip coretemp (provided by Synology kernel)"
+    else
+      load_module_with_dependencies coretemp || true
+    fi
+  elif grep -qm1 '^vendor_id[[:space:]]*:.*AuthenticAMD' /proc/cpuinfo; then
+    if grep -qw 'syno_k10cpu_temperature' /proc/kallsyms 2>/dev/null; then
+      echo "etc-modules-load: skip k10temp (provided by Synology kernel)"
+    else
+      load_module_with_dependencies k10temp || true
+    fi
+  else
+    echo "etc-modules-load: skip CPU temperature driver (unknown CPU vendor)"
+  fi
 
-  for I in coretemp k10temp hwmon-vid it87 nct6683 nct6775 \
+  # Other optional hardware-monitoring drivers are safe to probe.
+  for I in hwmon-vid it87 nct6683 nct6775 \
            adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
-    [ "${I}" = "k10temp" ] && [ "${_ml_skip_k10temp}" = "1" ] && continue
     load_module_with_dependencies "${I}" || true
   done
 
