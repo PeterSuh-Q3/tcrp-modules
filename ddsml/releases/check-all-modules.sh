@@ -3,9 +3,6 @@
 # Inject modules detected
 #
 
-KVER_CLEAN=$(uname -r | sed -n 's/^\([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')
-ZPADKVER=$(printf "%01d%03d%03d\n" $(echo "$KVER_CLEAN" | tr '.' ' '))
-
 listextension() {
 
     if [ ! -z $1 ]; then
@@ -127,61 +124,9 @@ getvars() {
     echo $MODULE_ALIAS_FILE
 }
 
-virtio_modprobe() {
-  echo "Checking for VirtIO"
-  if (grep -r -q -E "(QEMU|VirtualBox)" /sys/devices/virtual/dmi/id/); then
-    echo "VirtIO hypervisor detected"
-    /usr/sbin/insmod /lib/modules/virtio.ko
-    /usr/sbin/insmod /lib/modules/virtio_ring.ko
-    /usr/sbin/insmod /lib/modules/virtio_mmio.ko
-    /usr/sbin/insmod /lib/modules/virtio_pci.ko
-    #if [ "${LINUX_VER}" != "5.10.55" ]; then
-    /usr/sbin/insmod /lib/modules/virtio_blk.ko
-    /usr/sbin/insmod /lib/modules/virtio_net.ko
-    /usr/sbin/insmod /lib/modules/virtio_scsi.ko
-    #fi
-  else
-    echo "*No* VirtIO hypervisor detected"
-  fi
-}
-
-mmc_modprobe() {
-  echo "excute modprobe for mmc(include sd)..."
-  /usr/sbin/modprobe mmc_block
-  /usr/sbin/modprobe mmc_core
-  if [ "$ZPADKVER" -gt 4004059 ]; then
-      /usr/sbin/modprobe rtsx_pci
-      /usr/sbin/modprobe rtsx_pci_sdmmc
-  fi    
-  /usr/sbin/modprobe sdhci
-  # sdhci_pci (cqhci-capable backport) needs these providers; load them
-  # explicitly in case modules.dep is stale and does not auto-pull them.
-  /usr/sbin/modprobe cqhci 2>/dev/null
-  /usr/sbin/modprobe sdhci-pci-data 2>/dev/null
-  /usr/sbin/modprobe sdhci_pci
-  sleep 1
-  if [ `/sbin/lsmod |grep -i mmc|wc -l` -gt 0 ] ; then
-      echo "Module mmc loaded succesfully!!!"
-  else
-      echo "Module mmc failed to load successfully!!!"
-  fi
-}
-
-usblan_modprobe() {
-
-  modules="aqc111 asix ax88179_178a r8152 r8153_ecm rtl8150"
-  module_dir="/lib/modules"
-  
-  for mod in $modules; do
-    modpath="$module_dir/${mod}.ko"
-    if [ -f "$modpath" ]; then
-      echo "Loading module: $mod"
-      modprobe "$mod"
-    else
-      echo "Module file not found for: $mod"
-    fi
-  done
-}
+# virtio_modprobe / mmc_modprobe / usblan_modprobe moved to
+# etc-modules-load/src/install.sh so they run regardless of whether ddsml
+# or eudev is the installed hardware-detection addon.
 
 if [ "${1}" = "modules" ]; then
     echo "ddsml - ${1}"
@@ -196,13 +141,4 @@ if [ "${1}" = "modules" ]; then
     /usr/sbin/modprobe mptscsih 2>/dev/null
     getvars
     listpci
-    usblan_modprobe
-    virtio_modprobe
-    case $TARGET_PLATFORM in
-    avoton | bromolow | braswell | cedarview | grantley)
-        ;;
-    apollolake | broadwell | broadwellnk | v1000 | r1000 | denverton | geminilake | *)
-        mmc_modprobe
-        ;;
-    esac
 fi
