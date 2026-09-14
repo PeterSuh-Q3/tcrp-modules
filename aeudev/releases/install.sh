@@ -23,6 +23,15 @@ TR="${TMPROOT:-/tmpRoot}"
 RCD="${TR}/usr/local/etc/rc.d"
 mkdir -p "${RCD}"
 
+# Package ID migration boundary (v1.2.9): never retain a queued installer or
+# payload from either spelling.  Package-owned DSM directories are deliberately
+# not touched here; the generated hook removes the legacy package through
+# synopkg only after the lowercase replacement has been verified and installed.
+rm -f "${RCD}/S99mshell-manager-install.sh" \
+      "${RCD}/mshell-manager.json" \
+      "${RCD}"/MshellManager-x86_64-*.spk \
+      "${RCD}"/mshellmanager-x86_64-*.spk
+
 # MSHELL Manager now owns Intel GPU Top and AMDGPU Top. Remove hooks and
 # payloads left by older aeudev revisions before any DSM rc.d hook can run.
 # The AMD runtime hook below is recreated only when a current runtime payload
@@ -38,9 +47,7 @@ rm -f "${RCD}/S99intel-gpu-top-install.sh" \
 SPK_SOURCE="$(find /addons -maxdepth 1 -type f -name 'mshellmanager-x86_64-*.spk' -print -quit 2>/dev/null)"
 META_SOURCE="/addons/mshell-manager.json"
 if [ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ]; then
-  # A prior loader may have staged the pre-v1.2.9 uppercase asset.  The new
-  # metadata and hook below own the lowercase package ID exclusively.
-  rm -f "${RCD}"/MshellManager-x86_64-*.spk
+  # Only the current lowercase payload is staged after the migration reset.
   cp -f "${SPK_SOURCE}" "${RCD}/$(basename "${SPK_SOURCE}")"
   cp -f "${META_SOURCE}" "${RCD}/mshell-manager.json"
 else
@@ -115,6 +122,14 @@ remove_legacy_package() {
     return 1
   }
 }
+cleanup_bootstrap() {
+  # Consume every staged spelling once migration has completed.  This prevents
+  # an older loader payload from reinstalling the uppercase package on a later
+  # boot, while keeping package removal under synopkg ownership.
+  rm -f "${RCD}"/MshellManager-x86_64-*.spk \
+        "${RCD}"/mshellmanager-x86_64-*.spk \
+        "${META}" "$0"
+}
 wait_for_package_manager() {
   # pkg-rclocal runs before DSM starts third-party package units in parallel.
   # Let that wave finish before asking synopkg to stop/replace this package.
@@ -166,7 +181,7 @@ INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
 if [ -n "${INSTALLED_VERSION}" ]; then
   if ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
     log "${PKG} ${INSTALLED_VERSION} is current; completing migration and ensuring it is started"
-    remove_legacy_package && start_package && rm -f "${SPK}" "${META}" "$0"
+    remove_legacy_package && start_package && cleanup_bootstrap
     exit 0
   fi
   log "upgrading ${PKG} from ${INSTALLED_VERSION} to ${TARGET_VERSION}"
@@ -192,7 +207,7 @@ if install_with_retry; then
   # the working legacy package intact when the new SPK cannot be installed.
   # Remove it before starting the new service to avoid duplicate endpoints.
   if remove_legacy_package && start_package; then
-    rm -f "${SPK}" "${META}" "$0"
+    cleanup_bootstrap
   fi
 else
   log "installation failed; retrying next boot"
