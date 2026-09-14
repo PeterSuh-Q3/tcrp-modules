@@ -35,9 +35,12 @@ rm -f "${RCD}/S99intel-gpu-top-install.sh" \
       "${RCD}"/syno-amdgpu-top-*.spk \
       "${RCD}"/syno-intel-gpu-top-*.spk
 
-SPK_SOURCE="$(find /addons -maxdepth 1 -type f -name 'MshellManager-x86_64-*.spk' -print -quit 2>/dev/null)"
+SPK_SOURCE="$(find /addons -maxdepth 1 -type f -name 'mshellmanager-x86_64-*.spk' -print -quit 2>/dev/null)"
 META_SOURCE="/addons/mshell-manager.json"
 if [ -s "${SPK_SOURCE}" ] && [ -s "${META_SOURCE}" ]; then
+  # A prior loader may have staged the pre-v1.2.9 uppercase asset.  The new
+  # metadata and hook below own the lowercase package ID exclusively.
+  rm -f "${RCD}"/MshellManager-x86_64-*.spk
   cp -f "${SPK_SOURCE}" "${RCD}/$(basename "${SPK_SOURCE}")"
   cp -f "${META_SOURCE}" "${RCD}/mshell-manager.json"
 else
@@ -68,7 +71,8 @@ cat > "${RCD}/S99mshell-manager-install.sh" <<'RC'
 # with the same transient state as an early-boot update.
 [ "$1" = "start" ] || exit 0
 
-PKG="MshellManager"
+PKG="mshellmanager"
+LEGACY_PKG="MshellManager"
 RCD="/usr/local/etc/rc.d"
 META="${RCD}/mshell-manager.json"
 LOG="/var/log/mshell-manager-install.log"
@@ -101,6 +105,15 @@ version_is_newer() {
 }
 start_package() {
   "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
+}
+remove_legacy_package() {
+  "${SYNOPKG}" version "${LEGACY_PKG}" >/dev/null 2>&1 || return 0
+  log "removing legacy package ID ${LEGACY_PKG}"
+  "${SYNOPKG}" stop "${LEGACY_PKG}" >> "${LOG}" 2>&1 || true
+  "${SYNOPKG}" uninstall "${LEGACY_PKG}" >> "${LOG}" 2>&1 || {
+    log "legacy package removal failed; retrying next boot"
+    return 1
+  }
 }
 wait_for_package_manager() {
   # pkg-rclocal runs before DSM starts third-party package units in parallel.
@@ -139,10 +152,10 @@ install_with_retry() {
 SPK_NAME="$(meta name)"
 URL="$(meta url)"
 SHA="$(meta sha256)"
-TARGET_VERSION="$(printf '%s' "${SPK_NAME}" | sed -n 's/^MshellManager-x86_64-\([0-9][0-9.]*\)\.spk$/\1/p')"
+TARGET_VERSION="$(printf '%s' "${SPK_NAME}" | sed -n 's/^mshellmanager-x86_64-\([0-9][0-9.]*\)\.spk$/\1/p')"
 SPK="${RCD}/${SPK_NAME}"
 
-if ! echo "${SPK_NAME}" | grep -Eq '^MshellManager-x86_64-[0-9]+\.[0-9]+\.[0-9]+\.spk$' || \
+if ! echo "${SPK_NAME}" | grep -Eq '^mshellmanager-x86_64-[0-9]+\.[0-9]+\.[0-9]+\.spk$' || \
    [ "${URL##*/}" != "${SPK_NAME}" ] || \
    ! echo "${SHA}" | grep -Eq '^[a-f0-9]{64}$'; then
   log "release metadata is invalid; retrying next boot"
@@ -152,8 +165,8 @@ fi
 INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
 if [ -n "${INSTALLED_VERSION}" ]; then
   if ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
-    log "${PKG} ${INSTALLED_VERSION} is current; ensuring it is started"
-    start_package && rm -f "${SPK}" "${META}" "$0"
+    log "${PKG} ${INSTALLED_VERSION} is current; completing migration and ensuring it is started"
+    remove_legacy_package && start_package && rm -f "${SPK}" "${META}" "$0"
     exit 0
   fi
   log "upgrading ${PKG} from ${INSTALLED_VERSION} to ${TARGET_VERSION}"
@@ -175,7 +188,12 @@ wait_for_package_manager
 log "installing ${PKG} ${TARGET_VERSION}"
 if install_with_retry; then
   log "installation completed"
-  start_package && rm -f "${SPK}" "${META}" "$0"
+  # The new package is installed before removing the old one.  This leaves
+  # the working legacy package intact when the new SPK cannot be installed.
+  # Remove it before starting the new service to avoid duplicate endpoints.
+  if remove_legacy_package && start_package; then
+    rm -f "${SPK}" "${META}" "$0"
+  fi
 else
   log "installation failed; retrying next boot"
 fi
