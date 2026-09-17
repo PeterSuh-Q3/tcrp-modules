@@ -103,8 +103,8 @@ if [ "${1}" = "modules" ]; then
       echo "AMD CPU detected. Loading it87 with force_id=0x8665 (IT8665E for AM4)"
       /usr/sbin/modprobe it87 force_id=0x8665
   elif [ "$CPU_VENDOR" = "GenuineIntel" ]; then
-      # Intel (Z390~Z590 가정)
-      echo "Intel CPU detected. Loading it87 with force_id=0x8686 (IT8686E for Z390/Z490/Z590)"
+      # Intel (Z/H/B 시리즈 모두 IT8686E 사용)
+      echo "Intel CPU detected. Loading it87 with force_id=0x8686 (IT8686E for Z/H/B series)"
       /usr/sbin/modprobe it87 force_id=0x8686
   fi
 
