@@ -100,8 +100,8 @@ if [ "${1}" = "modules" ]; then
   
   if [ "$CPU_VENDOR" = "AuthenticAMD" ]; then
       # AMD (AM4 소켓 가정)
-      echo "AMD CPU detected. Loading it87 with force_id=0x8655 (IT8655E for AM4)"
-      /usr/sbin/modprobe it87 force_id=0x8655
+      echo "AMD CPU detected. Loading it87 with force_id=0x8603 (IT8603E for AMD)"
+      /usr/sbin/modprobe it87 force_id=0x8603
   elif [ "$CPU_VENDOR" = "GenuineIntel" ]; then
       # Intel (Z/H/B 시리즈 모두 IT8686E 사용)
       echo "Intel CPU detected. Loading it87 with force_id=0x8686 (IT8686E for Z/H/B series)"
