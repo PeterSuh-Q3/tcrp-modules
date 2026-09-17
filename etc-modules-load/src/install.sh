@@ -90,10 +90,17 @@ if [ "${1}" = "modules" ]; then
   fi
 
   # Other optional hardware-monitoring drivers are safe to probe.
-  for I in hwmon-vid it87 nct6683 nct6775 \
+  for I in hwmon-vid nct6683 nct6775 \
            adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
     load_module_with_dependencies "${I}" || true
   done
+
+  /usr/sbin/modprobe it87 force_id=0x8603   # IT8603E
+  /usr/sbin/modprobe it87 force_id=0x8623   # IT8623E
+  /usr/sbin/modprobe it87 force_id=0x8665   # IT8665E
+  /usr/sbin/modprobe it87 force_id=0x8686   # IT8686E
+  /usr/sbin/modprobe it87 force_id=0x8689   # IT8689E
+  /usr/sbin/modprobe it87 force_id=0x8695   # IT8695E
 
   # Remove only the KVM implementation unsupported by the current CPU.
   # A module in use will not be unloaded; failure is intentionally ignored.
