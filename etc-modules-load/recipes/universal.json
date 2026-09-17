@@ -3,7 +3,7 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/etc-modules-load/src/install.sh",
-      "sha256": "5d8f0e93f94038f31f83491c626058d1e9ef5d039cc3bff98839cb13b07aff52",
+      "sha256": "803b340bfa3110a4ffe4ae13f86facdfeee9c5387d7939dad1693872e4b40a11",
       "packed": false
     }
   ],
