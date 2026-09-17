@@ -95,12 +95,18 @@ if [ "${1}" = "modules" ]; then
     load_module_with_dependencies "${I}" || true
   done
 
-  /usr/sbin/modprobe it87 force_id=0x8603   # IT8603E
-  /usr/sbin/modprobe it87 force_id=0x8623   # IT8623E
-  /usr/sbin/modprobe it87 force_id=0x8665   # IT8665E
-  /usr/sbin/modprobe it87 force_id=0x8686   # IT8686E
-  /usr/sbin/modprobe it87 force_id=0x8689   # IT8689E
-  /usr/sbin/modprobe it87 force_id=0x8695   # IT8695E
+  # CPU 제조사 확인
+  CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk '{print $3}')
+  
+  if [ "$CPU_VENDOR" = "AuthenticAMD" ]; then
+      # AMD (AM4 소켓 가정)
+      echo "AMD CPU detected. Loading it87 with force_id=0x8665 (IT8665E for AM4)"
+      /usr/sbin/modprobe it87 force_id=0x8665
+  elif [ "$CPU_VENDOR" = "GenuineIntel" ]; then
+      # Intel (Z390~Z590 가정)
+      echo "Intel CPU detected. Loading it87 with force_id=0x8686 (IT8686E for Z390/Z490/Z590)"
+      /usr/sbin/modprobe it87 force_id=0x8686
+  fi
 
   # Remove only the KVM implementation unsupported by the current CPU.
   # A module in use will not be unloaded; failure is intentionally ignored.
