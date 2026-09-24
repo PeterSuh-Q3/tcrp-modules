@@ -15,8 +15,8 @@
     },
     {
       "name": "install.sh",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/all-modules/src/install.sh",
-      "sha256": "b1353ef587ffb1b9f30cf1a48262fa9a1f06dc485cb8848a5567682d6addc314",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/anodrm-modules/src/install.sh",
+      "sha256": "92404eb7fd0e92dbbaa15c057b477873c5b1ff3a91cfb7421670361a7e74b6c4",
       "packed": false
     }
   ],
