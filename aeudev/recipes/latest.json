@@ -3,21 +3,21 @@
     "amd_gpu_runtime": {
       "assets": [
         {
-          "name": "syno-amdgpu-runtime-0.5.0-7.4-x86_64-kernel4.4.x.spk",
-          "sha256": "61f5532432689bdf1ffc560b398733cd3ae25566a813e054e87766a9ca0cae6c",
-          "size": 137062400,
-          "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-driver/releases/download/v0.5.0/syno-amdgpu-runtime-0.5.0-7.4-x86_64-kernel4.4.x.spk"
+          "name": "syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel4.4.x.spk",
+          "sha256": "2d80bf37b8fb95167773fd522328b860628bce2319bec272dd900dbd03d349a8",
+          "size": 198533120,
+          "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-driver/releases/download/v0.5.2/syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel4.4.x.spk"
         },
         {
-          "name": "syno-amdgpu-runtime-0.5.0-7.4-x86_64-kernel5.10.55.spk",
-          "sha256": "f814b2dad58f44afeb6002fa296653d5571740ed9dbe69e6d67157f2de281e3e",
-          "size": 137062400,
-          "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-driver/releases/download/v0.5.0/syno-amdgpu-runtime-0.5.0-7.4-x86_64-kernel5.10.55.spk"
+          "name": "syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel5.10.55.spk",
+          "sha256": "f3decff61b6200db4fa60676d3f8f0444f81b944bb83c8cea4ed7a2579a07dd5",
+          "size": 198277120,
+          "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-driver/releases/download/v0.5.2/syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel5.10.55.spk"
         }
       ],
-      "published_at": "2026-08-30T03:51:01Z",
+      "published_at": "2026-09-24T16:55:00Z",
       "repository": "PeterSuh-Q3/syno-amdgpu-driver",
-      "tag": "v0.5.0"
+      "tag": "v0.5.2"
     },
     "amdgpu_top": {
       "assets": [
