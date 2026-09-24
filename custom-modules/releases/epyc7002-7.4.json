@@ -9,7 +9,7 @@
     },
     {
       "name": "firmware.tgz",
-      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/custom-modules/releases/firmware.tgz",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/firmware/custom-modules/firmware.tgz",
       "sha256": "d90c46fd73c6f6186e5d4892f00c5155cf3ba54cd1f0c0efa70c0a5fedf824d3",
       "packed": false
     },

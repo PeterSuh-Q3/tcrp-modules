@@ -8,26 +8,18 @@ sed_i () {
   fi
 }
 
-installsha=$(sha256sum ./src/install.sh | awk '{print $1}')
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+installsha=$(sha256sum "$script_dir/src/install.sh" | awk '{print $1}')
+firmware=$(sha256sum "$script_dir/../firmware/common/firmware.tgz" | awk '{print $1}')
+firmwarei915=$(sha256sum "$script_dir/../firmware/common/firmwarei915.tgz" | awk '{print $1}')
 echo "$installsha"
 
-cd ./releases/
-
-URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/files-chksum"
-echo "$URL"
-curl -kLO $URL
-
-firmware=`grep firmware.tgz files-chksum | grep firmware.sha256|awk '{print $1}'`
 echo "firmware sha256=$firmware"
-
-URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz"
-echo "$URL"
-curl -kLO $URL
-
-firmwarei915=`grep firmwarei915.tgz files-chksum | grep firmwarei915.sha256|awk '{print $1}'`
 echo "firmwarei915 sha256=$firmwarei915"
 
-URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmwarei915.tgz"
+cd "$script_dir/releases/"
+
+URL="https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/files-chksum"
 echo "$URL"
 curl -kLO $URL
 

@@ -22,6 +22,7 @@ During loader creation, the matching extension recipes download the required pac
 | `ddsml/` | Detected Device Static Module Loading extension. It provides the alternative static loading path that uses `modprobe`/`insmod` for modules selected from detected hardware information. |
 | `aeudev/` | MSHELL Manager installer extension. After DSM package services become available, it installs the pinned MSHELL Manager package only when the package is absent. Package installation is intentionally not performed from Junior/initrd. |
 | `.github/workflows/` | Automation for synchronizing release metadata, package indexes, checksums, translations, and files copied from the private build repository. |
+| `firmware/` | Centrally managed firmware archives. `common/` contains the shared base, i915, and AMDGPU archives; `custom-modules/` contains the distinct custom firmware archive. Release recipes download these files directly and do not duplicate them in each addon's `releases/` directory. |
 
 ### Common files inside an extension
 
@@ -83,6 +84,7 @@ Related suffixes have distinct purposes:
 | `ddsml/` | 감지 장치 정적 모듈 적재 확장입니다. 감지된 하드웨어 정보를 기준으로 선정한 모듈을 `modprobe`/`insmod`로 적재하는 대체 경로를 제공합니다. |
 | `aeudev/` | MSHELL Manager 설치 확장입니다. DSM 패키지 서비스가 준비된 뒤 MSHELL Manager가 없을 때만 고정된 패키지를 설치합니다. Junior/initrd 단계에서는 DSM 패키지 설치를 수행하지 않습니다. |
 | `.github/workflows/` | 비공개 빌드 저장소에서 복사된 파일, 릴리즈 메타데이터, 패키지 인덱스, 체크섬 및 번역을 동기화하는 자동화입니다. |
+| `firmware/` | 중앙 관리 펌웨어 압축파일입니다. `common/`에는 공통 기본·i915·AMDGPU 압축파일을, `custom-modules/`에는 별도 커스텀 펌웨어 압축파일을 둡니다. 릴리즈 레시피는 이 경로를 직접 내려받으며 각 애드온의 `releases/` 경로에는 중복 저장하지 않습니다. |
 
 ### 확장 내부의 공통 경로
 
