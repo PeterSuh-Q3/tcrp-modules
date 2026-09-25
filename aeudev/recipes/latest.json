@@ -3,12 +3,6 @@
     "amd_gpu_runtime": {
       "assets": [
         {
-          "name": "syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel4.4.x.spk",
-          "sha256": "2d80bf37b8fb95167773fd522328b860628bce2319bec272dd900dbd03d349a8",
-          "size": 198533120,
-          "url": "https://github.com/PeterSuh-Q3/syno-amdgpu-driver/releases/download/v0.5.2/syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel4.4.x.spk"
-        },
-        {
           "name": "syno-amdgpu-runtime-0.5.2-7.4-x86_64-kernel5.10.55.spk",
           "sha256": "f3decff61b6200db4fa60676d3f8f0444f81b944bb83c8cea4ed7a2579a07dd5",
           "size": 198277120,
