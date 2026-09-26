@@ -51,15 +51,16 @@ jobs:
           echo "대상 릴리즈 태그: ${TAG}"
 
       # ------------------------------------------------------------------ #
-      # 3. 릴리즈 asset 중 files-chksum 파일만 다운로드하여 sha256 맵 생성
+      # 3. files-chksum을 실제 같은 릴리즈의 .tgz asset digest와 대조하여
+      #    일치하는 항목만 sha256 맵에 등록
       #    files-chksum 형식 (공백 구분 3열):
       #      <sha256hex>  <파일명>  <체크섬파일명>
       #    예:
       #      8a7d9870...  apollolake-7.2-4.4.302.tgz  modpack.sha256
       #      9cbf4506...  firmware.tgz                 firmware.sha256
       #
-      #    이 중 {플랫폼}-{DSM버전}-{커널버전}.tgz 행만 추출하여 JSON 맵으로 변환
-      #    → 실제 tgz 파일은 일절 다운로드하지 않음
+      #    GitHub Releases API가 반환하는 asset digest(sha256)를 실제 자산 해시로
+      #    사용한다. 불일치하거나 자산/digest가 없으면 경고하고 맵에서 제외한다.
       # ------------------------------------------------------------------ #
       - name: Parse files-chksum and build SHA256 map
         id: sha256_map
@@ -73,6 +74,8 @@ jobs:
           WORK_DIR="$(mktemp -d)"
           CHKSUM_FILE="${WORK_DIR}/files-chksum"
           SHA256_MAP="${WORK_DIR}/sha256_map.json"
+          ASSET_MAP="${WORK_DIR}/release_asset_sha256.json"
+          RELEASE_JSON="${WORK_DIR}/release.json"
 
           echo "{}" > "${SHA256_MAP}"
 
@@ -83,14 +86,25 @@ jobs:
             --dir "${WORK_DIR}" \
             --clobber
 
+          echo "=== 같은 릴리즈의 실제 자산 SHA-256 조회 ==="
+          gh api "repos/${REPO}/releases/tags/${TAG}" > "${RELEASE_JSON}"
+          jq '
+            [.assets[]
+              | select(.name | endswith(".tgz"))
+              | {key: .name, value: ((.digest // "") | sub("^sha256:"; "") | ascii_downcase)}]
+            | from_entries
+          ' "${RELEASE_JSON}" > "${ASSET_MAP}"
+
           echo "=== files-chksum 내용 ==="
           cat "${CHKSUM_FILE}"
           echo ""
 
-          echo "=== 플랫폼 tgz 행 파싱 ==="
+          echo "=== 플랫폼 tgz 행 검증 및 파싱 ==="
           # 패턴: {플랫폼}-{DSM버전}-{커널버전}.tgz 행만 추출 (-drm 접미사 포함)
           # 예: apollolake-7.2-4.4.302.tgz  /  apollolake-7.4-4.4.302-drm.tgz
           # 제외: firmware.tgz, firmwarei915.tgz 등 (플랫폼-X.Y- 패턴이 아닌 것)
+          verified_count=0
+          mismatch_count=0
           while IFS=' ' read -r SHA256 FILENAME _REST; do
             [ -z "${SHA256}" ] || [ -z "${FILENAME}" ] && continue
 
@@ -99,17 +113,46 @@ jobs:
               continue
             fi
 
-            echo "  등록: ${FILENAME} → ${SHA256}"
+            expected_sha="$(printf '%s' "${SHA256}" | tr '[:upper:]' '[:lower:]')"
+            actual_sha="$(jq -r --arg name "${FILENAME}" '.[$name] // empty' "${ASSET_MAP}")"
+            if ! printf '%s' "${expected_sha}" | grep -qE '^[0-9a-f]{64}$'; then
+              echo "::warning::잘못된 SHA-256 형식으로 건너뜀: ${FILENAME} (${SHA256})"
+              mismatch_count=$((mismatch_count + 1))
+              continue
+            fi
+            if [ -z "${actual_sha}" ]; then
+              echo "::warning::릴리즈 자산 또는 SHA-256 digest가 없어 건너뜀: ${FILENAME}"
+              mismatch_count=$((mismatch_count + 1))
+              continue
+            fi
+            if [ "${expected_sha}" != "${actual_sha}" ]; then
+              echo "::warning::SHA-256 불일치로 건너뜀: ${FILENAME} (files-chksum=${expected_sha}, release asset=${actual_sha})"
+              mismatch_count=$((mismatch_count + 1))
+              continue
+            fi
+
+            echo "  검증 통과: ${FILENAME} → ${actual_sha}"
 
             SHA256_MAP_TMP=$(jq \
               --arg name "${FILENAME}" \
-              --arg hash "${SHA256}" \
+              --arg hash "${actual_sha}" \
               '. + {($name): $hash}' \
               "${SHA256_MAP}")
             echo "${SHA256_MAP_TMP}" > "${SHA256_MAP}"
+            verified_count=$((verified_count + 1))
           done < "${CHKSUM_FILE}"
 
+          echo "검증 결과: 통과 ${verified_count}건, 불일치/누락 ${mismatch_count}건"
+          {
+            echo "### files-chksum SHA-256 validation"
+            echo "- Release: \`${REPO}@${TAG}\`"
+            echo "- Verified entries applied: ${verified_count}"
+            echo "- Mismatched or missing entries skipped: ${mismatch_count}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
           echo "sha256_map_file=${SHA256_MAP}" >> "$GITHUB_OUTPUT"
+          echo "verified_count=${verified_count}" >> "$GITHUB_OUTPUT"
+          echo "mismatch_count=${mismatch_count}" >> "$GITHUB_OUTPUT"
           echo ""
           echo "=== 최종 SHA256 맵 ==="
           cat "${SHA256_MAP}"
@@ -253,5 +296,9 @@ jobs:
       - name: No changes detected
         if: steps.update_json.outputs.changed == 'false'
         run: |
-          echo "모든 JSON 파일의 sha256 값이 이미 최신 상태입니다."
+          if [ "${{ steps.sha256_map.outputs.mismatch_count }}" -gt 0 ]; then
+            echo "변경된 JSON은 없습니다. 실제 자산 해시와 불일치하거나 검증할 수 없는 ${{ steps.sha256_map.outputs.mismatch_count }}개 항목은 건너뛰었습니다. 검증 요약을 확인하세요."
+          else
+            echo "모든 JSON 파일의 sha256 값이 실제 릴리즈 자산과 일치하며 이미 최신 상태입니다."
+          fi
          
