@@ -1,4 +1,4 @@
-name: Update latest package metadata
+name: cron update latest package metadata
 
 on:
   workflow_dispatch:
