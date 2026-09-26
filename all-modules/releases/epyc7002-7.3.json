@@ -34,7 +34,7 @@
     {
       "name": "epyc7002-7.3-5.10.55-drm.tgz",
       "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.12/epyc7002-7.3-5.10.55-drm.tgz",
-      "sha256": "820f2c1afa5d870aca4da5373c7eb11dc6af970686ab7556ffb37920a3246f52",
+      "sha256": "7f52d3e1b4315270a883523e2d725cb496d86073c49ba65604e2b11c35fb6535",
       "packed": false
     }
   ],
