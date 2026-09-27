@@ -29,28 +29,28 @@
     "intel_gpu_top": {
       "assets": [
         {
-          "name": "syno-intel-gpu-top-0.1.2-x86_64-kernel5.10.55.spk",
-          "sha256": "d4075f46cb1c7209ebeb9f391269945ba21af23aa4fd2035990705176adcd791",
-          "size": 429568,
-          "url": "https://github.com/PeterSuh-Q3/syno-intel-gpu-top/releases/download/v0.1.2/syno-intel-gpu-top-0.1.2-x86_64-kernel5.10.55.spk"
+          "name": "syno-intel-gpu-top-0.1.3-x86_64.spk",
+          "sha256": "9a41290a1bb6b4006f6a6db42ae82faaa33b3e7762d572c4ac4f503dcafc68e3",
+          "size": 430080,
+          "url": "https://github.com/PeterSuh-Q3/syno-intel-gpu-top/releases/download/v0.1.3/syno-intel-gpu-top-0.1.3-x86_64.spk"
         }
       ],
-      "published_at": "2026-09-04T03:44:33Z",
+      "published_at": "2026-09-27T13:41:58Z",
       "repository": "PeterSuh-Q3/syno-intel-gpu-top",
-      "tag": "v0.1.2"
+      "tag": "v0.1.3"
     },
     "mshell_manager": {
       "assets": [
         {
-          "name": "mshellmanager-x86_64-1.4.2.spk",
-          "sha256": "0d2c97ce91377e893cfbda5108d68c59083599dfa39902440267912dee3b4102",
-          "size": 14264320,
-          "url": "https://github.com/PeterSuh-Q3/mshell-manager-rel/releases/download/v1.4.2/mshellmanager-x86_64-1.4.2.spk"
+          "name": "mshellmanager-x86_64-1.4.3.spk",
+          "sha256": "7b72d0638676785c9d67f5b4c68f9470ec9dba654528c4994393371abe1e4ff6",
+          "size": 14274560,
+          "url": "https://github.com/PeterSuh-Q3/mshell-manager-rel/releases/download/v1.4.3/mshellmanager-x86_64-1.4.3.spk"
         }
       ],
-      "published_at": "2026-09-20T13:53:13Z",
+      "published_at": "2026-09-27T14:34:04Z",
       "repository": "PeterSuh-Q3/mshell-manager-rel",
-      "tag": "v1.4.2"
+      "tag": "v1.4.3"
     },
     "syno_smart_info": {
       "assets": [
