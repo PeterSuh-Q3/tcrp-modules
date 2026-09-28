@@ -9,7 +9,7 @@
     {
       "name": "latest.json",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/recipes/latest.json",
-      "sha256": "07248adf1f09d0490f911f4b74dbcffdf71857bc3269c29997daff3a776ed92f",
+      "sha256": "dc293b3617e24206083254945e6001cfd2e9cf2c2fba68d6358003733b42eaa7",
       "packed": false
     }
   ],
