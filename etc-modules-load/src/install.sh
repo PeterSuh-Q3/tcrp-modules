@@ -73,40 +73,30 @@ if [ "${1}" = "modules" ]; then
   # CPU temperature drivers are mutually exclusive.  Select the driver from
   # the actual CPU vendor, then avoid an external module if Synology already
   # exports the matching temperature callback from vmlinux.
-  if grep -qm1 '^vendor_id[[:space:]]*:.*GenuineIntel' /proc/cpuinfo; then
-    if grep -qw 'syno_cpu_temperature' /proc/kallsyms 2>/dev/null; then
-      echo "etc-modules-load: skip coretemp (provided by Synology kernel)"
-    else
-      load_module_with_dependencies coretemp || true
-    fi
-  elif grep -qm1 '^vendor_id[[:space:]]*:.*AuthenticAMD' /proc/cpuinfo; then
+  # CPU 제조사 확인
+  CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk '{print $3}')
+  
+  if [ "$CPU_VENDOR" = "AuthenticAMD" ]; then
     if grep -qw 'syno_k10cpu_temperature' /proc/kallsyms 2>/dev/null; then
       echo "etc-modules-load: skip k10temp (provided by Synology kernel)"
     else
       load_module_with_dependencies k10temp || true
+    fi
+  elif [ "$CPU_VENDOR" = "GenuineIntel" ]; then
+    if grep -qw 'syno_cpu_temperature' /proc/kallsyms 2>/dev/null; then
+      echo "etc-modules-load: skip coretemp (provided by Synology kernel)"
+    else
+      load_module_with_dependencies coretemp || true
     fi
   else
     echo "etc-modules-load: skip CPU temperature driver (unknown CPU vendor)"
   fi
 
   # Other optional hardware-monitoring drivers are safe to probe.
-  for I in hwmon-vid nct6683 nct6775 \
+  for I in hwmon-vid nct6683 nct6775 it87 f71882fg \
            adt7470 adt7475 adm1021 adm1031 adm9240 lm75 lm78 lm90; do
     load_module_with_dependencies "${I}" || true
   done
-
-  # CPU 제조사 확인
-  CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk '{print $3}')
-  
-  if [ "$CPU_VENDOR" = "AuthenticAMD" ]; then
-      # AMD (AM4 소켓 가정)
-      echo "AMD CPU detected. Loading it87 with force_id=0x8603 (IT8603E for AMD)"
-      /usr/sbin/modprobe it87 force_id=0x8603
-  elif [ "$CPU_VENDOR" = "GenuineIntel" ]; then
-      # Intel (Z/H/B 시리즈 모두 IT8686E 사용)
-      echo "Intel CPU detected. Loading it87 with force_id=0x8628 (IT8628E for Z/H/B series)"
-      /usr/sbin/modprobe it87 force_id=0x8628
-  fi
 
   # Remove only the KVM implementation unsupported by the current CPU.
   # A module in use will not be unloaded; failure is intentionally ignored.
