@@ -6,6 +6,7 @@
 # boot delay.
 
 module_file() {
+  local _ml_name _ml_candidate
   _ml_name="$1"
   for _ml_candidate in "${_ml_name}" "$(echo "${_ml_name}" | tr '_' '-')" \
                        "$(echo "${_ml_name}" | tr '-' '_')"; do
@@ -21,11 +22,16 @@ module_file() {
 # provider.  Verify modinfo dependencies directly and load them first; a
 # consumer is skipped rather than allowed to emit an Unknown symbol error.
 load_module_with_dependencies() {
+  local _ml_name _ml_seen _ml_file _ml_deps _ml_dep
+  local _ml_modprobe_output _ml_modprobe_status
   _ml_name="$1"
   _ml_seen="${2:-}"
 
   case " ${_ml_seen} " in
-    *" ${_ml_name} "*) return 0 ;;
+    *" ${_ml_name} "*)
+      echo "etc-modules-load: dependency cycle detected at ${_ml_name}" >&2
+      return 1
+      ;;
   esac
   _ml_seen="${_ml_seen} ${_ml_name}"
 
@@ -61,6 +67,7 @@ load_module_with_dependencies() {
         ;;
     esac
   fi
+  return 0
 }
 
 if [ "${1}" = "modules" ]; then
