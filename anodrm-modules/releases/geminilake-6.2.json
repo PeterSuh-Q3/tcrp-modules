@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "geminilake-6.2-4.4.59.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.9.30/geminilake-6.2-4.4.59.tgz",
-      "sha256": "68b32b53b012ca0cfc4a1f560e294a5e15d7fefc940f783bb05f9e477f370a7b",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.1/geminilake-6.2-4.4.59.tgz",
+      "sha256": "94042684f32ed8c3d20a023cbf33da91b97e577357497693ad16093aa36620f0",
       "packed": false
     },
     {
