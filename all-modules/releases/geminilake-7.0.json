@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "geminilake-7.0-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.1-r2/geminilake-7.0-4.4.180.tgz",
-      "sha256": "bebb353c5c64fe7fa87265f89d156cd75312faf2003b8148dc599def6c618f11",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.2/geminilake-7.0-4.4.180.tgz",
+      "sha256": "39234c229cd7ce0c3e53a53ac949abfbb60068ee7b8615dc77fc5e81f94bb588",
       "packed": false
     },
     {
@@ -27,8 +27,8 @@
     },
     {
       "name": "geminilake-7.0-4.4.180-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.1-r2/geminilake-7.0-4.4.180-drm.tgz",
-      "sha256": "fc58addfd49e5d774012e5bcec56fbe2635edc4f4a8eecc5a78e9fd7a4fde993",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.2/geminilake-7.0-4.4.180-drm.tgz",
+      "sha256": "ca77daeef500c4885d792e174bdf71165692748be21a30cf239e0ef2e956267d",
       "packed": false
     }
   ],
