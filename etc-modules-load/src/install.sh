@@ -5,6 +5,30 @@
 # This addon intentionally does not stop udevd and does not add an arbitrary
 # boot delay.
 
+install_superiotool() {
+  _ml_tool_src="/exts/etc-modules-load/syno-superiotool-x86_64.gz"
+  _ml_tool_dest="$1"
+  _ml_tool_dir="${_ml_tool_dest%/*}"
+  _ml_tool_tmp="${_ml_tool_dest}.tmp.$$"
+
+  if [ ! -f "${_ml_tool_src}" ]; then
+    echo "etc-modules-load: syno-superiotool package is missing (${_ml_tool_src})" >&2
+    return 1
+  fi
+  mkdir -p "${_ml_tool_dir}" || return 1
+  if ! gzip -dc "${_ml_tool_src}" > "${_ml_tool_tmp}"; then
+    rm -f "${_ml_tool_tmp}"
+    echo "etc-modules-load: failed to decompress syno-superiotool" >&2
+    return 1
+  fi
+  chmod 0755 "${_ml_tool_tmp}" && mv -f "${_ml_tool_tmp}" "${_ml_tool_dest}" || {
+    rm -f "${_ml_tool_tmp}"
+    echo "etc-modules-load: failed to install syno-superiotool at ${_ml_tool_dest}" >&2
+    return 1
+  }
+  echo "etc-modules-load: installed executable ${_ml_tool_dest}"
+}
+
 module_file() {
   local _ml_name _ml_candidate
   _ml_name="$1"
@@ -73,6 +97,9 @@ load_module_with_dependencies() {
 if [ "${1}" = "modules" ]; then
   echo "etc-modules-load - ${1}"
 
+  # Keep a runnable copy in this event's PATH for Super I/O diagnostics.
+  install_superiotool /usr/local/bin/syno-superiotool || true
+
   # PC speaker support
   load_module_with_dependencies pcspeaker || true
   load_module_with_dependencies pcspkr || true
@@ -119,4 +146,9 @@ if [ "${1}" = "modules" ]; then
     /usr/sbin/lsmod 2>/dev/null | grep -q '^kvm_amd' &&
       /usr/sbin/modprobe -r kvm_amd || true
   fi
+elif [ "${1}" = "late" ]; then
+  echo "etc-modules-load - ${1}"
+
+  # Stage the same standalone diagnostic tool into the DSM root filesystem.
+  install_superiotool /tmpRoot/usr/local/bin/syno-superiotool || true
 fi

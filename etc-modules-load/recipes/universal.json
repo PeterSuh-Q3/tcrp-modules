@@ -3,7 +3,13 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/etc-modules-load/src/install.sh",
-      "sha256": "2604f9359867f95a421f99cb5e026138963028f10b4d14b071c5539cfabbffb7",
+      "sha256": "23931b50b4c5c6f4d396fd0b659f3d0f1d1c694b21a4571d0a4e9da120567897",
+      "packed": false
+    },
+    {
+      "name": "syno-superiotool-x86_64.gz",
+      "url": "https://github.com/PeterSuh-Q3/syno-superiotool/releases/download/v1.0.0/syno-superiotool-x86_64.gz",
+      "sha256": "73e3eee41e0e20adab11acfe99eb83bdbd613165c81faaab64c7f51818784b19",
       "packed": false
     }
   ],
