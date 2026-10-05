@@ -49,7 +49,7 @@
       "assets": [
         {
           "name": "mshellmanager-x86_64-1.4.8.spk",
-          "sha256": "b047153ebaa4817853a8607eda0630a1d976564b0d6ae155227cd338bd99aaae",
+          "sha256": "1ddca4f9117b692b20fa6d9b415e3e939c19d312ad2fe030099c2aa92119f9ef",
           "size": 14284800,
           "url": "https://github.com/PeterSuh-Q3/mshell-manager-rel/releases/download/v1.4.8/mshellmanager-x86_64-1.4.8.spk"
         }
