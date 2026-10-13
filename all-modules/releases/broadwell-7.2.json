@@ -34,7 +34,7 @@
     {
       "name": "broadwell-7.2-4.4.302-drm.tgz",
       "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.2/broadwell-7.2-4.4.302-drm.tgz",
-      "sha256": "4816a83015422c7c75038e9971bf105488a3756570d4efee470ebe47844ae413",
+      "sha256": "8ffd5fc8577b2b3ac42db883c70b4611ca724a7b47f2eae4ae86c696598a4a1f",
       "packed": false
     }
   ],

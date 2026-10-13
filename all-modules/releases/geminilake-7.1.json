@@ -28,7 +28,7 @@
     {
       "name": "geminilake-7.1-4.4.180-drm.tgz",
       "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.2/geminilake-7.1-4.4.180-drm.tgz",
-      "sha256": "845bcab096736fa5ee3bb4af4a6c774888caf7ac63893c99b6c331f3c9296500",
+      "sha256": "7645dbbcde290bd0f86ec73f1ee1784bd08d0eb439b501063b4a469bd841ea8b",
       "packed": false
     }
   ],
