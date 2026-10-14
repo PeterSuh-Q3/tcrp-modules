@@ -28,14 +28,15 @@ getvars() {
   fi
 }
 
-# Detect Intel display-class PCI devices without depending on lspci's
+# Detect display-class PCI devices without depending on lspci's
 # human-readable output format. The optional root is used by local tests.
-has_intel_gpu() {
-  _pci_root="${1:-/sys/bus/pci/devices}"
+has_display_pci_vendor() {
+  _wanted_vendor="${1}"
+  _pci_root="${2:-/sys/bus/pci/devices}"
   for _pci_dev in "${_pci_root}"/*; do
     [ -r "${_pci_dev}/vendor" ] && [ -r "${_pci_dev}/class" ] || continue
     _pci_vendor="$(cat "${_pci_dev}/vendor" 2>/dev/null)"
-    [ "${_pci_vendor}" = "0x8086" ] || continue
+    [ "${_pci_vendor}" = "${_wanted_vendor}" ] || continue
     _pci_class="$(cat "${_pci_dev}/class" 2>/dev/null)"
     case "${_pci_class}" in
       0x03????) return 0 ;;
@@ -169,7 +170,7 @@ if [ "${1}" = "modules" ]; then
           ;;
       esac
       if [ "${I915_OK}" = "1" ]; then
-        if has_intel_gpu; then
+        if has_display_pci_vendor "0x8086"; then
           echo "all-modules: Intel GPU detected (${LINUX_VER}) - loading i915"
           /usr/sbin/modprobe i915 && echo "i915 loaded OK" || echo "i915 modprobe failed"
         else
@@ -183,11 +184,11 @@ if [ "${1}" = "modules" ]; then
     # When running under ddsml, manually detect AMD VGA (PCI class 0300, vendor 1002)
     # and trigger modprobe so amdgpu loads even without eudev.
     if [ -f /lib/modules/amdgpu.ko ]; then
-      if lspci 2>/dev/null | grep -qE "Class 0300.*Device 1002|1002.*Class 0300"; then
+      if has_display_pci_vendor "0x1002"; then
         echo "all-modules: AMD GPU detected - loading amdgpu (ddsml compatibility)"
         /usr/sbin/modprobe amdgpu && echo "amdgpu loaded OK" || echo "amdgpu modprobe failed"
       else
-        echo "all-modules: no AMD GPU found at PCI class 0300 vendor 1002"
+        echo "all-modules: no AMD display-class PCI device found (vendor 1002)"
       fi
     fi
   fi
