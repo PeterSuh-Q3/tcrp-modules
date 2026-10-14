@@ -28,6 +28,22 @@ getvars() {
   fi
 }
 
+# Detect Intel display-class PCI devices without depending on lspci's
+# human-readable output format. The optional root is used by local tests.
+has_intel_gpu() {
+  _pci_root="${1:-/sys/bus/pci/devices}"
+  for _pci_dev in "${_pci_root}"/*; do
+    [ -r "${_pci_dev}/vendor" ] && [ -r "${_pci_dev}/class" ] || continue
+    _pci_vendor="$(cat "${_pci_dev}/vendor" 2>/dev/null)"
+    [ "${_pci_vendor}" = "0x8086" ] || continue
+    _pci_class="$(cat "${_pci_dev}/class" 2>/dev/null)"
+    case "${_pci_class}" in
+      0x03????) return 0 ;;
+    esac
+  done
+  return 1
+}
+
 # DSM/플랫폼/커널 조합 지문 계산 (BAK 유효성 판단용)
 # 포맷: platform|kernel|productversion-buildnumber-smallfixnumber
 # busybox ash 호환: md5sum/bash 불필요, local 미사용
@@ -153,11 +169,11 @@ if [ "${1}" = "modules" ]; then
           ;;
       esac
       if [ "${I915_OK}" = "1" ]; then
-        if lspci 2>/dev/null | grep -qE "Class 0300.*Device 8086|8086.*Class 0300"; then
+        if has_intel_gpu; then
           echo "all-modules: Intel GPU detected (${LINUX_VER}) - loading i915"
           /usr/sbin/modprobe i915 && echo "i915 loaded OK" || echo "i915 modprobe failed"
         else
-          echo "all-modules: no Intel GPU found at PCI class 0300 vendor 8086"
+          echo "all-modules: no Intel display-class PCI device found (vendor 8086)"
         fi
       fi
     fi
