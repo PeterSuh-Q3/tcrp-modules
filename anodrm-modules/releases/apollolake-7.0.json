@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "apollolake-7.0-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.2/apollolake-7.0-4.4.180.tgz",
-      "sha256": "f6f1b2e35f6d865cf0040ce4c2680bb3b6868576b0d92a7a8088cc84ec433e79",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.15/apollolake-7.0-4.4.180.tgz",
+      "sha256": "ead75c1a27d2c921fdf40d4748d1ea976599c0856527dc71df9bfc88f359054e",
       "packed": false
     },
     {
