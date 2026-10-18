@@ -110,9 +110,6 @@ version_is_newer() {
       exit 1;
     }'
 }
-start_package() {
-  "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
-}
 remove_legacy_package() {
   "${SYNOPKG}" version "${LEGACY_PKG}" >/dev/null 2>&1 || return 0
   log "removing legacy package ID ${LEGACY_PKG}"
@@ -180,8 +177,8 @@ fi
 INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
 if [ -n "${INSTALLED_VERSION}" ]; then
   if ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
-    log "${PKG} ${INSTALLED_VERSION} is current; completing migration and ensuring it is started"
-    remove_legacy_package && start_package && cleanup_bootstrap
+    log "${PKG} ${INSTALLED_VERSION} is current; DSM Package Center owns service startup"
+    remove_legacy_package && cleanup_bootstrap
     exit 0
   fi
   log "upgrading ${PKG} from ${INSTALLED_VERSION} to ${TARGET_VERSION}"
@@ -205,8 +202,9 @@ if install_with_retry; then
   log "installation completed"
   # The new package is installed before removing the old one.  This leaves
   # the working legacy package intact when the new SPK cannot be installed.
-  # Remove it before starting the new service to avoid duplicate endpoints.
-  if remove_legacy_package && start_package; then
+  # DSM's synopkg install lifecycle starts the package.  Do not issue a second
+  # start here: its systemd unit may already be queued by the boot target.
+  if remove_legacy_package; then
     cleanup_bootstrap
   fi
 else
@@ -349,9 +347,6 @@ version_is_newer() {
       exit 1;
     }'
 }
-start_package() {
-  "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 && log "package started"
-}
 wait_for_package_manager() {
   # pkg-rclocal runs before DSM starts third-party package units in parallel.
   # Let that wave finish before asking synopkg to stop/replace this package.
@@ -402,8 +397,8 @@ fi
 INSTALLED_VERSION="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
 if [ -n "${INSTALLED_VERSION}" ]; then
   if ! version_is_newer "${INSTALLED_VERSION}" "${TARGET_VERSION}"; then
-    log "${PKG} ${INSTALLED_VERSION} is current; ensuring it is started"
-    start_package && rm -f "${SPK}" "${META}" "$0"
+    log "${PKG} ${INSTALLED_VERSION} is current; DSM Package Center owns service startup"
+    rm -f "${SPK}" "${META}" "$0"
     exit 0
   fi
   log "upgrading ${PKG} from ${INSTALLED_VERSION} to ${TARGET_VERSION}"
@@ -425,7 +420,9 @@ wait_for_package_manager
 log "installing ${PKG} ${TARGET_VERSION}"
 if install_with_retry; then
   log "installation completed"
-  start_package && rm -f "${SPK}" "${META}" "$0"
+  # synopkg install performs the package lifecycle; the DSM systemd unit owns
+  # subsequent boot startup. Avoid a second synopkg start from this rc.d hook.
+  rm -f "${SPK}" "${META}" "$0"
 else
   log "installation failed; retrying next boot"
 fi
