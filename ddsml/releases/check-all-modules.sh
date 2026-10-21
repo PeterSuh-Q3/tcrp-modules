@@ -21,7 +21,8 @@ listextension() {
         # Resolve module filenames that use '-' while the module name uses '_'.
         module_file="/lib/modules/${1}.ko"
         if [ ! -f "${module_file}" ]; then
-            module_file="/lib/modules/${1//_/-}.ko"
+            module_filename="$(printf '%s' "${1}" | tr '_' '-')"
+            module_file="/lib/modules/${module_filename}.ko"
         fi
 
         # Priority 2: load vanilla (will become idle if variant already claimed device)
@@ -49,8 +50,8 @@ listextension() {
 
 matchpciidmodule() {
 
-    vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
-    device="$(echo $2 | sed 's/[a-z]/\U&/g')"
+    vendor="$(printf '%s' "$1" | tr '[:lower:]' '[:upper:]')"
+    device="$(printf '%s' "$2" | tr '[:lower:]' '[:upper:]')"
     
     pciid="${vendor}d0000${device}"
 
@@ -62,13 +63,16 @@ matchpciidmodule() {
         [ -n "${matchedmodule}" ] || continue
         module_file="/lib/modules/${matchedmodule}.ko"
         if [ ! -f "${module_file}" ]; then
-            module_file="/lib/modules/${matchedmodule//_/-}.ko"
+            module_filename="$(printf '%s' "${matchedmodule}" | tr '_' '-')"
+            module_file="/lib/modules/${module_filename}.ko"
         fi
         if [ -f "${module_file}" ]; then
             listextension "${matchedmodule}"
             return
         fi
-    done <<< "${matchedmodules}"
+    done <<EOF
+${matchedmodules}
+EOF
 
     echo "No matching extension"
 
