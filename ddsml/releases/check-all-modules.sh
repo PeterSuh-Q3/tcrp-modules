@@ -55,7 +55,7 @@ matchpciidmodule() {
     
     pciid="${vendor}d0000${device}"
 
-    matchedmodules=$(jq -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " "$MODULE_ALIAS_FILE" 2>/dev/null | sort -u)
+    matchedmodules=$(jq -r "[.modules[] | select(.alias | contains(\"${pciid}\")?) | .name] | unique[]" "$MODULE_ALIAS_FILE" 2>/dev/null)
 
     # Alias manifests cover both K4 and K5 modules. Select the matching driver
     # actually present in this platform's /lib/modules (e.g. bochs-drm vs bochs).
