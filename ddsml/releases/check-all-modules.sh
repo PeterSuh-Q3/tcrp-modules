@@ -18,6 +18,12 @@ listextension() {
             fi
         done
 
+        # Resolve module filenames that use '-' while the module name uses '_'.
+        module_file="/lib/modules/${1}.ko"
+        if [ ! -f "${module_file}" ]; then
+            module_file="/lib/modules/${1//_/-}.ko"
+        fi
+
         # Priority 2: load vanilla (will become idle if variant already claimed device)
         /usr/sbin/modprobe "${1}"
 
@@ -29,7 +35,11 @@ listextension() {
             echo "Module ${1} (or variant) loaded successfully and is in use"
         else
             echo "Module ${1} not detected in use, trying insmod"
-            /usr/sbin/insmod "/lib/modules/${1}.ko"
+            if [ -f "${module_file}" ]; then
+                /usr/sbin/insmod "${module_file}"
+            else
+                echo "Module file not found: ${module_file}"
+            fi
         fi
     else
         echo "No matching extension"
@@ -44,11 +54,23 @@ matchpciidmodule() {
     
     pciid="${vendor}d0000${device}"
 
-    matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
+    matchedmodules=$(jq -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " "$MODULE_ALIAS_FILE" 2>/dev/null | sort -u)
 
-    # Call listextensions for extention matching
+    # Alias manifests cover both K4 and K5 modules. Select the matching driver
+    # actually present in this platform's /lib/modules (e.g. bochs-drm vs bochs).
+    while IFS= read -r matchedmodule; do
+        [ -n "${matchedmodule}" ] || continue
+        module_file="/lib/modules/${matchedmodule}.ko"
+        if [ ! -f "${module_file}" ]; then
+            module_file="/lib/modules/${matchedmodule//_/-}.ko"
+        fi
+        if [ -f "${module_file}" ]; then
+            listextension "${matchedmodule}"
+            return
+        fi
+    done <<< "${matchedmodules}"
 
-    listextension $matchedmodule
+    echo "No matching extension"
 
 }
 

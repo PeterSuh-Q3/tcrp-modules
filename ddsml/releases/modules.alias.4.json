@@ -14700,6 +14700,34 @@
         {
             "name": "xhci-pci",
             "alias": "pci:v*d*sv*sd*bc0Csc03i30*"
+        },
+        {
+            "name": "ast",
+            "alias": "pci:v00001A03d00002000sv*sd*bc03sc*i*"
+        },
+        {
+            "name": "ast",
+            "alias": "pci:v00001A03d00002010sv*sd*bc03sc*i*"
+        },
+        {
+            "name": "bochs",
+            "alias": "pci:v00001234d00001111sv*sd*bc*sc*i*"
+        },
+        {
+            "name": "bochs",
+            "alias": "pci:v00001234d00001111sv00001AF4sd00001100bc*sc*i*"
+        },
+        {
+            "name": "bochs",
+            "alias": "pci:v00004321d00001111sv*sd*bc*sc*i*"
+        },
+        {
+            "name": "bochs_drm",
+            "alias": "pci:v00001234d00001111sv*sd*bc*sc*i*"
+        },
+        {
+            "name": "bochs_drm",
+            "alias": "pci:v00001234d00001111sv00001AF4sd00001100bc*sc*i*"
         }
     ]
 }
