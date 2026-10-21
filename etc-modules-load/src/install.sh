@@ -1,7 +1,7 @@
 #!/usr/bin/env ash
 
-# Load optional system and hardware-monitoring modules during the modules
-# phase, after all-modules has extracted the target pack and run depmod.
+# Load hardware, optional system, and hardware-monitoring modules during the
+# modules phase, after all-modules has extracted the target pack and run depmod.
 # This addon intentionally does not stop udevd and does not add an arbitrary
 # boot delay.
 
@@ -94,8 +94,86 @@ load_module_with_dependencies() {
   return 0
 }
 
+is_virtio_hypervisor() {
+  local _ml_dmi_file
+  for _ml_dmi_file in /sys/devices/virtual/dmi/id/sys_vendor \
+                      /sys/devices/virtual/dmi/id/product_name \
+                      /sys/devices/virtual/dmi/id/product_version \
+                      /sys/devices/virtual/dmi/id/board_vendor \
+                      /sys/devices/virtual/dmi/id/board_name; do
+    [ -r "${_ml_dmi_file}" ] &&
+      grep -qiE 'QEMU|VirtualBox' "${_ml_dmi_file}" && return 0
+  done
+  return 1
+}
+
+virtio_modprobe() {
+  local _ml_virtio_module
+  echo "etc-modules-load: checking for VirtIO"
+  if ! is_virtio_hypervisor; then
+    echo "etc-modules-load: no QEMU/VirtualBox hypervisor detected; skip VirtIO"
+    return 0
+  fi
+
+  echo "etc-modules-load: QEMU/VirtualBox hypervisor detected"
+  # Load the PCI transport before virtio_net so the guest NIC is enumerated.
+  # The dependency helper reads modinfo directly and loads providers first.
+  for _ml_virtio_module in virtio_pci virtio_net virtio_mmio \
+                           virtio_blk virtio_scsi; do
+    load_module_with_dependencies "${_ml_virtio_module}" || true
+  done
+}
+
+mmc_modprobe() {
+  local _ml_kver _ml_kver_num
+  echo "etc-modules-load: loading MMC/SD support"
+
+  load_module_with_dependencies mmc_block || true
+  load_module_with_dependencies mmc_core || true
+
+  _ml_kver="$(uname -r | sed -n 's/^\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p')"
+  if [ -n "${_ml_kver}" ]; then
+    _ml_kver_num="$(echo "${_ml_kver}" | awk -F. '{printf "%d%03d%03d", $1, $2, $3}')"
+    if [ "${_ml_kver_num}" -gt 4004059 ]; then
+      load_module_with_dependencies rtsx_pci || true
+      load_module_with_dependencies rtsx_pci_sdmmc || true
+    fi
+  fi
+
+  load_module_with_dependencies sdhci || true
+  # sdhci_pci may need these providers even when modules.dep is incomplete.
+  load_module_with_dependencies cqhci || true
+  load_module_with_dependencies sdhci-pci-data || true
+  load_module_with_dependencies sdhci_pci || true
+
+  if /sbin/lsmod 2>/dev/null | grep -qi mmc; then
+    echo "etc-modules-load: MMC modules loaded"
+  else
+    echo "etc-modules-load: no MMC modules loaded"
+  fi
+}
+
+usblan_modprobe() {
+  local _ml_usb_module
+  for _ml_usb_module in aqc111 asix ax88179_178a r8152 r8153_ecm rtl8150; do
+    load_module_with_dependencies "${_ml_usb_module}" || true
+  done
+}
+
 if [ "${1}" = "modules" ]; then
   echo "etc-modules-load - ${1}"
+
+  # These hardware drivers must load here rather than in ddsml so the same
+  # behavior is available when eudev is the selected hardware-detection addon.
+  usblan_modprobe
+  virtio_modprobe
+  case "$(uname -a | awk '{print $NF}' | cut -d '_' -f2)" in
+    avoton | bromolow | braswell | cedarview | grantley)
+      ;;
+    *)
+      mmc_modprobe
+      ;;
+  esac
 
   # Keep a runnable copy in this event's PATH for Super I/O diagnostics.
   install_superiotool /usr/local/bin/syno-superiotool || true
