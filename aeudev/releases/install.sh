@@ -27,8 +27,9 @@ rm -f "${RCD}/S99mshell-manager-install.sh" \
       "${RCD}/amdgpu-top.json" "${RCD}/intel-gpu-top.json" \
       "${RCD}"/syno-amdgpu-top-*.spk "${RCD}"/syno-intel-gpu-top-*.spk
 
-SELF_DIR="$(CDPATH='' cd -- "$(dirname -- "$0")" 2>/dev/null && pwd)"
-HELPER_SOURCE="${SELF_DIR}/postboot-spk-install.sh"
+# The extension dispatcher sources this file after changing into the extension
+# directory. Since the file is sourced, $0 names the dispatcher, not install.sh.
+HELPER_SOURCE="./postboot-spk-install.sh"
 if [ -s "${HELPER_SOURCE}" ]; then
   cp -f "${HELPER_SOURCE}" "${LIBEXEC}/mshell-postboot-spk-install.sh"
   chmod 755 "${LIBEXEC}/mshell-postboot-spk-install.sh"

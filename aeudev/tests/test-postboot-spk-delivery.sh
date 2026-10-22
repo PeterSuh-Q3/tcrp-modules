@@ -5,8 +5,11 @@ ROOT_DIR="$(CDPATH='' cd -- "$(dirname -- "$0")/../.." && pwd)"
 INSTALLER="${ROOT_DIR}/aeudev/releases/install.sh"
 TMP="$(mktemp -d)"
 trap 'rm -rf "${TMP}"' EXIT HUP INT TERM
-mkdir -p "${TMP}/addons" "${TMP}/dsm/usr" "${TMP}/dsm/volume1" \
+mkdir -p "${TMP}/addons" "${TMP}/extension" "${TMP}/dsm/usr" "${TMP}/dsm/volume1" \
   "${TMP}/dsm/var/packages" "${TMP}/bin"
+cp "${ROOT_DIR}/aeudev/releases/install.sh" "${TMP}/extension/install.sh"
+cp "${ROOT_DIR}/aeudev/releases/postboot-spk-install.sh" \
+  "${TMP}/extension/postboot-spk-install.sh"
 
 PAYLOAD="${TMP}/payload.spk"
 printf 'mock signed package payload\n' > "${PAYLOAD}"
@@ -22,7 +25,15 @@ write_meta "${TMP}/addons/mshell-manager.json" mshellmanager-x86_64-1.5.1.spk ms
 write_meta "${TMP}/addons/synosmartinfo.json" Synosmartinfo-x86_64-2.0.8.spk Synosmartinfo 2.0.8 https://example.invalid/Synosmartinfo-x86_64-2.0.8.spk
 write_meta "${TMP}/addons/amdgpu-driver.json" syno-amdgpu-runtime-0.5.4-7.4-x86_64-kernel5.10.55.spk syno-amdgpu-runtime 0.5.4 https://example.invalid/syno-amdgpu-runtime-0.5.4-7.4-x86_64-kernel5.10.55.spk ',"platform":"epyc7002","kernel":"5.10.55","dsm_version":"7.4.1"'
 
-TMPROOT="${TMP}/dsm" AEUDEV_ADDONS_ROOT="${TMP}/addons" sh "${INSTALLER}" late
+run_late_installer() (
+  cd "${TMP}/extension"
+  TMPROOT="${TMP}/dsm" AEUDEV_ADDONS_ROOT="${TMP}/addons" EXT_ID=aeudev \
+    . ./install.sh late
+)
+
+# redpill-load sources extension scripts from inside the extension directory;
+# $0 therefore belongs to the dispatcher, not install.sh.
+run_late_installer
 RCD="${TMP}/dsm/usr/local/etc/rc.d"
 LIBEXEC="${TMP}/dsm/usr/local/libexec/mshell-postboot-spk-install.sh"
 [ -x "${LIBEXEC}" ]
@@ -42,7 +53,7 @@ if find "${RCD}" -type f -name '*.spk' | grep -q .; then
 fi
 # Running the late hook twice must produce the same independent jobs without
 # ever copying a payload into the DSM system tree.
-TMPROOT="${TMP}/dsm" AEUDEV_ADDONS_ROOT="${TMP}/addons" sh "${INSTALLER}" late >/dev/null
+run_late_installer >/dev/null
 [ -x "${RCD}/S99mshell-manager-install.sh" ] && [ -x "${RCD}/S99synosmartinfo-install.sh" ]
 
 cat > "${TMP}/bin/curl" <<'MOCK_CURL'
