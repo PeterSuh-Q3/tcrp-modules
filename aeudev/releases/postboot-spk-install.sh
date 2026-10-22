@@ -41,6 +41,13 @@ cleanup() {
       "${volume}/@tmp/mshell-spk-delivery/${NAME}.part"
   done
 }
+start_package() {
+  if ! "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
+    log "${PKG} start failed; installer hook retained for next boot retry"
+    return 1
+  fi
+  log "${PKG} start command succeeded"
+}
 NAME="$(meta name)"; URL="$(meta url)"; SHA="$(meta sha256)"; SIZE="$(meta size)"; TARGET="$(meta version)"
 if ! echo "${NAME}" | grep -Eq "^${PREFIX}-[A-Za-z0-9.+_-]+\.spk$" || \
    [ "${URL##*/}" != "${NAME}" ] || ! echo "${URL}" | grep -Eq '^https://[^[:space:]]+$' || \
@@ -70,18 +77,11 @@ done
 INSTALLED="$("${SYNOPKG}" version "${PKG}" 2>/dev/null | tr -d '\r\n')"
 if [ -n "${INSTALLED}" ] && ! version_is_newer "${INSTALLED}" "${TARGET}"; then
   log "${PKG} ${INSTALLED} is current"
-  if [ "${KIND}" = amdgpu ]; then "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 || log "start failed; DSM package service can retry"; fi
   if [ "${KIND}" = manager ] && "${SYNOPKG}" version MshellManager >/dev/null 2>&1; then
     "${SYNOPKG}" stop MshellManager >> "${LOG}" 2>&1 || true
     "${SYNOPKG}" uninstall MshellManager >> "${LOG}" 2>&1 || { log "legacy package cleanup pending"; exit 0; }
   fi
-  if [ "${KIND}" = manager ]; then
-    if ! "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
-      log "start failed; installer hook retained for next boot retry"
-      exit 0
-    fi
-    log "${PKG} start command succeeded"
-  fi
+  start_package || exit 0
   cleanup; exit 0
 fi
 download_volume() {
@@ -169,14 +169,7 @@ if [ "${KIND}" = manager ] && "${SYNOPKG}" version MshellManager >/dev/null 2>&1
   "${SYNOPKG}" stop MshellManager >> "${LOG}" 2>&1 || true
   "${SYNOPKG}" uninstall MshellManager >> "${LOG}" 2>&1 || { log "new package installed; legacy cleanup pending"; exit 0; }
 fi
-if [ "${KIND}" = manager ]; then
-  if ! "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
-    log "installed but start failed; installer hook retained for next boot retry"
-    exit 0
-  fi
-  log "${PKG} start command succeeded"
-fi
-if [ "${KIND}" = amdgpu ]; then "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 || log "installed but start failed"; fi
+start_package || exit 0
 log "${PKG} ${TARGET} installed successfully"
 cleanup
 exit 0

@@ -164,6 +164,7 @@ final_curl="$(wc -l < "${TMP}/curl.log" | tr -d ' ')"
 run_hook amdgpu /usr/local/etc/rc.d/amdgpu-driver.json /usr/local/etc/rc.d/S99amdgpu-runtime-install.sh
 grep -q '^install .*syno-amdgpu-runtime-0.5.4-7.4-x86_64-kernel5.10.55.spk$' "${TMP}/synopkg.log"
 grep -q '^start syno-amdgpu-runtime$' "${TMP}/synopkg.log"
+! grep -q 'start failed; installer hook retained' "${TMP}/dsm/var/log/amdgpu-packages-install.log"
 
 # A checksum error must never reach synopkg and must preserve metadata/hook for
 # a later boot retry. Use a Smart Info manifest with a deliberately wrong hash.
@@ -183,6 +184,7 @@ if find "${TMP}/dsm/volume1" -name '*.part' | grep -q .; then exit 1; fi
 cp "${TMP}/addons/synosmartinfo.json" "${RCD}/synosmartinfo.json"
 run_hook smartinfo /usr/local/etc/rc.d/synosmartinfo.json /usr/local/etc/rc.d/S99synosmartinfo-install.sh
 grep -q '^install .*Synosmartinfo-x86_64-2.0.8.spk$' "${TMP}/synopkg.log"
+grep -q '^start Synosmartinfo$' "${TMP}/synopkg.log"
 [ ! -e "${RCD}/synosmartinfo.json" ]
 
 # Unsupported AMD kernel is safely skipped without network or synopkg calls.
