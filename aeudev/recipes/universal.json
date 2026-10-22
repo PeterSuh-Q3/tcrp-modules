@@ -3,7 +3,13 @@
     {
       "name": "install.sh",
       "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/releases/install.sh",
-      "sha256": "b09d02cdb413fcafc2e388cedd7d47cc3b803354f44d27d518fcacb4f0c48335",
+      "sha256": "d54fc79240a54193e78a607893d374bd138c6602eb24817cbbfda3bcd0692268",
+      "packed": false
+    },
+    {
+      "name": "postboot-spk-install.sh",
+      "url": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/main/aeudev/releases/postboot-spk-install.sh",
+      "sha256": "f22b49989b8a7529abcd22766f2a3f56a183c7f0c745c1c52374507db9d7e42e",
       "packed": false
     },
     {
