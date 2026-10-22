@@ -75,6 +75,13 @@ if [ -n "${INSTALLED}" ] && ! version_is_newer "${INSTALLED}" "${TARGET}"; then
     "${SYNOPKG}" stop MshellManager >> "${LOG}" 2>&1 || true
     "${SYNOPKG}" uninstall MshellManager >> "${LOG}" 2>&1 || { log "legacy package cleanup pending"; exit 0; }
   fi
+  if [ "${KIND}" = manager ]; then
+    if ! "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
+      log "start failed; installer hook retained for next boot retry"
+      exit 0
+    fi
+    log "${PKG} start command succeeded"
+  fi
   cleanup; exit 0
 fi
 download_volume() {
@@ -158,11 +165,18 @@ while [ "${wait_attempt}" -le 8 ]; do
   wait_attempt=$((wait_attempt + 1)); sleep "${MSHELL_SPK_RETRY_DELAY:-15}"
 done
 if [ "${status}" -ne 0 ]; then log "install failed; verified cache retained for next boot"; exit 0; fi
-if [ "${KIND}" = amdgpu ]; then "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 || log "installed but start failed"; fi
 if [ "${KIND}" = manager ] && "${SYNOPKG}" version MshellManager >/dev/null 2>&1; then
   "${SYNOPKG}" stop MshellManager >> "${LOG}" 2>&1 || true
   "${SYNOPKG}" uninstall MshellManager >> "${LOG}" 2>&1 || { log "new package installed; legacy cleanup pending"; exit 0; }
 fi
+if [ "${KIND}" = manager ]; then
+  if ! "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1; then
+    log "installed but start failed; installer hook retained for next boot retry"
+    exit 0
+  fi
+  log "${PKG} start command succeeded"
+fi
+if [ "${KIND}" = amdgpu ]; then "${SYNOPKG}" start "${PKG}" >> "${LOG}" 2>&1 || log "installed but start failed"; fi
 log "${PKG} ${TARGET} installed successfully"
 cleanup
 exit 0

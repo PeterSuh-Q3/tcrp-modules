@@ -76,7 +76,8 @@ case "$1" in
     [ "${2:-}" = MshellManager ] && printf '1.0.0\n'
     exit 0 ;;
   install) [ "${MOCK_INSTALL_FAIL:-0}" = 0 ] && exit 0; echo '{"code":263}'; exit 1 ;;
-  start|stop|uninstall) exit 0 ;;
+  start) [ "${MOCK_START_FAIL:-0}" = 0 ] && exit 0; echo '{"code":1}'; exit 1 ;;
+  stop|uninstall) exit 0 ;;
 esac
 exit 0
 MOCK_SYNOPKG
@@ -94,6 +95,7 @@ run_hook() (
     MSHELL_SPK_SETTLE_DELAY=0 MOCK_PAYLOAD="${PAYLOAD}" \
     MOCK_SYNOPKG_LOG="${TMP}/synopkg.log" MOCK_CURL_LOG="${TMP}/curl.log" \
     MOCK_CURL_FAIL="${curl_fail}" MOCK_INSTALL_FAIL="${install_fail}" \
+    MOCK_START_FAIL="${9:-0}" \
     MOCK_INSTALLED_VERSION="${installed}" MOCK_LEGACY_INSTALLED="${legacy}" \
     "$LIBEXEC" "$kind" "$meta" "$hook" start
 )
@@ -108,6 +110,7 @@ after="$(grep -c '^install ' "${TMP}/synopkg.log" || true)"
 # Successful post-boot fetch is verified and passed to synopkg from a volume.
 run_hook manager /usr/local/etc/rc.d/mshell-manager.json /usr/local/etc/rc.d/S99mshell-manager-install.sh
 grep -q '^install .*volume1/@tmp/mshell-spk-delivery/mshellmanager-x86_64-1.5.1.spk$' "${TMP}/synopkg.log"
+grep -q '^start mshellmanager$' "${TMP}/synopkg.log"
 [ ! -e "${RCD}/mshell-manager.json" ]
 [ ! -e "${RCD}/S99mshell-manager-install.sh" ]
 [ ! -e "${TMP}/dsm/volume1/@tmp/mshell-spk-delivery/mshellmanager-x86_64-1.5.1.spk" ]
@@ -117,9 +120,13 @@ grep -q '^install .*volume1/@tmp/mshell-spk-delivery/mshellmanager-x86_64-1.5.1.
 write_meta "${RCD}/mshell-manager.json" mshellmanager-x86_64-1.5.1.spk mshellmanager 1.5.1 https://example.invalid/mshellmanager-x86_64-1.5.1.spk
 touch "${RCD}/S99mshell-manager-install.sh"; chmod +x "${RCD}/S99mshell-manager-install.sh"
 before_curl="$(wc -l < "${TMP}/curl.log" | tr -d ' ')"
-run_hook manager /usr/local/etc/rc.d/mshell-manager.json /usr/local/etc/rc.d/S99mshell-manager-install.sh 1.5.1 1
+run_hook manager /usr/local/etc/rc.d/mshell-manager.json /usr/local/etc/rc.d/S99mshell-manager-install.sh 1.5.1 1 0 0 0 1
+[ -s "${RCD}/mshell-manager.json" ] && [ -x "${RCD}/S99mshell-manager-install.sh" ]
+grep -q 'start failed; installer hook retained for next boot retry' "${TMP}/dsm/var/log/mshell-manager-install.log"
+run_hook manager /usr/local/etc/rc.d/mshell-manager.json /usr/local/etc/rc.d/S99mshell-manager-install.sh 1.5.1
 after_curl="$(wc -l < "${TMP}/curl.log" | tr -d ' ')"
 [ "${before_curl}" = "${after_curl}" ]
+grep -q '^start mshellmanager$' "${TMP}/synopkg.log"
 grep -q '^uninstall MshellManager$' "${TMP}/synopkg.log"
 [ ! -e "${RCD}/mshell-manager.json" ]
 
