@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "broadwell-7.1-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.21/broadwell-7.1-4.4.180.tgz",
-      "sha256": "32cb31fdb04ba4525206fa2fcf389c21ffb4059bf8ee365926ac79b7a6fcc1b6",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.23/broadwell-7.1-4.4.180.tgz",
+      "sha256": "b3656080f7fdd5d6a91ab425d15fa7912738aab2cc380abbedd78677abb747ad",
       "packed": false
     },
     {
