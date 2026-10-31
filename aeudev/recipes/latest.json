@@ -48,15 +48,15 @@
     "mshell_manager": {
       "assets": [
         {
-          "name": "mshellmanager-x86_64-1.5.5.spk",
-          "sha256": "37070f9635b56f9dd68140f263e925e7ab042e2c4cc5c22d42df7d92a255cd0c",
-          "size": 14336000,
-          "url": "https://github.com/PeterSuh-Q3/mshell-manager-rel/releases/download/v1.5.5/mshellmanager-x86_64-1.5.5.spk"
+          "name": "mshellmanager-x86_64-1.5.6.spk",
+          "sha256": "938bc6c066c57127befb25bbd98d5faf0502bc809dc26335daf7ed5b05707362",
+          "size": 14325760,
+          "url": "https://github.com/PeterSuh-Q3/mshell-manager-rel/releases/download/v1.5.6/mshellmanager-x86_64-1.5.6.spk"
         }
       ],
-      "published_at": "2026-10-30T23:05:47Z",
+      "published_at": "2026-10-31T12:49:38Z",
       "repository": "PeterSuh-Q3/mshell-manager-rel",
-      "tag": "v1.5.5"
+      "tag": "v1.5.6"
     },
     "syno_smart_info": {
       "assets": [
