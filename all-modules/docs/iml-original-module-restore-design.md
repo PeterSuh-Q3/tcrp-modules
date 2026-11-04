@@ -2,7 +2,7 @@
 
 작성일: 2026-11-04 (Asia/Seoul)
 
-상태: U0 모듈 트리를 항상 기준으로 복원하고, 설치된 smallfix에 필요한 차이만 단일 선택 적용하도록 확정한 설계. sparse smallfix delta 방식은 아직 구현되지 않았다.
+상태: 구현됨. 정식 PAT의 U0 모듈 트리를 `U0.tar`로 만들고, 설치된 smallfix에 필요한 U0 기준 sparse delta 하나만 선택 적용한다. DSM tar 호환성은 45.229 실기에서 별도로 확인했다.
 
 ## 목적과 범위
 
@@ -12,9 +12,9 @@
 
 ## 원본 공급 기반
 
-`tinycore-redpill/functions_t.sh`의 `c0ffae02`, `7e49cb01`은 `general.synology_module_restore=true`일 때 빌드마다 원본 PAT를 다운로드하고 설정의 MD5를 검증한다. PAT에서 hda1.tgz를 추출하여 XZ/gzip 매직 바이트에 따라 tar 목록을 검사하고 `/addons/hda1.tgz`에 포함한다. 같은 빌드의 재귀 호출에서는 다운로드를 재사용한다.
+`tinycore-redpill/functions_t.sh`의 구현은 `general.synology_module_restore=true`일 때 원본 PAT를 다운로드하고 설정의 MD5를 검증한다. PAT에서 hda1.tgz를 꺼내 버전·모델 식별값을 읽고, `usr/lib/modules`만 일반 tar인 `/addons/hda1-smallfix/U0.tar`로 다시 묶는다. initrd에는 원본 hda1.tgz 대신 U0.tar, smallfix delta와 manifest를 포함한다.
 
-현재 전용 버전 메타데이터는 없다. 빌드 시 압축 검증 성공은 설치 DSM과의 버전 일치를 의미하지 않는다.
+빌드 산출물은 검증된 U0 PAT의 버전·모델 식별값을 manifest에 기록한다. 아카이브 압축 검증만으로 설치 DSM과의 버전 일치를 판단하지 않는다.
 
 SA6400 DSM 7.4.1-90080 Update 1 실물 PAT는 완성된 `hda1.tgz` 대신 `hda1-epyc7002_7.4-90080-s1.tar`와 `hda1-sa6400_7.4-90080-s1.tar`를 담고 있다. 전자의 `content.txz`는 `usr/lib/modules/nfsd.ko`를 교체하며, 후자에는 모듈 파일이 없다. Update 0과 Update 1의 `nfsd.ko` SHA-256은 서로 다르다. 따라서 Update 1 DSM에 Update 0 hda1만 복원할 수 없다.
 
@@ -26,9 +26,9 @@ Synology SA6400 릴리스 노트 페이지는 `/api/releaseNote/findChangeLog?id
 
 1. `general.synology_module_restore=true`인 빌드에서 정확한 모델과 DSM productversion/buildnumber의 Update 번호를 Synology 릴리스 노트 목록에서 수집한다. 숫자 URL을 순차 추측해 마지막 Update를 결정하지 않는다.
 2. 기존 방식대로 Update 0 정식 PAT를 새로 받아 설정된 MD5를 확인한다. `hda1.tgz` 안의 VERSION과 모델 식별자, 압축 무결성을 확인한다.
-3. 목록의 각 smallfix PAT를 공식 다운로드 경로에서 받는다. 다운로드 URL의 최종 결정 방법은 Synology 다운로드 목록과 응답을 확인해 구현한다. 각 PAT를 `SynoXtract`로 열어 내부 INFO의 archive_type, platform, productversion, buildnum, smallfixnum, unique가 요청한 대상과 일치하는지 확인한다. 필요한 Update 파일이 없거나 검증에 실패하면 복원 옵션을 켠 빌드를 실패시킨다.
+3. 목록에 나타난 각 smallfix PAT의 공식 아카이브 페이지에서 해당 플랫폼·모델 파일 URL을 찾는다. 각 PAT를 `SynoXtract`로 열어 내부 INFO의 archive_type, platform, productversion, buildnum, smallfixnum, unique가 요청한 대상과 일치하는지 확인한다. 필요한 Update 파일이 없거나 검증에 실패하면 복원 옵션을 켠 빌드를 실패시킨다.
 4. 각 PAT의 `hda1-<platform>...tar` 및 `hda1-<model>...tar`에서 `content.txz`를 추출한다. 빌드 준비 단계에서는 U0 트리에 Update 변경분을 순서대로 적용해 각 대상 Update의 모듈 상태를 계산한다. 그런 다음 각 상태를 U0와 비교하여 **U0에서 해당 Update로 바뀐 파일만** `U<n>.tar`에 담는다. 삭제된 모듈 경로는 별도의 삭제 목록으로 기록한다. 변경 파일이나 삭제 작업을 해석할 수 없으면 조용히 누락하지 않고 준비에 실패한다. 이 단계는 압축 산출물을 계산하기 위한 것이며, 런타임에 이전 Update tar들을 누적 적용한다는 의미가 아니다.
-5. `/addons/hda1.tgz`와 sparse `/addons/hda1-smallfix/U<n>.tar` 변경분, 필요한 삭제 목록 및 manifest를 initrd-dsm에 포함한다. U1에서 확인한 변경이 `nfsd.ko` 하나라면 U1.tar에는 그 파일만 들어간다. manifest에는 원본 모델·플랫폼·DSM 버전, base hda1 해시, 각 Update 변경 tar와 삭제 목록의 SHA-256을 기록한다. 빌드 시 확인한 최신 Update보다 설치 DSM이 높아지면 새 빌드가 필요하다.
+5. `U0.tar`와 sparse `/addons/hda1-smallfix/U<n>.tar` 변경분, 필요한 삭제 목록 및 manifest를 initrd-dsm에 포함한다. U1에서 확인한 변경이 `nfsd.ko` 하나라면 U1.tar에는 그 파일만 들어간다. manifest에는 원본 모델·플랫폼·DSM 버전과 U0 tar, 각 Update 변경 tar 및 삭제 목록의 SHA-256을 기록한다. 빌드 시 확인한 최신 Update보다 설치 DSM이 높아지면 새 빌드가 필요하다.
 
 ### 추출기 전환
 
@@ -45,11 +45,11 @@ late 단계에서는 DSM의 `/tmpRoot/usr/bin`, `/tmpRoot/usr/sbin` 등의 명�
 | 조건 | 처리 |
 | --- | --- |
 | PML | 기존 PML 분기 유지 |
-| IML, hda1 및 필요한 smallfix 변경분 존재, DSM 버전 일치 확인 | 매 IML 부팅마다 hda1의 U0 모듈 트리를 복원한 뒤, 설치된 smallfix와 일치하는 변경분 하나만 적용 |
-| IML, hda1 존재, 버전 불일치·변경분 누락 또는 확인 불가 | 오류 로그만 기록. 모듈 유지. BAK 대체 복원 금지 |
-| IML, hda1 없음 | 기존 BAK 복원 루틴 실행 |
+| IML, U0 bundle 및 필요한 smallfix 변경분 존재, DSM 버전 일치 확인 | 매 IML 부팅마다 U0 모듈 트리를 복원한 뒤, 설치된 smallfix와 일치하는 변경분 하나만 적용 |
+| IML, bundle 경로 존재, 버전 불일치·U0/변경분 누락 또는 확인 불가 | 오류 로그만 기록. 모듈 유지. BAK 대체 복원 금지 |
+| IML, U0 bundle 경로 없음 | 기존 BAK 복원 루틴 실행 |
 
-hda1 복원은 오염 마커 유무와 무관하다. 읽을 수 없거나 손상된 아카이브를 부재로 간주하지 않는다. hda1 검증·추출 실패도 BAK로 자동 대체하지 않는다.
+U0 복원은 오염 마커 유무와 무관하다. `/addons/hda1-smallfix` 경로가 있으면 manifest나 U0.tar 일부가 빠진 상태도 bundle 오류로 처리한다. 손상·누락된 구성요소를 bundle 부재로 간주하지 않는다. 검증·추출 실패도 BAK로 자동 대체하지 않는다.
 
 기존 BAK 분기의 조건은 오염 마커 존재, 마커 지문 일치, 비어 있지 않은 BAK, BAK 지문 일치다. 조건 미충족 시 복원하지 않는다.
 
@@ -62,13 +62,13 @@ hda1 복원은 오염 마커 유무와 무관하다. 읽을 수 없거나 손상
 - 별도 메타데이터에는 스키마 버전, DSM 버전 필드, 확인 가능한 모델/플랫폼, hda1 SHA-256을 기록한다. 해시로 해당 아카이브와 메타데이터의 결합을 확인한다. 확인한 식별자에 충돌이 있으면 복원을 허용하지 않는다.
 - SHA-256 일치만으로 DSM 버전 일치를 판단하지 않는다. 메타데이터는 source하지 않고 데이터로 파싱한다.
 
-메타데이터 최종 형식은 구현 시 정한다. 45.90 표본의 내부 경로는 확인했지만 다른 PAT에서도 확인해야 한다. 버전이나 모델 일치 확인이 불가능하면 복원을 생략하는 정책은 확정이다.
+빌드 산출물의 `manifest`는 `base`, `platform`, `model`, `unique`, `u0_sha256`, `artifact=U0-modules-only`와 각 Update의 tar·삭제목록 해시를 기록한다. 런타임은 설치 DSM의 버전 및 모델 식별값을 이 manifest와 대조한다. 버전이나 모델 일치 확인이 불가능하면 복원을 생략하는 정책은 확정이다.
 
 ## 복원 절차
 
-1. 모드, 아카이브 존재, 버전과 무결성을 확인한다. base hda1의 productversion/buildnumber와 모델을 설치 DSM에 대조한다. base의 smallfixnumber 0은 기준본 표시로 확인하며 설치 DSM의 smallfix와 다르다는 이유만으로 거부하지 않는다. 버전 오류는 대상 변경 전에 로그를 남기고 복원을 생략한다.
+1. 모드, 아카이브 존재, 버전과 무결성을 확인한다. base hda1에서 만든 U0 manifest의 productversion/buildnumber와 모델을 설치 DSM에 대조한다. base의 smallfixnumber 0은 기준본 표시로 확인하며 설치 DSM의 smallfix와 다르다는 이유만으로 거부하지 않는다. 버전 오류는 대상 변경 전에 로그를 남기고 복원을 생략한다.
 2. `/tmpRoot/lib/modules`를 DSM 루트 기준으로 해석한다. `/lib`가 `/usr/lib` 링크인 경우 링크 자체를 보존한다. 절대 링크를 initrd 루트 기준으로 잘못 해석하지 않는다.
-3. 매번 같은 파일시스템의 임시 디렉터리에 hda1에서 U0 `usr/lib/modules` 트리를 추출한다. smallfix가 0이면 이 트리가 선택 결과다. 아카이브 전체를 `/tmpRoot`에 풀지 않는다.
+3. 매번 같은 파일시스템의 임시 디렉터리에 U0.tar에서 `usr/lib/modules` 트리를 추출한다. smallfix가 0이면 이 트리가 선택 결과다. 아카이브 전체를 `/tmpRoot`에 풀지 않는다. U0.tar는 DSM의 `/usr/bin/tar`로 직접 해제 가능한 일반 tar 형식이어야 한다.
 4. 설치 DSM의 smallfix 번호가 0보다 크면 정확히 같은 번호의 sparse delta 하나만 선택한다. manifest의 모델·버전·base hash, delta tar SHA-256, 삭제 목록 SHA-256을 확인한다. 해당 tar의 변경 파일을 U0 임시 트리에 덮어쓰고 삭제 목록의 모듈 경로를 제거한다. U1이면 U1 변경분만 적용하며 U0→U1→U2와 같이 여러 Update를 런타임에서 차례로 적용하지 않는다. 대상 번호 자료가 빠졌거나 잘못되면 원래 대상을 유지한다.
 5. 경로 이탈 방지, 추출·적용 성공, 비어 있지 않은 모듈 트리, 권한 보존을 확인한다. 준비 완료 전에 현재 트리를 삭제하지 않는다.
 6. 교체 전 작업 상태를 기록하고 기존 트리를 롤백용으로 보존한 뒤 준비된 트리로 전체 교체한다. 덮어쓰기만 하여 PML 추가 파일을 남기지 않는다. 각 이동 및 상태 기록 결과를 확인한다.

@@ -453,11 +453,11 @@ elif [ "${1}" = "late" ]; then
     chroot /tmpRoot /sbin/depmod -a 2>/dev/null || echo "<3>[TCRP] WARNING: chroot depmod failed" > /dev/kmsg
 
   else
-    if [ -s "/addons/hda1-smallfix/U0.tar" ]; then
-      # U0 모듈 아카이브가 있으면 검증·복원 실패를 BAK로 우회하지 않는다.
+    if [ -e "/addons/hda1-smallfix" ]; then
+      # Bundle가 일부만 배포되었거나 손상된 경우도 BAK로 우회하지 않는다.
       restore_modules_from_hda1 || true
     else
-      iml_restore_log "INFO source=BAK reason=hda1 archive absent"
+      iml_restore_log "INFO source=BAK reason=U0 bundle absent"
       # IML 모드: PML 오염이 "확실한" 경우만 복원
       # 조건 3중:
     #   1) PML 마커 존재 (= 직전 부팅 중 한 번이라도 PML 오버레이 있었음)
