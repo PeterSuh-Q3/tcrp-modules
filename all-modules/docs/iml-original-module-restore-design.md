@@ -16,6 +16,8 @@
 
 현재 전용 버전 메타데이터는 없다. 빌드 시 압축 검증 성공은 설치 DSM과의 버전 일치를 의미하지 않는다.
 
+실기에서 확인된 45.90 표본의 `/dev/shm/hda1.tgz`는 파일명과 달리 XZ 압축이었다. 내부 `etc.defaults/VERSION`에서 DSM 7.4.1, build 90080, smallfix 0 (Update 0), builddate `2026/07/22`를 읽었다. `etc.defaults/synoinfo.conf`에는 `upnpmodelname="SA6400"`, `unique="synology_epyc7002_sa6400"`가 있었다. 이 관찰은 해당 hda1 표본에 한정되며, 모든 PAT에 같은 형식과 항목이 있다는 보장은 아니다. `etc.defaults/model.dtb`는 DT 모델만 담을 수 있으므로 모델 판별 근거로 사용하지 않는다.
+
 late 단계에서는 DSM의 `/tmpRoot/usr/bin`, `/tmpRoot/usr/sbin` 등의 명령 및 sha256sum을 사용할 수 있다고 전제한다. DSM 바이너리는 필요한 경우 chroot를 통해 해당 라이브러리 환경에서 실행한다.
 
 ## 확정 분기
@@ -35,13 +37,14 @@ hda1 복원은 오염 마커 유무와 무관하다. 읽을 수 없거나 손상
 
 ## 버전 및 무결성
 
-- 실제 hda1 내부에 신뢰할 수 있는 VERSION 정보가 있는지 구현 전에 확인한다.
+- 실제 hda1 내부의 `etc.defaults/VERSION` 및 `etc.defaults/synoinfo.conf`를 확인한다. 45.90 표본에서는 VERSION의 productversion/buildnumber/smallfixnumber와 synoinfo.conf의 upnpmodelname/unique를 읽을 수 있었다. 다른 PAT에서도 이 경로와 값이 제공되는지 개별 검증한다.
+- `etc.defaults/model.dtb`는 DT 모델만 존재할 수 있으므로 모델 식별 또는 일치 판정에 사용하지 않는다.
 - 원본의 productversion, buildnumber, smallfixnumber와 `/tmpRoot/etc.defaults/VERSION`의 세 필드가 모두 일치해야 한다. 누락값은 일치로 간주하지 않는다.
-- 내부 정보가 없거나 부족하면 원본 PAT에서 확인한 버전을 `/addons/hda1.meta` 같은 별도 파일로 전달한다. 빌드 설정의 추정값을 원본 확인값으로 대체하지 않는다.
+- 내부 VERSION 또는 `synoinfo.conf` 정보가 없거나 부족하면 원본 PAT에서 확인한 값을 `/addons/hda1.meta` 같은 별도 파일로 전달한다. 빌드 설정의 추정값을 원본 확인값으로 대체하지 않는다.
 - 별도 메타데이터에는 스키마 버전, DSM 버전 필드, 확인 가능한 모델/플랫폼, hda1 SHA-256을 기록한다. 해시로 해당 아카이브와 메타데이터의 결합을 확인한다. 확인한 식별자에 충돌이 있으면 복원을 허용하지 않는다.
 - SHA-256 일치만으로 DSM 버전 일치를 판단하지 않는다. 메타데이터는 source하지 않고 데이터로 파싱한다.
 
-메타데이터 최종 형식 및 원본 VERSION 위치는 실제 PAT 확인 후 확정할 구현 세부 사항이다. 버전 확인이 불가능하면 복원을 생략하는 정책은 확정이다.
+메타데이터 최종 형식은 구현 시 정한다. 45.90 표본의 내부 경로는 확인했지만 다른 PAT에서도 확인해야 한다. 버전이나 모델 일치 확인이 불가능하면 복원을 생략하는 정책은 확정이다.
 
 ## 복원 절차
 
