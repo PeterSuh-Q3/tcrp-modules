@@ -126,55 +126,91 @@ restore_modules_from_hda1() {
     rm -f "${_archive_tar}"
     return 1
   fi
-  if [ "${_product}-${_build}-${_smallfix}-${_model}-${_unique}" != "${_archive_product}-${_archive_build}-${_archive_smallfix}-${_archive_model}-${_archive_unique}" ]; then
-    iml_restore_log "ERROR code=VERSION_MISMATCH installed=${_product}-${_build}-${_smallfix}-${_model}-${_unique} archive=${_archive_product}-${_archive_build}-${_archive_smallfix}-${_archive_model}-${_archive_unique}; restore skipped; BAK fallback disabled"
+  if [ "${_product}-${_build}-${_model}-${_unique}" != "${_archive_product}-${_archive_build}-${_archive_model}-${_archive_unique}" ] || [ "${_archive_smallfix}" != "0" ]; then
+    iml_restore_log "ERROR code=VERSION_MISMATCH installed=${_product}-${_build}-${_smallfix}-${_model}-${_unique} base=${_archive_product}-${_archive_build}-${_archive_smallfix}-${_archive_model}-${_archive_unique}; restore skipped; BAK fallback disabled"
     rm -f "${_archive_tar}"
     return 1
   fi
-  [ -n "${_hash}" ] || { iml_restore_log "ERROR stage=hash sha256sum failed"; rm -f "${_archive_tar}"; return 1; }
-
-  # Resolve /lib/modules inside DSM and reject paths outside its root.
+  case "${_smallfix}" in ''|*[!0-9]*)
+    iml_restore_log "ERROR code=VERSION_UNKNOWN invalid installed smallfixnumber '${_smallfix}'; restore skipped; BAK fallback disabled"
+    rm -f "${_archive_tar}"
+    return 1
+  esac
+  # Resolve /lib/modules inside DSM and reject paths outside its supported locations.
   case "${_target_link}" in /usr/lib/modules|/lib/modules) ;; *)
     iml_restore_log "ERROR stage=target invalid DSM /lib/modules target '${_target_link}'"
     rm -f "${_archive_tar}"
     return 1
   esac
-  chroot "${_root}" /usr/bin/tar -tJf /tmp/.tcrp-hda1-restore.tar > "${_list}" 2>/dev/null || {
-    iml_restore_log "ERROR stage=archive archive listing failed"
+  _bundle="/addons/hda1-smallfix"
+  _manifest="${_bundle}/manifest"
+  if [ ! -f "${_manifest}" ] || ! grep -qx "base=${_archive_product}-${_archive_build}" "${_manifest}" || \
+     ! grep -qx "platform=${TARGET_PLATFORM}" "${_manifest}" || \
+     ! grep -qx "model=${_archive_model}" "${_manifest}" || \
+     ! grep -qx "unique=${_archive_unique}" "${_manifest}" || \
+     ! grep -qx "base_sha256=${_hash}" "${_manifest}"; then
+    iml_restore_log "ERROR code=SMALLFIX_BUNDLE_MISSING smallfix manifest identity missing or mismatched; restore skipped; BAK fallback disabled"
     rm -f "${_archive_tar}"
     return 1
-  }
-  if awk '
-    { p=$0; sub(/^\.\//, "", p); if (p ~ /^\// || p ~ /(^|\/)\.\.(\/|$)/) exit 1 }
-  ' "${_list}"; then :; else
-    iml_restore_log "ERROR stage=archive unsafe archive path"
-    rm -f "${_archive_tar}" "${_list}"
-    return 1
   fi
-  awk '{ p=$0; sub(/^\.\//, "", p); if (p ~ /^usr\/lib\/modules(\/|$)/ || p ~ /^lib\/modules(\/|$)/) print $0 }' "${_list}" > "${_root}/tmp/.tcrp-hda1-modules.list"
-  [ -s "${_root}/tmp/.tcrp-hda1-modules.list" ] || {
-    iml_restore_log "ERROR stage=archive no module tree in hda1"
-    rm -f "${_archive_tar}" "${_list}"
-    return 1
-  }
+  [ -n "${_hash}" ] || { iml_restore_log "ERROR stage=hash sha256sum failed"; rm -f "${_archive_tar}"; return 1; }
   rm -rf "${_stage}" "${_new}"
   mkdir -p "${_stage}" "${_new}" || { iml_restore_log "ERROR stage=prepare mkdir failed"; return 1; }
-  cp "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" || return 1
-  chroot "${_root}" /usr/bin/tar -xJf /tmp/.tcrp-hda1-restore.tar -C /tmp/.tcrp-hda1-restore -T /tmp/.tcrp-hda1-extract.list 2>/dev/null || {
-    iml_restore_log "ERROR stage=extract hda1 module extraction failed"
-    rm -rf "${_stage}"; rm -f "${_archive_tar}"
-    return 1
-  }
-  if [ -d "${_stage}/usr/lib/modules" ]; then
+  _applied_updates="none"
+  if [ "${_smallfix}" -gt 0 ]; then
+    _layer="${_bundle}/U${_smallfix}.tar"
+    _expected_layer_hash="$(awk -v n="${_smallfix}" '$1 == ("update=" n) {sub(/^sha256=/, "", $2); print $2; exit}' "${_manifest}")"
+    _actual_layer_hash="$(sha256sum "${_layer}" 2>/dev/null | awk '{print $1}')"
+    if [ -z "${_expected_layer_hash}" ] || [ "${_actual_layer_hash}" != "${_expected_layer_hash}" ]; then
+      iml_restore_log "ERROR code=SMALLFIX_SNAPSHOT_MISSING exact U${_smallfix} snapshot missing or SHA-256 mismatch; restore skipped; BAK fallback disabled"
+      rm -f "${_archive_tar}"
+      return 1
+    fi
+    _layer_listing="${_root}/tmp/.tcrp-hda1-U${_smallfix}.list"
+    tar -tf "${_layer}" > "${_layer_listing}" 2>/dev/null || { iml_restore_log "ERROR stage=snapshot U${_smallfix} cannot be listed"; return 1; }
+    if ! awk '{p=$0; sub(/^\.\//,"",p); if (p !~ /^usr\/lib\/modules(\/|$)/ || p ~ /(^|\/)\.\.(\/|$)/) exit 1}' "${_layer_listing}"; then
+      iml_restore_log "ERROR stage=snapshot U${_smallfix} contains an unsafe or out-of-scope path"
+      rm -f "${_archive_tar}" "${_layer_listing}"
+      return 1
+    fi
+    cp -f "${_layer}" "${_root}/tmp/.tcrp-hda1-U${_smallfix}.tar" || return 1
+    chroot "${_root}" /usr/bin/tar -xf "/tmp/.tcrp-hda1-U${_smallfix}.tar" -C /tmp/.tcrp-hda1-restore 2>/dev/null || {
+      iml_restore_log "ERROR stage=snapshot exact U${_smallfix} extraction failed"
+      rm -f "${_archive_tar}" "${_layer_listing}"
+      return 1
+    }
+    [ -d "${_stage}/usr/lib/modules" ] || { iml_restore_log "ERROR stage=snapshot U${_smallfix} module tree missing"; return 1; }
     cp -a "${_stage}/usr/lib/modules/." "${_new}/" || return 1
-  elif [ -d "${_stage}/lib/modules" ]; then
-    cp -a "${_stage}/lib/modules/." "${_new}/" || return 1
+    _applied_updates="U${_smallfix}"
   else
-    iml_restore_log "ERROR stage=extract extracted module tree missing"
-    rm -rf "${_stage}" "${_new}"; rm -f "${_archive_tar}"
-    return 1
+    chroot "${_root}" /usr/bin/tar -tJf /tmp/.tcrp-hda1-restore.tar > "${_list}" 2>/dev/null || {
+      iml_restore_log "ERROR stage=archive archive listing failed"
+      rm -f "${_archive_tar}"
+      return 1
+    }
+    if awk '{p=$0; sub(/^\.\//,"",p); if (p ~ /^\// || p ~ /(^|\/)\.\.(\/|$)/) exit 1}' "${_list}"; then :; else
+      iml_restore_log "ERROR stage=archive unsafe archive path"
+      rm -f "${_archive_tar}" "${_list}"
+      return 1
+    fi
+    awk '{p=$0; sub(/^\.\//,"",p); if (p ~ /^usr\/lib\/modules(\/|$)/ || p ~ /^lib\/modules(\/|$)/) print $0}' "${_list}" > "${_root}/tmp/.tcrp-hda1-modules.list"
+    [ -s "${_root}/tmp/.tcrp-hda1-modules.list" ] || { iml_restore_log "ERROR stage=archive no module tree in base hda1"; return 1; }
+    cp "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" || return 1
+    chroot "${_root}" /usr/bin/tar -xJf /tmp/.tcrp-hda1-restore.tar -C /tmp/.tcrp-hda1-restore -T /tmp/.tcrp-hda1-extract.list 2>/dev/null || {
+      iml_restore_log "ERROR stage=extract base hda1 module extraction failed"
+      rm -f "${_archive_tar}"
+      return 1
+    }
+    if [ -d "${_stage}/usr/lib/modules" ]; then
+      cp -a "${_stage}/usr/lib/modules/." "${_new}/" || return 1
+    elif [ -d "${_stage}/lib/modules" ]; then
+      cp -a "${_stage}/lib/modules/." "${_new}/" || return 1
+    else
+      iml_restore_log "ERROR stage=extract base module tree missing"
+      return 1
+    fi
   fi
-  [ -n "$(ls -A "${_new}" 2>/dev/null)" ] || { iml_restore_log "ERROR stage=extract extracted module tree empty"; return 1; }
+  [ -n "$(ls -A "${_new}" 2>/dev/null)" ] || { iml_restore_log "ERROR stage=snapshot selected module tree empty"; return 1; }
 
   # Recover interrupted previous swaps before starting another replacement.
   if [ -f "${_state}" ]; then
@@ -206,9 +242,9 @@ restore_modules_from_hda1() {
     return 1
   fi
   rm -rf "${_rollback}" "${_stage}"
-  rm -f "${_state}" "${_archive_tar}" "${_list}" "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" "${_root}/tmp/.tcrp-hda1-VERSION" "${_root}/tmp/.tcrp-hda1-synoinfo.conf"
+  rm -f "${_state}" "${_archive_tar}" "${_list}" "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" "${_root}/tmp/.tcrp-hda1-VERSION" "${_root}/tmp/.tcrp-hda1-synoinfo.conf" "${_root}/tmp/.tcrp-hda1-U"*.tar "${_root}/tmp/.tcrp-hda1-U"*.list
   rm -f "${PML_MARKER}"
-  iml_restore_log "SUCCESS source=hda1 target=/tmpRoot/lib/modules dsm=${_archive_product}-${_archive_build}-${_archive_smallfix} model=${_archive_model} unique=${_archive_unique} sha256=${_hash} depmod=complete"
+  iml_restore_log "SUCCESS source=hda1 target=/tmpRoot/lib/modules dsm=${_archive_product}-${_archive_build}-${_smallfix} model=${_archive_model} unique=${_archive_unique} applied_updates=${_applied_updates:-none} base_sha256=${_hash} depmod=complete"
   return 0
 }
 
