@@ -63,6 +63,155 @@ get_dsm_fingerprint() {
   echo "${_fp_platform}|${_fp_kver}|${_fp_dsm}"
 }
 
+iml_restore_log() {
+  _restore_msg="[TCRP][IML-RESTORE] $*"
+  echo "${_restore_msg}"
+  echo "<4>${_restore_msg}" > /dev/kmsg 2>/dev/null || true
+}
+
+read_version_field() {
+  awk -F= -v key="$2" '$1 == key { gsub(/["\r]/, "", $2); print $2; exit }' "$1" 2>/dev/null
+}
+
+read_synoinfo_field() {
+  awk -F= -v key="$2" '$1 == key { sub(/^[^=]*=/, ""); gsub(/["\r]/, ""); print; exit }' "$1" 2>/dev/null
+}
+
+# Restore only the original DSM module tree from the verified initrd hda1 archive.
+restore_modules_from_hda1() {
+  _archive=/addons/hda1.tgz
+  _root=/tmpRoot
+  _version_file="${_root}/etc.defaults/VERSION"
+  _synoinfo="${_root}/etc.defaults/synoinfo.conf"
+  _product="$(read_version_field "${_version_file}" productversion)"
+  _build="$(read_version_field "${_version_file}" buildnumber)"
+  _smallfix="$(read_version_field "${_version_file}" smallfixnumber)"
+  _model="$(read_synoinfo_field "${_synoinfo}" upnpmodelname)"
+  _unique="$(read_synoinfo_field "${_synoinfo}" unique)"
+  _archive_tar="${_root}/tmp/.tcrp-hda1-restore.tar"
+  _stage="${_root}/tmp/.tcrp-hda1-restore"
+  _state="${_root}/tmp/.tcrp-hda1-restore.state"
+  _target_link="$(chroot "${_root}" /usr/bin/readlink -f /lib/modules 2>/dev/null)"
+  _target="${_root}${_target_link}"
+  _rollback="${_target}.tcrp-rollback"
+  _new="${_target}.tcrp-new"
+  _list="${_root}/tmp/.tcrp-hda1-restore.list"
+  _meta="/addons/hda1.meta"
+  _hash="$(sha256sum "${_archive}" 2>/dev/null | awk '{print $1}')"
+
+  iml_restore_log "START source=hda1 target=/tmpRoot/lib/modules dsm=${_product}-${_build}-${_smallfix}"
+  if [ -z "${_product}" ] || [ -z "${_build}" ] || [ -z "${_smallfix}" ] || [ -z "${_model}" ] || [ -z "${_unique}" ]; then
+    iml_restore_log "ERROR code=VERSION_UNKNOWN archive DSM/model identity unavailable; restore skipped; BAK fallback disabled"
+    return 1
+  fi
+
+  # The archive's own VERSION and synoinfo values are authoritative. Never use model.dtb.
+  mkdir -p "${_root}/tmp" || return 1
+  cp -f "${_archive}" "${_archive_tar}" || return 1
+  chroot "${_root}" /usr/bin/tar -xJOf /tmp/.tcrp-hda1-restore.tar etc.defaults/VERSION > "${_root}/tmp/.tcrp-hda1-VERSION" 2>/dev/null || {
+    iml_restore_log "ERROR code=VERSION_UNKNOWN cannot read archive etc.defaults/VERSION; restore skipped; BAK fallback disabled"
+    return 1
+  }
+  chroot "${_root}" /usr/bin/tar -xJOf /tmp/.tcrp-hda1-restore.tar etc.defaults/synoinfo.conf > "${_root}/tmp/.tcrp-hda1-synoinfo.conf" 2>/dev/null || {
+    iml_restore_log "ERROR code=VERSION_UNKNOWN cannot read archive synoinfo.conf; restore skipped; BAK fallback disabled"
+    return 1
+  }
+  _archive_product="$(read_version_field "${_root}/tmp/.tcrp-hda1-VERSION" productversion)"
+  _archive_build="$(read_version_field "${_root}/tmp/.tcrp-hda1-VERSION" buildnumber)"
+  _archive_smallfix="$(read_version_field "${_root}/tmp/.tcrp-hda1-VERSION" smallfixnumber)"
+  _archive_model="$(read_synoinfo_field "${_root}/tmp/.tcrp-hda1-synoinfo.conf" upnpmodelname)"
+  _archive_unique="$(read_synoinfo_field "${_root}/tmp/.tcrp-hda1-synoinfo.conf" unique)"
+  if [ -z "${_archive_product}" ] || [ -z "${_archive_build}" ] || [ -z "${_archive_smallfix}" ] || [ -z "${_archive_model}" ] || [ -z "${_archive_unique}" ]; then
+    iml_restore_log "ERROR code=VERSION_UNKNOWN archive DSM/model identity incomplete; restore skipped; BAK fallback disabled"
+    rm -f "${_archive_tar}"
+    return 1
+  fi
+  if [ "${_product}-${_build}-${_smallfix}-${_model}-${_unique}" != "${_archive_product}-${_archive_build}-${_archive_smallfix}-${_archive_model}-${_archive_unique}" ]; then
+    iml_restore_log "ERROR code=VERSION_MISMATCH installed=${_product}-${_build}-${_smallfix}-${_model}-${_unique} archive=${_archive_product}-${_archive_build}-${_archive_smallfix}-${_archive_model}-${_archive_unique}; restore skipped; BAK fallback disabled"
+    rm -f "${_archive_tar}"
+    return 1
+  fi
+  [ -n "${_hash}" ] || { iml_restore_log "ERROR stage=hash sha256sum failed"; rm -f "${_archive_tar}"; return 1; }
+
+  # Resolve /lib/modules inside DSM and reject paths outside its root.
+  case "${_target_link}" in /usr/lib/modules|/lib/modules) ;; *)
+    iml_restore_log "ERROR stage=target invalid DSM /lib/modules target '${_target_link}'"
+    rm -f "${_archive_tar}"
+    return 1
+  esac
+  chroot "${_root}" /usr/bin/tar -tJf /tmp/.tcrp-hda1-restore.tar > "${_list}" 2>/dev/null || {
+    iml_restore_log "ERROR stage=archive archive listing failed"
+    rm -f "${_archive_tar}"
+    return 1
+  }
+  if awk '
+    { p=$0; sub(/^\.\//, "", p); if (p ~ /^\// || p ~ /(^|\/)\.\.(\/|$)/) exit 1 }
+  ' "${_list}"; then :; else
+    iml_restore_log "ERROR stage=archive unsafe archive path"
+    rm -f "${_archive_tar}" "${_list}"
+    return 1
+  fi
+  awk '{ p=$0; sub(/^\.\//, "", p); if (p ~ /^usr\/lib\/modules(\/|$)/ || p ~ /^lib\/modules(\/|$)/) print $0 }' "${_list}" > "${_root}/tmp/.tcrp-hda1-modules.list"
+  [ -s "${_root}/tmp/.tcrp-hda1-modules.list" ] || {
+    iml_restore_log "ERROR stage=archive no module tree in hda1"
+    rm -f "${_archive_tar}" "${_list}"
+    return 1
+  }
+  rm -rf "${_stage}" "${_new}"
+  mkdir -p "${_stage}" "${_new}" || { iml_restore_log "ERROR stage=prepare mkdir failed"; return 1; }
+  cp "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" || return 1
+  chroot "${_root}" /usr/bin/tar -xJf /tmp/.tcrp-hda1-restore.tar -C /tmp/.tcrp-hda1-restore -T /tmp/.tcrp-hda1-extract.list 2>/dev/null || {
+    iml_restore_log "ERROR stage=extract hda1 module extraction failed"
+    rm -rf "${_stage}"; rm -f "${_archive_tar}"
+    return 1
+  }
+  if [ -d "${_stage}/usr/lib/modules" ]; then
+    cp -a "${_stage}/usr/lib/modules/." "${_new}/" || return 1
+  elif [ -d "${_stage}/lib/modules" ]; then
+    cp -a "${_stage}/lib/modules/." "${_new}/" || return 1
+  else
+    iml_restore_log "ERROR stage=extract extracted module tree missing"
+    rm -rf "${_stage}" "${_new}"; rm -f "${_archive_tar}"
+    return 1
+  fi
+  [ -n "$(ls -A "${_new}" 2>/dev/null)" ] || { iml_restore_log "ERROR stage=extract extracted module tree empty"; return 1; }
+
+  # Recover interrupted previous swaps before starting another replacement.
+  if [ -f "${_state}" ]; then
+    if [ -d "${_rollback}" ]; then
+      rm -rf "${_target}"
+      mv "${_rollback}" "${_target}" || {
+        iml_restore_log "ERROR stage=recovery previous swap rollback failed"
+        return 1
+      }
+      iml_restore_log "INFO stage=recovery restored modules after interrupted prior swap"
+    fi
+    rm -f "${_state}"
+  fi
+  printf '%s\n' prepared > "${_state}" || return 1
+  if [ -d "${_target}" ]; then mv "${_target}" "${_rollback}" || { rm -f "${_state}"; return 1; }; fi
+  printf '%s\n' old-moved > "${_state}" || return 1
+  if ! mv "${_new}" "${_target}"; then
+    [ -d "${_rollback}" ] && mv "${_rollback}" "${_target}"
+    iml_restore_log "ERROR stage=replace install failed; rollback attempted"
+    return 1
+  fi
+  printf '%s\n' installed > "${_state}" || return 1
+  [ -f "${_root}/lib/modules/modules.order" ] || : > "${_root}/lib/modules/modules.order"
+  [ -f "${_root}/lib/modules/modules.builtin" ] || : > "${_root}/lib/modules/modules.builtin"
+  if ! chroot "${_root}" /sbin/depmod -a 2>/dev/null; then
+    rm -rf "${_target}"
+    [ -d "${_rollback}" ] && mv "${_rollback}" "${_target}"
+    iml_restore_log "ERROR stage=depmod failed; rollback attempted"
+    return 1
+  fi
+  rm -rf "${_rollback}" "${_stage}"
+  rm -f "${_state}" "${_archive_tar}" "${_list}" "${_root}/tmp/.tcrp-hda1-modules.list" "${_root}/tmp/.tcrp-hda1-extract.list" "${_root}/tmp/.tcrp-hda1-VERSION" "${_root}/tmp/.tcrp-hda1-synoinfo.conf"
+  rm -f "${PML_MARKER}"
+  iml_restore_log "SUCCESS source=hda1 target=/tmpRoot/lib/modules dsm=${_archive_product}-${_archive_build}-${_archive_smallfix} model=${_archive_model} unique=${_archive_unique} sha256=${_hash} depmod=complete"
+  return 0
+}
+
 getvars
 
 if [ "${1}" = "modules" ]; then
@@ -254,8 +403,13 @@ elif [ "${1}" = "late" ]; then
     chroot /tmpRoot /sbin/depmod -a 2>/dev/null || echo "<3>[TCRP] WARNING: chroot depmod failed" > /dev/kmsg
 
   else
-    # IML 모드: PML 오염이 "확실한" 경우만 복원
-    # 조건 3중:
+    if [ -f "/addons/hda1.tgz" ]; then
+      # hda1 존재 시 버전 확인 실패는 BAK로 우회하지 않는다.
+      restore_modules_from_hda1 || true
+    else
+      iml_restore_log "INFO source=BAK reason=hda1 archive absent"
+      # IML 모드: PML 오염이 "확실한" 경우만 복원
+      # 조건 3중:
     #   1) PML 마커 존재 (= 직전 부팅 중 한 번이라도 PML 오버레이 있었음)
     #   2) 마커 지문 == 현재 지문 (= 같은 플랫폼/DSM에서 발생한 오염)
     #   3) BAK 지문 == 현재 지문 (= BAK가 현재 DSM에 유효)
@@ -275,14 +429,18 @@ elif [ "${1}" = "late" ]; then
         echo "IML restore done, PML marker cleared."
         [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
         [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
-        chroot /tmpRoot /sbin/depmod -a 2>/dev/null \
-            || echo "<3>[TCRP] WARNING: IML chroot depmod failed" > /dev/kmsg
+        if chroot /tmpRoot /sbin/depmod -a 2>/dev/null; then
+            iml_restore_log "SUCCESS source=BAK target=/tmpRoot/lib/modules dsm=${CURRENT_FP} depmod=complete"
+        else
+            iml_restore_log "ERROR source=BAK stage=depmod failed after restore"
+        fi
     elif [ -f "${PML_MARKER}" ] && [ "${MARKER_FP}" != "${CURRENT_FP}" ]; then
         echo "<4>[TCRP] IML mode: PML marker fingerprint mismatch (marker='${MARKER_FP}' current='${CURRENT_FP}') - leave rootfs intact" > /dev/kmsg
     elif [ -f "${PML_MARKER}" ] && [ "${SAVED_FP}" != "${CURRENT_FP}" ]; then
         echo "<4>[TCRP] IML mode: BAK fingerprint mismatch (saved='${SAVED_FP}' current='${CURRENT_FP}') - leave rootfs intact" > /dev/kmsg
     else
         echo "IML mode: no PML pollution evidence - nothing to restore"
+      fi
     fi
   fi
 
