@@ -45,6 +45,42 @@ has_display_pci_vendor() {
   return 1
 }
 
+# Extract the optional DRM companion pack for the active all-modules target.
+# This is called from both IML and PML: PML's main module tree is pre-staged,
+# but the separately packaged DRM modules still need to be overlaid at boot.
+extract_all_modules_drm_pack() {
+  DRMPACK=""
+  _exact_drm="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}-drm.tgz"
+  if [ -n "${DSM_VER}" ] && [ -f "${_exact_drm}" ] && gunzip -t "${_exact_drm}" 2>/dev/null; then
+    DRMPACK="${_exact_drm}"
+  else
+    for _cand in /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}-drm.tgz; do
+      [ -f "${_cand}" ] || continue
+      if gunzip -t "${_cand}" 2>/dev/null; then
+        DRMPACK="${_cand}"
+        break
+      fi
+      echo "<4>[TCRP] all-modules: corrupt drm pack skipped (${_cand})" > /dev/kmsg
+    done
+  fi
+
+  [ -n "${DRMPACK}" ] || return 0
+  echo "all-modules: extracting drm pack ${DRMPACK}"
+  if ! gunzip -c "${DRMPACK}" | tar xf - -C /lib/modules/ 2>/dev/null; then
+    echo "<3>[TCRP] all-modules: drm pack extraction FAILED (${DRMPACK})" > /dev/kmsg
+  fi
+}
+
+# PML stages i915 firmware into the initrd at build time, while IML expands
+# it here. Re-extract the same archive during the modules event in both modes
+# so the active /lib/firmware tree is populated before any GPU driver loads.
+extract_all_modules_i915_firmware() {
+  [ -f /exts/all-modules/firmwarei915.tgz ] || return 0
+  [ -d /lib/firmware ] || mkdir -p /lib/firmware
+  gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
+    || echo "Firmwarei915 extraction failed" >&2
+}
+
 # DSM/플랫폼/커널 조합 지문 계산 (BAK 유효성 판단용)
 # 포맷: platform|kernel|productversion-buildnumber-smallfixnumber
 # busybox ash 호환: md5sum/bash 불필요, local 미사용
@@ -293,28 +329,10 @@ if [ "${1}" = "modules" ]; then
       fi
     fi
 
-    # DRM 전용 팩(i915/amdgpu 등, <platform>-<DSM_VER>-<LINUX_VER>-drm.tgz)이
-    # 별도로 배포된 조합이면 기본 모듈팩과 나란히 추가로 풀어준다.
-    # 없는 조합(예: epyc7003ntb)에서는 조용히 skip - 에러 아님.
-    DRMPACK=""
-    _exact_drm="/exts/all-modules/${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}-drm.tgz"
-    if [ -n "${DSM_VER}" ] && [ -f "${_exact_drm}" ] && gunzip -t "${_exact_drm}" 2>/dev/null; then
-      DRMPACK="${_exact_drm}"
-    else
-      for _cand in /exts/all-modules/*${TARGET_PLATFORM}*${LINUX_VER}-drm.tgz; do
-        [ -f "${_cand}" ] || continue
-        if gunzip -t "${_cand}" 2>/dev/null; then
-          DRMPACK="${_cand}"; break
-        fi
-        echo "<4>[TCRP] all-modules: corrupt drm pack skipped (${_cand})" > /dev/kmsg
-      done
-    fi
-    if [ -n "${DRMPACK}" ]; then
-      echo "all-modules: extracting drm pack ${DRMPACK}"
-      if ! gunzip -c "${DRMPACK}" | tar xf - -C /lib/modules/ 2>/dev/null; then
-        echo "<3>[TCRP] all-modules: drm pack extraction FAILED (${DRMPACK})" > /dev/kmsg
-      fi
-    fi
+    # IML expands its main archive here; overlay the optional DRM companion
+    # before depmod and driver preloads below.
+    extract_all_modules_drm_pack
+    extract_all_modules_i915_firmware
 
     # A detour build overlays its verified companion pack after the regular
     # modules. Ordinary PML has no marker and never enters this branch.
@@ -333,10 +351,6 @@ if [ "${1}" = "modules" ]; then
     if [ -f /exts/all-modules/firmware-custom.tgz ]; then
       gunzip -c /exts/all-modules/firmware-custom.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
         || echo "Firmware-custom extraction failed" >&2
-    fi
-    if [ -f /exts/all-modules/firmwarei915.tgz ]; then
-      gunzip -c /exts/all-modules/firmwarei915.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
-        || echo "Firmwarei915 extraction failed" >&2
     fi
     if [ -f /exts/all-modules/firmwareamdgpu.tgz ]; then
       gunzip -c /exts/all-modules/firmwareamdgpu.tgz | tar xvf - -C /lib/firmware/ >/dev/null 2>&1 \
@@ -427,6 +441,14 @@ if [ "${1}" = "modules" ]; then
         exit 1
       fi
       echo "all-modules:PML detour pack overlaid: ${DETOUR_NAME}"
+    fi
+
+    # PML's main archive (and optional BMI2 detour overlay) is already staged
+    # in /lib/modules. Still install the separate DRM archive, then refresh
+    # dependency metadata for both overlays.
+    extract_all_modules_drm_pack
+    extract_all_modules_i915_firmware
+    if [ -f /addons/detourbmi2.pack ] || [ -n "${DRMPACK}" ]; then
       [ -f /lib/modules/modules.order ] || : > /lib/modules/modules.order
       [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
       /usr/sbin/depmod -a || exit 1
