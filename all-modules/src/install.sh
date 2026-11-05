@@ -412,7 +412,14 @@ if [ "${1}" = "modules" ]; then
         echo "<3>[TCRP] detour pack marker does not match running DSM" > /dev/kmsg
         exit 1
       fi
-      DETOUR_ACTUAL="$(sha256sum "${DETOUR_FILE}" 2>/dev/null | awk '{print $1}')"
+      DETOUR_HASH_TOOL="/usr/sbin/busybox-static"
+      if [ -x "${DETOUR_HASH_TOOL}" ]; then
+        echo "all-modules:PML detour hash tool found: ${DETOUR_HASH_TOOL}"
+      else
+        echo "<3>[TCRP] detour hash tool missing or not executable: ${DETOUR_HASH_TOOL}" > /dev/kmsg
+        exit 1
+      fi
+      DETOUR_ACTUAL="$("${DETOUR_HASH_TOOL}" sha256sum "${DETOUR_FILE}" 2>/dev/null | awk '{print $1}')"
       if [ "${DETOUR_ACTUAL}" != "${DETOUR_SHA}" ] ||
          ! tar -tzf "${DETOUR_FILE}" >/dev/null 2>&1 ||
          ! tar -xzf "${DETOUR_FILE}" -C /lib/modules/; then
