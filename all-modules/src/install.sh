@@ -316,6 +316,13 @@ if [ "${1}" = "modules" ]; then
       fi
     fi
 
+    # A detour build overlays its verified companion pack after the regular
+    # modules. Ordinary PML has no marker and never enters this branch.
+    if [ -f /addons/detourbmi2.pack ]; then
+      echo "<3>[TCRP] detour pack marker found without PML mode" > /dev/kmsg
+      exit 1
+    fi
+
     #[ -f /lib/modules/r8168_tx.ko ] && rm /lib/modules/r8168.ko
 
     [ ! -d /lib/firmware ] && mkdir /lib/firmware
@@ -389,6 +396,33 @@ if [ "${1}" = "modules" ]; then
       else
         echo "all-modules: no AMD display-class PCI device found (vendor 1002)"
       fi
+    fi
+  else
+    # PML's main pack is already expanded into this initrd at build time.
+    # Overlay the optional detour pack before dependency generation and late
+    # copies this combined tree into DSM's persistent root.
+    if [ -f /addons/detourbmi2.pack ]; then
+      DETOUR_NAME="$(awk -F= '$1=="filename" {print $2; exit}' /addons/detourbmi2.pack)"
+      DETOUR_SHA="$(awk -F= '$1=="sha256" {print $2; exit}' /addons/detourbmi2.pack)"
+      DETOUR_EXPECTED="${TARGET_PLATFORM}-${DSM_VER}-${LINUX_VER}-detour.tgz"
+      DETOUR_FILE="/addons/${DETOUR_NAME}"
+      if [ "${DETOUR_NAME}" != "${DETOUR_EXPECTED}" ] ||
+         ! echo "${DETOUR_SHA}" | grep -Eq '^[0-9a-f]{64}$' ||
+         [ ! -s "${DETOUR_FILE}" ]; then
+        echo "<3>[TCRP] detour pack marker does not match running DSM" > /dev/kmsg
+        exit 1
+      fi
+      DETOUR_ACTUAL="$(sha256sum "${DETOUR_FILE}" 2>/dev/null | awk '{print $1}')"
+      if [ "${DETOUR_ACTUAL}" != "${DETOUR_SHA}" ] ||
+         ! tar -tzf "${DETOUR_FILE}" >/dev/null 2>&1 ||
+         ! tar -xzf "${DETOUR_FILE}" -C /lib/modules/; then
+        echo "<3>[TCRP] detour pack verification/extraction failed (${DETOUR_NAME})" > /dev/kmsg
+        exit 1
+      fi
+      echo "all-modules:PML detour pack overlaid: ${DETOUR_NAME}"
+      [ -f /lib/modules/modules.order ] || : > /lib/modules/modules.order
+      [ -f /lib/modules/modules.builtin ] || : > /lib/modules/modules.builtin
+      /usr/sbin/depmod -a || exit 1
     fi
   fi
 
