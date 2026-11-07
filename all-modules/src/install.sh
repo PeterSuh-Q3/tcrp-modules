@@ -513,7 +513,13 @@ elif [ "${1}" = "late" ]; then
     [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
     [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
     echo "Rebuilding module dependencies in /tmpRoot..."
-    chroot /tmpRoot /sbin/depmod -a 2>/dev/null || echo "<3>[TCRP] WARNING: chroot depmod failed" > /dev/kmsg
+    if chroot /tmpRoot /sbin/depmod -a; then
+        echo "[TCRP] DEPMOD status=success event=late mode=PML target=/tmpRoot"
+    else
+        DEPMOD_EXIT=$?
+        echo "[TCRP] DEPMOD status=failed exit=${DEPMOD_EXIT} event=late mode=PML target=/tmpRoot" >&2
+        echo "<3>[TCRP] WARNING: chroot depmod failed exit=${DEPMOD_EXIT}" > /dev/kmsg
+    fi
 
   else
     if [ -e "/addons/hda1-smallfix" ]; then
