@@ -105,6 +105,42 @@ iml_restore_log() {
   echo "<4>${_restore_msg}" > /dev/kmsg 2>/dev/null || true
 }
 
+# Run depmod inside a staged DSM root. Some DSM roots ship kmod but omit the
+# depmod compatibility symlink; provide it temporarily so kmod dispatches by
+# argv[0], then remove it after the index has been generated.
+run_pml_target_depmod() {
+  local _depmod_root _depmod_path _depmod_alias _depmod_rc
+  _depmod_root="${1:-/tmpRoot}"
+  _depmod_path="/sbin/depmod"
+  _depmod_alias=""
+  DEPMOD_METHOD="target-depmod"
+
+  if [ ! -x "${_depmod_root}/sbin/depmod" ]; then
+    if [ -x "${_depmod_root}/usr/sbin/depmod" ]; then
+      _depmod_path="/usr/sbin/depmod"
+      DEPMOD_METHOD="target-usr-sbin-depmod"
+    elif [ -x "${_depmod_root}/usr/bin/kmod" ] &&
+         [ ! -e "${_depmod_root}/sbin/depmod" ] &&
+         [ ! -L "${_depmod_root}/sbin/depmod" ]; then
+      DEPMOD_METHOD="target-kmod-alias"
+      mkdir -p "${_depmod_root}/sbin" || { DEPMOD_METHOD="alias-setup-failed"; return 1; }
+      ln -s /usr/bin/kmod "${_depmod_root}/sbin/depmod" || { DEPMOD_METHOD="alias-setup-failed"; return 1; }
+      _depmod_alias="${_depmod_root}/sbin/depmod"
+    else
+      echo "[TCRP] target depmod unavailable or alias path occupied: ${_depmod_root}/sbin/depmod" >&2
+      DEPMOD_METHOD="unavailable"
+      return 127
+    fi
+  fi
+
+  chroot "${_depmod_root}" "${_depmod_path}" -a
+  _depmod_rc=$?
+  if [ -n "${_depmod_alias}" ] && ! rm -f "${_depmod_alias}"; then
+    echo "[TCRP] temporary depmod alias cleanup failed: ${_depmod_alias}" >&2
+  fi
+  return "${_depmod_rc}"
+}
+
 read_version_field() {
   awk -F= -v key="$2" '$1 == key { gsub(/["\r]/, "", $2); print $2; exit }' "$1" 2>/dev/null
 }
@@ -513,11 +549,11 @@ elif [ "${1}" = "late" ]; then
     [ -f /tmpRoot/lib/modules/modules.order ]   || : > /tmpRoot/lib/modules/modules.order
     [ -f /tmpRoot/lib/modules/modules.builtin ] || : > /tmpRoot/lib/modules/modules.builtin
     echo "Rebuilding module dependencies in /tmpRoot..."
-    if chroot /tmpRoot /sbin/depmod -a; then
-        echo "[TCRP] DEPMOD status=success event=late mode=PML target=/tmpRoot"
+    if run_pml_target_depmod /tmpRoot; then
+        echo "[TCRP] DEPMOD status=success event=late mode=PML target=/tmpRoot method=${DEPMOD_METHOD}"
     else
         DEPMOD_EXIT=$?
-        echo "[TCRP] DEPMOD status=failed exit=${DEPMOD_EXIT} event=late mode=PML target=/tmpRoot" >&2
+        echo "[TCRP] DEPMOD status=failed exit=${DEPMOD_EXIT} event=late mode=PML target=/tmpRoot method=${DEPMOD_METHOD}" >&2
         echo "<3>[TCRP] WARNING: chroot depmod failed exit=${DEPMOD_EXIT}" > /dev/kmsg
     fi
 
