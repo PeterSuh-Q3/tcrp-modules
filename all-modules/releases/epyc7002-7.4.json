@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "epyc7002-7.4-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.24/epyc7002-7.4-5.10.55.tgz",
-      "sha256": "ecc624f20c17d128c334568592bcc70170820eee9e01c11e0a5c02ba2f23cace",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.11/epyc7002-7.4-5.10.55.tgz",
+      "sha256": "1506a10835d46d8b17ef3918aed724a77b9872c871037058932d3de2c32576c2",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "epyc7002-7.4-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.10.24/epyc7002-7.4-5.10.55-drm.tgz",
-      "sha256": "202bd129eb04a8fa3d5fe6d69e6c85edc8fa61465b1201b3839548a30a855049",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.11/epyc7002-7.4-5.10.55-drm.tgz",
+      "sha256": "f78c11d4cac2b3d48550634f769958e297876d34543b9dae0e0521197986ae9c",
       "packed": false
     }
   ],
