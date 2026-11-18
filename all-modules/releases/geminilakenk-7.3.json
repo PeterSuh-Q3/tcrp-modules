@@ -3,8 +3,8 @@
   "files": [
     {
       "name": "geminilakenk-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.11/geminilakenk-7.3-5.10.55.tgz",
-      "sha256": "0d4aaa267fef3949794ce7274049f10e84c5978e54be4639df84c5df9c462a7d",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilakenk-7.3-5.10.55.tgz",
+      "sha256": "2485288978bff1f0421880c4a83faf03f524d5b1053ef89722cc73fb44a92027",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "geminilakenk-7.3-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.11/geminilakenk-7.3-5.10.55-drm.tgz",
-      "sha256": "e1fadea55b2eb635f2b1b4142485e9067080cfa6e248b9730502ab53d2db7c79",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilakenk-7.3-5.10.55-drm.tgz",
+      "sha256": "43418bec453bcbb0bb57441ba04543736366c4b968986d352f44ce2498cfaca6",
       "packed": false
     }
   ],
