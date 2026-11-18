@@ -231,19 +231,15 @@ jobs:
             # files[] 배열에서 name이 .tgz 로 끝나고 sha256_map에 있는 항목만 갱신
             # . as $file 로 요소를 캡처해 has() 에 명시적 문자열 키를 전달,
             # null name 으로 인한 "Cannot check whether object has a null key" 오류 방지
-            update_firmware=false
-            case "${JSON_FILE}" in ./all-modules/releases/*) update_firmware=true ;; esac
             UPDATED=$(jq \
               --slurpfile sha_map "${SHA256_MAP_FILE}" \
               --arg release_tag "${TAG}" \
-              --argjson update_firmware "${update_firmware}" \
               '
               .files |= map(
                 . as $file
                 | if (
                     ($file.name | type == "string")
                     and ($file.name | test("\\.tgz$"))
-                    and ($file.name != "firmware.tgz" or $update_firmware)
                     and (($sha_map[0] | type == "object") and ($sha_map[0] | has($file.name)))
                   )
                   then
