@@ -142,6 +142,23 @@ jobs:
             verified_count=$((verified_count + 1))
           done < "${CHKSUM_FILE}"
 
+          # firmware.tgz is not necessarily listed in files-chksum. Verify the
+          # selected release asset itself before using its digest in manifests.
+          firmware_sha="$(jq -r '."firmware.tgz" // empty' "${ASSET_MAP}")"
+          if printf '%s' "${firmware_sha}" | grep -qE '^[0-9a-f]{64}$'; then
+            gh release download "${TAG}" --repo "${REPO}" --pattern firmware.tgz --dir "${WORK_DIR}" --clobber
+            actual_firmware_sha="$(sha256sum "${WORK_DIR}/firmware.tgz" | cut -d' ' -f1)"
+            if [ "${firmware_sha}" != "${actual_firmware_sha}" ]; then
+              echo "::error::firmware.tgz release digest does not match the downloaded asset"
+              exit 1
+            fi
+            jq --arg hash "${firmware_sha}" '. + {"firmware.tgz": $hash}' "${SHA256_MAP}" > "${SHA256_MAP}.tmp"
+            mv "${SHA256_MAP}.tmp" "${SHA256_MAP}"
+            echo "Verified firmware.tgz: ${firmware_sha}"
+          else
+            echo "::warning::Selected release has no firmware.tgz with a SHA-256 digest; existing firmware URLs and hashes remain unchanged."
+          fi
+
           echo "검증 결과: 통과 ${verified_count}건, 불일치/누락 ${mismatch_count}건"
           {
             echo "### files-chksum SHA-256 validation"
@@ -214,15 +231,19 @@ jobs:
             # files[] 배열에서 name이 .tgz 로 끝나고 sha256_map에 있는 항목만 갱신
             # . as $file 로 요소를 캡처해 has() 에 명시적 문자열 키를 전달,
             # null name 으로 인한 "Cannot check whether object has a null key" 오류 방지
+            update_firmware=false
+            case "${JSON_FILE}" in ./all-modules/releases/*) update_firmware=true ;; esac
             UPDATED=$(jq \
               --slurpfile sha_map "${SHA256_MAP_FILE}" \
               --arg release_tag "${TAG}" \
+              --argjson update_firmware "${update_firmware}" \
               '
               .files |= map(
                 . as $file
                 | if (
                     ($file.name | type == "string")
                     and ($file.name | test("\\.tgz$"))
+                    and ($file.name != "firmware.tgz" or $update_firmware)
                     and (($sha_map[0] | type == "object") and ($sha_map[0] | has($file.name)))
                   )
                   then
