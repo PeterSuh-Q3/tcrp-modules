@@ -10,11 +10,9 @@ sed_i () {
 
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 installsha=$(sha256sum "$script_dir/src/install.sh" | awk '{print $1}')
-firmware=$(sha256sum "$script_dir/../firmware/common/firmware.tgz" | awk '{print $1}')
 firmwarei915=$(sha256sum "$script_dir/../firmware/common/firmwarei915.tgz" | awk '{print $1}')
 echo "$installsha"
 
-echo "firmware sha256=$firmware"
 echo "firmwarei915 sha256=$firmwarei915"
 
 cd "$script_dir/releases/"
@@ -35,8 +33,6 @@ for platform in avoton cedarview bromolow braswell grantley; do
         org=$(jq -r '.files[0].sha256' "${platform}62.json")
         sed_i "s/$org/$value/" "${platform}62.json"
     
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}62.json")
-        sed_i "s/$orgfirmware/$firmware/" "${platform}62.json"
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}62.json")
         sed_i "s/$orginstall/$installsha/" "${platform}62.json"
@@ -54,8 +50,6 @@ for platform in avoton cedarview bromolow braswell grantley; do
     org=$(jq -r '.files[0].sha256' "${platform}71.json")
     sed_i "s/$org/$value/" "${platform}71.json"
 
-    orgfirmware=$(jq -r '.files[1].sha256' "${platform}71.json")
-    sed_i "s/$orgfirmware/$firmware/" "${platform}71.json"
 
     orginstall=$(jq -r '.files[2].sha256' "${platform}71.json")
     sed_i "s/$orginstall/$installsha/" "${platform}71.json"
@@ -81,8 +75,6 @@ for platform in epyc7002 v1000nk r1000nk geminilakenk; do
         org=$(jq -r '.files[0].sha256' "${platform}71.json")
         sed_i "s/$org/$value/" "${platform}71.json"
     
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}71.json")
-        sed_i "s/$orgfirmware/$firmware/" "${platform}71.json"
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}71.json")
         sed_i "s/$orginstall/$installsha/" "${platform}71.json"
@@ -101,8 +93,6 @@ for platform in epyc7002 v1000nk r1000nk geminilakenk; do
         org=$(jq -r '.files[0].sha256' "${platform}72.json")
         sed_i "s/$org/$value/" "${platform}72.json"
     
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
-        sed_i "s/$orgfirmware/$firmware/" "${platform}72.json"
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
         sed_i "s/$orginstall/$installsha/" "${platform}72.json"
@@ -127,8 +117,6 @@ for platform in epyc7002 v1000nk r1000nk geminilakenk; do
         org=$(jq -r '.files[0].sha256' "${platform}72.json")
         sed_i "s/$org/$value/" "${platform}72.json"
     
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
-        sed_i "s/$orgfirmware/$firmware/" "${platform}72.json"
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
         sed_i "s/$orginstall/$installsha/" "${platform}72.json"
@@ -156,8 +144,6 @@ for platform in apollolake broadwellnk denverton geminilake v1000 purley broadwe
     org=$(jq -r '.files[0].sha256' "${platform}62.json")
     sed_i "s/$org/$value/" "${platform}62.json"
 
-    orgfirmware=$(jq -r '.files[1].sha256' "${platform}62.json")
-    sed_i "s/$orgfirmware/$firmware/" "${platform}62.json"
 
     orginstall=$(jq -r '.files[2].sha256' "${platform}62.json")
     sed_i "s/$orginstall/$installsha/" "${platform}62.json"
@@ -179,8 +165,6 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
         org=$(jq -r '.files[0].sha256' "${platform}62.json")
         sed_i "s/$org/$value/" "${platform}62.json"
     
-        orgfirmware=$(jq -r '.files[1].sha256' "${platform}62.json")
-        sed_i "s/$orgfirmware/$firmware/" "${platform}62.json"
     
         orginstall=$(jq -r '.files[2].sha256' "${platform}62.json")
         sed_i "s/$orginstall/$installsha/" "${platform}62.json"
@@ -198,8 +182,6 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     org=$(jq -r '.files[0].sha256' "${platform}71.json")
     sed_i "s/$org/$value/" "${platform}71.json"
 
-    orgfirmware=$(jq -r '.files[1].sha256' "${platform}71.json")
-    sed_i "s/$orgfirmware/$firmware/" "${platform}71.json"
 
     orginstall=$(jq -r '.files[2].sha256' "${platform}71.json")
     sed_i "s/$orginstall/$installsha/" "${platform}71.json"
@@ -220,8 +202,6 @@ for platform in apollolake broadwell broadwellnk denverton geminilake v1000 r100
     org=$(jq -r '.files[0].sha256' "${platform}72.json")
     sed_i "s/$org/$value/" "${platform}72.json"
 
-    orgfirmware=$(jq -r '.files[1].sha256' "${platform}72.json")
-    sed_i "s/$orgfirmware/$firmware/" "${platform}72.json"
 
     orginstall=$(jq -r '.files[2].sha256' "${platform}72.json")
     sed_i "s/$orginstall/$installsha/" "${platform}72.json"

@@ -36,7 +36,6 @@ sync_checksum() {
   done < <(rg -l -0 -F "$url" "$repo_root" -g '*.json')
 }
 
-sync_checksum 'firmware/common/firmware.tgz'
 sync_checksum 'firmware/common/firmwarei915.tgz'
 sync_checksum 'firmware/common/firmwareamdgpu.tgz'
 sync_checksum 'firmware/custom-modules/firmware.tgz'
