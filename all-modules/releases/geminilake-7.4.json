@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "geminilake-7.4-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilake-7.4-4.4.302.tgz",
-      "sha256": "3684d140386a5902871be9141d75a6f58181b14c7f88519829d9d8e6af039e09",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/geminilake-7.4-4.4.302.tgz",
+      "sha256": "c6b381098b3588df7db0257461121ee915ab4f480791fabda2f711127ed960fb",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "geminilake-7.4-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilake-7.4-4.4.302-drm.tgz",
-      "sha256": "eb66fcd1c67514e1439e9fe1ca7fc4f30ef23f511fc8dc3c3116361d08a1e272",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/geminilake-7.4-4.4.302-drm.tgz",
+      "sha256": "310dee8f1020973bc1454081a29df7e1d522fd12b67e3ea3e9c4ad87f66ddec0",
       "packed": false
     }
   ],

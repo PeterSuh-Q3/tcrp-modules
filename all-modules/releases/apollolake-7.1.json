@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "apollolake-7.1-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/apollolake-7.1-4.4.180.tgz",
-      "sha256": "4c8624d2604b87f28dcc75642913f4b83c1aa1eb0dc164819a013273f81a1553",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/apollolake-7.1-4.4.180.tgz",
+      "sha256": "b3277fa50591ed14d020d6f449db4d8bc3c0655854df0f823edf195d3b6695d7",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
@@ -27,8 +27,8 @@
     },
     {
       "name": "apollolake-7.1-4.4.180-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/apollolake-7.1-4.4.180-drm.tgz",
-      "sha256": "3bb2e1f741177e8c84aa41151fbad8aed3fc1b7f8520d656bc07b96ccb3fc716",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/apollolake-7.1-4.4.180-drm.tgz",
+      "sha256": "d9bba8ea1b7252a06be44caa8f7b98c8cd28a92a4b2b5925f945d862b52d2175",
       "packed": false
     }
   ],

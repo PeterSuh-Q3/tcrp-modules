@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "broadwellnk-7.4-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/broadwellnk-7.4-4.4.302.tgz",
-      "sha256": "dc98c496d172ba00a5c65007e068a0b6a7a7822df5f0b0af09cfc7411d1588c0",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/broadwellnk-7.4-4.4.302.tgz",
+      "sha256": "636d9aee1855dac5a7cc4f44a2a730ef96895e26854c05a10fbf029cd7d45bef",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "broadwellnk-7.4-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/broadwellnk-7.4-4.4.302-drm.tgz",
-      "sha256": "08e3fbfa5d4ec1f658c12706040e9139fc0ab2eeabe043843dd5fe98f9d864e2",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/broadwellnk-7.4-4.4.302-drm.tgz",
+      "sha256": "1a79e602cd595efae98ff91e41da6cb52b5304a402ddfa70978b043f2030bdbf",
       "packed": false
     }
   ],

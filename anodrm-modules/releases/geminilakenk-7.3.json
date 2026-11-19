@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "geminilakenk-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilakenk-7.3-5.10.55.tgz",
-      "sha256": "2485288978bff1f0421880c4a83faf03f524d5b1053ef89722cc73fb44a92027",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/geminilakenk-7.3-5.10.55.tgz",
+      "sha256": "65e7ac7d69b1f7fd922350cb880dfc49eaedbb35d936e896508026ad2ccf69ee",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {

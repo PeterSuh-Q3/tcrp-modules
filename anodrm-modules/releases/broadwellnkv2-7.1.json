@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "broadwellnkv2-7.1-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/broadwellnkv2-7.1-4.4.180.tgz",
-      "sha256": "b930748646c99308593b2819c3c9b41b2fae69938d9da5ab7c1fffe39abd9832",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/broadwellnkv2-7.1-4.4.180.tgz",
+      "sha256": "7a9d4297fcac0901fa2e91acbd9ac5e866bddf83a3f3f5f1a79d065b15835a7d",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {

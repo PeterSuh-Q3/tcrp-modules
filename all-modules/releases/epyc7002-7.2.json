@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "epyc7002-7.2-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/epyc7002-7.2-5.10.55.tgz",
-      "sha256": "069cdb88d860b434fd57371ed21be6736b8a5a51810486f6eb26b27d92e83aaf",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/epyc7002-7.2-5.10.55.tgz",
+      "sha256": "3145543d613678531b755f645f7ffa4568b0cab0ac0fed00d47d9a9d83c4aa67",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "epyc7002-7.2-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/epyc7002-7.2-5.10.55-drm.tgz",
-      "sha256": "5333b88d9a8b61ba60a314dc25db8bf2029f4a8a46f50e27bdaec66efed4a4b5",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/epyc7002-7.2-5.10.55-drm.tgz",
+      "sha256": "26a8dde7b22c68dfa853541f6947a9d86dd61f9c1ed368569f00d5758abd9267",
       "packed": false
     }
   ],

@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "geminilakenk-7.2-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilakenk-7.2-5.10.55.tgz",
-      "sha256": "7d1ca6a82b8f52163daf55082142dc4936dfe55209d6492ebcf733177c1d82cd",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/geminilakenk-7.2-5.10.55.tgz",
+      "sha256": "a6a8f743916d0595e5f03b84f90f22212631dea34edc94053819d20f84775c7f",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "geminilakenk-7.2-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/geminilakenk-7.2-5.10.55-drm.tgz",
-      "sha256": "7f0075a0faf6cacd867165fc176ab1882df29a4600657194c4ed13d0fc8c4de9",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/geminilakenk-7.2-5.10.55-drm.tgz",
+      "sha256": "5d569d4a8d2432d899f161ecb3e8c7aec45e176644b3aeaea5f6923f5c9356bc",
       "packed": false
     }
   ],

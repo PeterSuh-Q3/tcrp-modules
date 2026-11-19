@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "epyc7002-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/epyc7002-7.3-5.10.55.tgz",
-      "sha256": "a51e41631316098af02defd782a8f416c8450962c8da0fd73feec73a11e04db0",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/epyc7002-7.3-5.10.55.tgz",
+      "sha256": "56f02843dcc67efd050b4b584ac4e50cb6256b86272a6edd961fae2ca6a66dfb",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {

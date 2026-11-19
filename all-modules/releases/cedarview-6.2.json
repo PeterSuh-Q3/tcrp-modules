@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "cedarview-6.2-3.10.105.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/cedarview-6.2-3.10.105.tgz",
-      "sha256": "4f45e411d5e48c025965494abbefe44b3e4423bf3fb8a97f8dc6398d7b23222b",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/cedarview-6.2-3.10.105.tgz",
+      "sha256": "67887d68eb0af64136865d5836e773380e777f0b3b9fedcf1334c28f67324d21",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.18/firmware.tgz",
-      "sha256": "97034fc42c49b2a6ec5786c92488907ff5db576d862d4cd0ebc6e403b5d29426",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
+      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
       "packed": false
     },
     {
