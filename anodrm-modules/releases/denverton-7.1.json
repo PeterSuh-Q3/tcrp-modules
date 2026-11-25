@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "denverton-7.1-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/denverton-7.1-4.4.180.tgz",
-      "sha256": "f1e357607dafe7fb4233c6db63f7dc87ed3eae34c0cffea2e67f8bbb8eb9b40b",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/denverton-7.1-4.4.180.tgz",
+      "sha256": "9081b1de111e7227f74752009f538cf82c9571eab820fa22f9411bec1d720584",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

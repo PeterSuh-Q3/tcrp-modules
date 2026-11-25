@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "braswell-6.2-3.10.105.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/braswell-6.2-3.10.105.tgz",
-      "sha256": "b3e945a385990350ab255bef67822b2717ea0261a0b7c99cac744d3f9455b757",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/braswell-6.2-3.10.105.tgz",
+      "sha256": "8bc91ebdfaf55a478d4dd54597d7dbb5e58d6039af24661a642608bace7d5e1b",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

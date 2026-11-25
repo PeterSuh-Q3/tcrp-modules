@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "v1000-7.2-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/v1000-7.2-4.4.302.tgz",
-      "sha256": "320f65e88c47634a8512e13170efae847d4667b55c0081dffde7952b1f602bcd",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/v1000-7.2-4.4.302.tgz",
+      "sha256": "477fb8f095677a0ff1ceb9c6058a1e32f7760fb4e16d37448947bce78b1d495f",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "v1000-7.2-4.4.302-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/v1000-7.2-4.4.302-drm.tgz",
-      "sha256": "155f665b962dcf12b452ba433ef9601d82c5d9e6751e580e4087dceac13f1906",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/v1000-7.2-4.4.302-drm.tgz",
+      "sha256": "674b34fcaf880ed01cfba24352c33dcb580a5da5b1aa2382216e7ad256251036",
       "packed": false
     }
   ],

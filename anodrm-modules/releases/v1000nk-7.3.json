@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "v1000nk-7.3-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/v1000nk-7.3-5.10.55.tgz",
-      "sha256": "fe632457b90dace72a779d8a769b9bf3550312d7b0e650aa3a6d17b2ac614433",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/v1000nk-7.3-5.10.55.tgz",
+      "sha256": "54d6740a1b0d8c6b748162292c77cf478c3dc438f3732344e41691d076052913",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "apollolake-7.0-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/apollolake-7.0-4.4.180.tgz",
-      "sha256": "68790bc1d3cb159716b23951b2f0a3458fe3adc8f956783ec22914c491b52ce5",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/apollolake-7.0-4.4.180.tgz",
+      "sha256": "24b4524b4e13457c691bb0861520e36c7d5b4336f4aa9aae85b372e9d3a2a8b4",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

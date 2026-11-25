@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "icelaked-7.4-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/icelaked-7.4-5.10.55.tgz",
-      "sha256": "bcdbc29e9e757d93a5176a9dbfad9372eda1e192a3451b8954ee34943c76e258",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/icelaked-7.4-5.10.55.tgz",
+      "sha256": "5fb053a1d597c2d8c5e90dcf47bbba781fa8ceed5f891973f408cf0eed5691db",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "icelaked-7.4-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/icelaked-7.4-5.10.55-drm.tgz",
-      "sha256": "bf953c9a217b9ffe7b46977adac15f055e1fe651323ae41dc658b61fa1750577",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/icelaked-7.4-5.10.55-drm.tgz",
+      "sha256": "2a98853556bb56df24de5e2a49eb7104cdf8fd0fffaa0d69d03ae7372bb1187d",
       "packed": false
     }
   ],

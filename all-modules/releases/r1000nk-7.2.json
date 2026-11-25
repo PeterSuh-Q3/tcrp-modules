@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "r1000nk-7.2-5.10.55.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/r1000nk-7.2-5.10.55.tgz",
-      "sha256": "aa21ed7871850e0e06e270827d26b0f85186bf7768e008d30cf4030a9a911348",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/r1000nk-7.2-5.10.55.tgz",
+      "sha256": "03b257e47e9a6688027ee904dd5c19f0c3df1c526dd94248a30ce9316fb193bd",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "r1000nk-7.2-5.10.55-drm.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/r1000nk-7.2-5.10.55-drm.tgz",
-      "sha256": "0e5e1229b40cf298f6adaf0a4aedbf7311018afa740917440d4843f2285d3a80",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/r1000nk-7.2-5.10.55-drm.tgz",
+      "sha256": "e40fd062bc0403ec078d558b4c15938b303e6d15107b94a14ea74b03fe3ce605",
       "packed": false
     }
   ],

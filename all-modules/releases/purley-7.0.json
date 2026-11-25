@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "purley-7.0-4.4.180.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/purley-7.0-4.4.180.tgz",
-      "sha256": "6b54c8c2f66c750af0c08d5fe86f9e39654aa768ca475d5a10ba26395df01715",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/purley-7.0-4.4.180.tgz",
+      "sha256": "0a235b0babb1a42b4fa9fd570b119783cd130006b5d6c31e6ee3d0ad28768e5f",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

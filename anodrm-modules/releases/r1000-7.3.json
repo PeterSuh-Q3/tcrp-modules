@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "r1000-7.3-4.4.302.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/r1000-7.3-4.4.302.tgz",
-      "sha256": "411c6f213a6efcc1843f32530d7e67175d37c81225842af2d8b42bcf9184930e",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/r1000-7.3-4.4.302.tgz",
+      "sha256": "49e4d7175dad6b22737abbefae1c0518b4deba165b7d0eaa7a2687eeb02e5bf1",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

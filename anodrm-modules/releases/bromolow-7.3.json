@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "bromolow-7.3-3.10.108.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/bromolow-7.3-3.10.108.tgz",
-      "sha256": "1e80709583aacec5427087e80cd0148d2a85e3a3ee3b29a63b29b6fd6715936d",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/bromolow-7.3-3.10.108.tgz",
+      "sha256": "94082d3044c02459984477a93aebc35e68f904a0ddb02cfafeeb23683e030044",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {

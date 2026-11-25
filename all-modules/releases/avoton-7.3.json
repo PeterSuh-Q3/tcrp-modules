@@ -3,14 +3,14 @@
   "files": [
     {
       "name": "avoton-7.3-3.10.108.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/avoton-7.3-3.10.108.tgz",
-      "sha256": "062cdd240915b30a4433149613e5d0e931da700f7566bbdd99fac3bc6b3f9ff3",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/avoton-7.3-3.10.108.tgz",
+      "sha256": "6f97d27f80c25e7f0d96b1f21ef0fed9f4be56017bd5bb431d296cd3e10808d6",
       "packed": false
     },
     {
       "name": "firmware.tgz",
-      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.19/firmware.tgz",
-      "sha256": "cd37d63b6e92fda5fb87bd92a8a04987488d4423b64fb4faa8871dc6c2638856",
+      "url": "https://github.com/PeterSuh-Q3/tcrp-modules/releases/download/26.11.25/firmware.tgz",
+      "sha256": "787164b14e25763bc34f99ed7b1622e1a80075fdf769d310736401a7147ed05b",
       "packed": false
     },
     {
